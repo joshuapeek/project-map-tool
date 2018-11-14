@@ -128,6 +128,28 @@ def orgPage(org_id):
         sprojects=sprojects, nsprojects=nsprojects)
 
 
+@app.route('/new', methods=['GET', 'POST'])
+def newOrg():
+    if request.method == 'POST':
+        newOrg = Org(title=request.form['orgtitle'],
+                     description=request.form['orgdesc'])
+        session.add(newOrg)
+        session.commit()
+        flash("New org created!")
+        org = session.query(Org).filter_by(title=request.form['orgtitle']).one()
+        if request.form['projtitle'] is not None:
+            newProj = Project(title=request.form['projtitle'],
+                              description=request.form['projdesc'],
+                              stage="Not Started",
+                              org_id=org.id)
+            session.add(newProj)
+            session.commit()
+            flash("New project created!")
+        return redirect(url_for('orgPage',org_id=org.id))
+    else:
+        return render_template('newOrg.html')
+
+
 @app.route('/')
 def mainPage():
     orgs = session.query(Org).all()
@@ -136,6 +158,6 @@ def mainPage():
 
 
 if __name__ == '__main__':
-    # app.secret_key = CLIENT_SECRET
+    app.secret_key = 'supersecretkey'
     app.debug = True
     app.run(host='0.0.0.0', port=5000)
