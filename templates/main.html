@@ -20,8 +20,8 @@
 
   <body>
 
-    <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-      <a class="navbar-brand" href="#">Project-Map</a>
+    <!--<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+      <a class="navbar-brand" href="/">Project-Map</a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -36,7 +36,7 @@
           <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
         </form>
       </div>
-    </nav>
+    </nav>-->
 
     <main role="main" class="container">
       <div class="jumbotron">
@@ -44,7 +44,7 @@
         <p class="lead">A tool for making sense of requirements gathering,
           developed by Joshua Peek.<br>
           Select an org or project below to resume,
-          or use the "Add New" buttons to get started.</p>
+          or use the "Add" button to get started.</p>
         <!--<a class="btn btn-lg btn-primary" href="../../components/navbar/" role="button">View navbar docs &raquo;</a>-->
       </div>
 
@@ -58,7 +58,7 @@
               <a href='{{url_for('orgPage',
                 org_id = i.id)}}'>Click Here</a><br><br>
             {% endfor %}
-            <!--<p><a class="btn btn-secondary" href="#" role="button">View details &raquo;</a></p>-->
+            <p><a class="btn btn-secondary" href="#" role="button">Add an Org &raquo;</a></p>
           </div>
           <div class="col-md-6">
             <h2>Projects</h2>
@@ -69,7 +69,6 @@
                 project_id = i.id)}}'>Click Here</a><br>
               <i>(ID: {{i.id}})</i> {{i.description}}<br><br>
             {% endfor %}
-            <!--<p><a class="btn btn-secondary" href="#" role="button">View details &raquo;</a></p>-->
           </div>
         </div>
       </div>
