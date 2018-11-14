@@ -150,6 +150,47 @@ def newOrg():
         return render_template('newOrg.html')
 
 
+@app.route('/<int:org_id>/edit', methods=['GET', 'POST'])
+def editOrg(org_id):
+    editOrg=session.query(Org).filter_by(id=org_id).one()
+    if request.method == 'POST':
+        if request.form['orgtitle']:
+            editOrg.title = request.form['orgtitle']
+            editOrg.description = request.form['orgdesc']
+        session.add(editOrg)
+        session.commit()
+        flash("Org Edited!")
+        return redirect(url_for('orgPage',org_id=editOrg.id))
+    else:
+        return render_template('editOrg.html', org=editOrg)
+
+
+@app.route('/<int:org_id>/del', methods=['GET', 'POST'])
+def delOrg(org_id):
+    delOrg = session.query(Org).filter_by(id=org_id).one()
+    delProjects = session.query(Project).filter_by(org_id=org_id).all()
+    if request.method == 'POST':
+        for i in delProjects:
+            session.delete(i)
+        session.delete(delOrg)
+        session.commit()
+        flash("Org & Associated Projects Removed")
+        return redirect(url_for('mainPage'))
+    else:
+        return render_template('delOrg.html', i=delOrg)
+
+@app.route('/<int:org_id>/<int:project_id>/del', methods=['GET', 'POST'])
+def delProject(org_id, project_id):
+    delOrg = session.query(Org).filter_by(id=org_id).one()
+    delProject = session.query(Project).filter_by(id=project_id).one()
+    if request.method == 'POST':
+        session.delete(delProject)
+        session.commit()
+        flash("Project Removed")
+        return redirect(url_for('mainPage'))
+    else:
+        return render_template('delProject.html', i=delProject, o=delOrg)
+
 @app.route('/')
 def mainPage():
     orgs = session.query(Org).all()
