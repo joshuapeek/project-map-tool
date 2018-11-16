@@ -11,15 +11,14 @@
         </button>
       </div>
       <div class="modal-body">
-        <table class="table-responsive table-sm table-hover">
+        <table class="table table-responsive table-sm table-hover">
           <thead class="thead-light">
             <tr>
-              <th scope="col">#</th>
-              <th scope="col">Title</th>
-              <th scope="col"></th>
-              <th scope="col"></th>
-              <th scope="col"></th>
-              <th scope="col"></th>
+              <th scope="col" width="55px">#</th>
+              <th scope="col" width="96px">Title</th>
+              <th scope="col" width="435px"></th>
+              <th scope="col" width="105px"></th>
+              <th scope="col" width="75px"></th>
             </tr>
           </thead>
           <tbody>
@@ -28,7 +27,7 @@
               <th scope="row">{{loop.index}}</th>
               <td>{{i.org.title}}</td>
               <td>{{i.title}}</td>
-              <td><a href='{{url_for('projectPage', org_id = i.org.id,  project_id = i.id)}}'>View Dashboard</a></td>
+              <td><a href='{{url_for('projectPage', org_id = i.org.id,  project_id = i.id)}}'>Dashboard</a></td>
               <td><a href='{{url_for('delProject', org_id = i.org.id,  project_id = i.id)}}'>Delete</a></td>
             </tr>
             {% endfor %}

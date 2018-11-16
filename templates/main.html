@@ -21,20 +21,36 @@
         <!-- Example row of columns -->
         <div class="row">
           <div class="col-md-4">
-            <!--<h2>Orgs</h2>-->
+            <h2>Quick Links</h2>
               <p><button type="button" class="btn btn-secondary btn-block" data-toggle="modal" data-target="#org-select">Adjust Orgs &raquo;</button></p>
               <p><button type="button" class="btn btn-secondary btn-block" data-toggle="modal" data-target="#project-select">Adjust Projects &raquo;</button></p>
           </div>
-          <div class="col-md-4">
-            <h2>Orgs</h2>
-            {% for i in orgs %}
-              <b>{{i.title}}</b>
-              <a href='{{url_for('orgPage', org_id = i.id)}}'>View</a><br>
-              {{i.description}}<br><br>
-            {% endfor %}
-          </div>
-          <div class="col-md-4">
+          <div class="col-md-8">
             <h2>Projects</h2>
+              <table class="table table-responsive table-sm table-hover" width="100%">
+                <thead class="thead-light">
+                  <tr>
+                    <th scope="col" width="45px">#</th>
+                    <th scope="col" width="80px">Title</th>
+                    <th scope="col" width="425px"></th>
+                    <th scope="col" width="95px"></th>
+                    <th scope="col" width="65px"></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for i in projects %}
+                  <tr>
+                    <th scope="row">{{loop.index}}</th>
+                    <td>{{i.org.title}}</td>
+                    <td>{{i.title}}</td>
+                    <td><a href='{{url_for('projectPage', org_id = i.org.id,  project_id = i.id)}}'>Dashboard</a></td>
+                    <td><a href='{{url_for('delProject', org_id = i.org.id,  project_id = i.id)}}'>Delete</a></td>
+                  </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+
+            <!--
             {% for i in projects %}
               <b>{{i.org.title}} - {{i.title}}</b>
               <a href='{{url_for('projectPage',
@@ -42,7 +58,10 @@
                 project_id = i.id)}}'>Click Here</a><br>
               {{i.description}}<br><br>
             {% endfor %}
+            -->
           </div>
+
+
         </div>
       </div>
 
