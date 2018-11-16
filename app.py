@@ -24,85 +24,26 @@ DBSession = sessionmaker(bind=engine)
 session = DBSession()
 
 
-# db dump pages for testing
-@app.route('/orgdump')
-def orgs():
+@app.route('/')
+def mainPage():
     orgs = session.query(Org).all()
-    output = '<br><br>'
-    for i in orgs:
-        output += 'org id: ' + str(i.id) + '<br>'
-        output += 'username: ' + i.title + '<br>'
-        output += 'email: ' + i.description + '<br></br>'
-    return output
-
-@app.route('/projectdump')
-def projects():
     projects = session.query(Project).all()
-    output = '<br><br>'
-    for i in projects:
-        output += 'org: ' + str(i.org_id) + '<br>'
-        output += 'project id: ' + str(i.id) + '<br>'
-        output += 'title: ' + i.title + '<br>'
-        output += 'description: ' + i.description + '<br>'
-        output += 'stage: ' + i.stage + '<br></br>'
-    return output
-
-@app.route('/roledump')
-def roles():
-    roles = session.query(Role).all()
-    output = '<br><br>'
-    for i in roles:
-        output += 'org: ' + str(i.org_id) + '<br>'
-        output += 'project id: ' + str(i.project_id) + '<br>'
-        output += 'role id: ' + str(i.id) + '<br>'
-        output += 'title: ' + i.title + '<br>'
-        output += 'description: ' + i.description + '<br>'
-        output += 'authRequired: ' + i.authRequired + '<br></br>'
-    return output
-
-@app.route('/screendump')
-def screens():
-    screens = session.query(Screen).all()
-    output = '<br><br>'
-    for i in screens:
-        output += 'org: ' + str(i.org_id) + '<br>'
-        output += 'project id: ' + str(i.project_id) + '<br>'
-        output += 'role id: ' + str(i.id) + '<br>'
-        output += 'title: ' + i.title + '<br>'
-        output += 'description: ' + i.description + '<br>'
-        output += 'authRequired: ' + i.authRequired + '<br>'
-        output += "associated role_id's: " + i.roles + '<br><br>'
-    return output
-
-@app.route('/functdump')
-def funct():
-    funct = session.query(Function).all()
-    output = '<br><br>'
-    for i in funct:
-        output += 'org: ' + str(i.org_id) + '<br>'
-        output += 'project id: ' + str(i.project_id) + '<br>'
-        output += 'function id: ' + str(i.id) + '<br>'
-        output += "associated screen_id's: " + str(i.screen_id) + '<br>'
-        output += 'title: ' + i.title + '<br>'
-        output += 'description: ' + i.description + '<br>'
-        output += 'authRequired: ' + i.authRequired + '<br>'
-        output += "associated role_id's: " + i.roles + '<br><br>'
-    return output
-
-@app.route('/fgdump')
-def fgdump():
-    fg = session.query(Functgroup).all()
-    output = '<br><br>'
-    for i in fg:
-        output += 'org: ' + str(i.org_id) + '<br>'
-        output += 'project id: ' + str(i.project_id) + '<br>'
-        output += 'function group id: ' + str(i.id) + '<br>'
-        output += 'title: ' + i.title + '<br>'
-        output += 'description: ' + i.description + '<br>'
-        output += "associated function_id's: " + i.functions + '<br><br>'
-    return output
+    return render_template('main.html', orgs=orgs, projects=projects)
 
 
+# query specified org object & all project objects associated with org
+# serves objects to org page template
+@app.route('/<int:org_id>/')
+def orgPage(org_id):
+    org = session.query(Org).filter_by(id=org_id).one()
+    projects = session.query(Project).filter_by(org_id=org.id).all()
+    return render_template('org.html', org=org, projects=projects)
+
+
+# query specified org & project objects
+# query projects objects associated with org
+# query function groups, screens, functions & role objects for specified project
+# pass objects to project page template
 @app.route('/<int:org_id>/<int:project_id>/')
 def projectPage(org_id, project_id):
     org = session.query(Org).filter_by(id=org_id).one()
@@ -118,13 +59,7 @@ def projectPage(org_id, project_id):
                            functions=functions, projects=projects)
 
 
-@app.route('/<int:org_id>/')
-def orgPage(org_id):
-    org = session.query(Org).filter_by(id=org_id).one()
-    projects = session.query(Project).filter_by(org_id=org.id).all()
-    return render_template('org.html', org=org, projects=projects)
-
-
+# serves new org form for get request, adds form data to db for post
 @app.route('/new', methods=['GET', 'POST'])
 def newOrg():
     if request.method == 'POST':
@@ -147,6 +82,7 @@ def newOrg():
         return render_template('newOrg.html')
 
 
+# query specified org, serve edit org page for get, update form data for post
 @app.route('/<int:org_id>/edit', methods=['GET', 'POST'])
 def editOrg(org_id):
     editOrg=session.query(Org).filter_by(id=org_id).one()
@@ -162,6 +98,8 @@ def editOrg(org_id):
         return render_template('editOrg.html', org=editOrg)
 
 
+# query specified org, serve delete form for get
+# on post, cycle-delete all projects in db, then org
 @app.route('/<int:org_id>/del', methods=['GET', 'POST'])
 def delOrg(org_id):
     delOrg = session.query(Org).filter_by(id=org_id).one()
@@ -176,6 +114,8 @@ def delOrg(org_id):
     else:
         return render_template('delOrg.html', i=delOrg)
 
+
+# query specified project, org; serve delete form for get, delete db for post
 @app.route('/<int:org_id>/<int:project_id>/del', methods=['GET', 'POST'])
 def delProject(org_id, project_id):
     delOrg = session.query(Org).filter_by(id=org_id).one()
@@ -187,12 +127,6 @@ def delProject(org_id, project_id):
         return redirect(url_for('mainPage'))
     else:
         return render_template('delProject.html', i=delProject, o=delOrg)
-
-@app.route('/')
-def mainPage():
-    orgs = session.query(Org).all()
-    projects = session.query(Project).all()
-    return render_template('main.html', orgs=orgs, projects=projects)
 
 
 if __name__ == '__main__':
