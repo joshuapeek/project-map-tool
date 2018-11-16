@@ -61,6 +61,8 @@ def projectPage(org_id, project_id):
                            allorgs=allorgs, allprojects=allprojects)
 
 
+# CREATE Pages-------------------------
+
 # serves new org form for get request, adds form data to db for post
 @app.route('/new', methods=['GET', 'POST'])
 def newOrg():
@@ -84,6 +86,8 @@ def newOrg():
         return render_template('newOrg.html')
 
 
+# UPDATE Pages-------------------------
+
 # query specified org, serve edit org page for get, update form data for post
 @app.route('/<int:org_id>/edit', methods=['GET', 'POST'])
 def editOrg(org_id):
@@ -99,6 +103,8 @@ def editOrg(org_id):
     else:
         return render_template('editOrg.html', org=editOrg)
 
+
+# DELETE Pages-------------------------
 
 # query specified org, serve delete form for get
 # on post, cycle-delete all projects in db, then org

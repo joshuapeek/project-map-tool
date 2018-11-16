@@ -22,8 +22,17 @@
         <div class="row">
           <div class="col-md-4">
             <h2>Quick Links</h2>
-              <p><button type="button" class="btn btn-secondary btn-block" data-toggle="modal" data-target="#org-select">Adjust Orgs &raquo;</button></p>
-              <p><button type="button" class="btn btn-secondary btn-block" data-toggle="modal" data-target="#project-select">Adjust Projects &raquo;</button></p>
+              <form action="#">
+                <p><button type="button" class="btn btn-secondary btn-block">Add an Org &raquo;</button></p>
+              </form>
+              <form action="#">
+                <p><button type="button" class="btn btn-secondary btn-block">Add a Project &raquo;</button></p>
+              </form>
+              <form action="#">
+                <p><button type="button" class="btn btn-secondary btn-block">Adjust a Template &raquo;</button></p>
+              </form>
+              <!--<p><button type="button" class="btn btn-secondary btn-block" data-toggle="modal" data-target="#org-select">Adjust Orgs &raquo;</button></p>-->
+              <!--<p><button type="button" class="btn btn-secondary btn-block" data-toggle="modal" data-target="#project-select">Adjust Projects &raquo;</button></p>-->
           </div>
           <div class="col-md-8">
             <h2>Projects</h2>
@@ -49,20 +58,41 @@
                   {% endfor %}
                 </tbody>
               </table>
-
-            <!--
-            {% for i in projects %}
-              <b>{{i.org.title}} - {{i.title}}</b>
-              <a href='{{url_for('projectPage',
-                org_id = i.org.id,
-                project_id = i.id)}}'>Click Here</a><br>
-              {{i.description}}<br><br>
-            {% endfor %}
-            -->
           </div>
-
-
         </div>
+
+        <div class="row">
+          <div class="col-md-4">
+            <h2>Templates</h2>
+              <p>This is where a list of templates will live, with the ability to edit them.</p>
+          </div>
+          <div class="col-md-8">
+            <h2>Orgs</h2>
+              <table class="table table-responsive table-sm table-hover" width="100%">
+                <thead class="thead-light">
+                  <tr>
+                    <th scope="col" width="55px">#</th>
+                    <th scope="col" width="501px">Title</th>
+                    <th scope="col" width="70px"></th>
+                    <th scope="col" width="70px"></th>
+                    <th scope="col" width="70px"></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for i in allorgs %}
+                  <tr>
+                    <th scope="row">{{loop.index}}</th>
+                    <td>{{i.title}}</td>
+                    <td><a href='{{url_for('orgPage', org_id = i.id)}}'>View</a></td>
+                    <td><a href='{{url_for('editOrg', org_id = i.id)}}'>Edit</a></td>
+                    <td><a href='{{url_for('delOrg', org_id = i.id)}}'>Delete</a></td>
+                  </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+          </div>
+        </div>
+
       </div>
 
     </main>
