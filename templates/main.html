@@ -6,25 +6,8 @@
   <body>
     <title>SoCon Project-Map</title>
 
-  {% include "orgselect.html" %}
-  {% include "projectselect.html" %}
-    <!--<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-      <a class="navbar-brand" href="/">Project-Map</a>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarCollapse">
-        <ul class="navbar-nav mr-auto">
-          <li class="nav-item active">
-            <span class="nav-link">&nbsp;</span>
-          </li>
-        </ul>
-        <form class="form-inline mt-2 mt-md-0">
-          <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
-          <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-        </form>
-      </div>
-    </nav>-->
+  {% include "orgsmodal.html" %}
+  {% include "projectsmodal.html" %}
 
     <main role="main" class="container">
       <div class="jumbotron">
@@ -43,13 +26,11 @@
               <p><button type="button" class="btn btn-secondary btn-block" data-toggle="modal" data-target="#project-select">Adjust Projects &raquo;</button></p>
           </div>
           <div class="col-md-4">
-            <h2>Projects</h2>
-            {% for i in projects %}
-              <b>{{i.org.title}} - {{i.title}}</b>
-              <a href='{{url_for('projectPage',
-                org_id = i.org.id,
-                project_id = i.id)}}'>Click Here</a><br>
-              <i>(ID: {{i.id}})</i> {{i.description}}<br><br>
+            <h2>Orgs</h2>
+            {% for i in orgs %}
+              <b>{{i.title}}</b>
+              <a href='{{url_for('orgPage', org_id = i.id)}}'>View</a><br>
+              {{i.description}}<br><br>
             {% endfor %}
           </div>
           <div class="col-md-4">
@@ -59,7 +40,7 @@
               <a href='{{url_for('projectPage',
                 org_id = i.org.id,
                 project_id = i.id)}}'>Click Here</a><br>
-              <i>(ID: {{i.id}})</i> {{i.description}}<br><br>
+              {{i.description}}<br><br>
             {% endfor %}
           </div>
         </div>

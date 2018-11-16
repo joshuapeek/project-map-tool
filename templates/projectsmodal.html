@@ -1,8 +1,8 @@
 <!-- Large modal -->
 <!--<button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-lg">Large modal</button>-->
 
-<div class="modal fade bd-example-modal-lg" id="org-select" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-lg">
+<div class="modal fade bd-example-modal-lg" id="project-select" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg modal-dialog-centered">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="exampleModalLabel">Orgs</h5>
@@ -19,16 +19,17 @@
               <th scope="col"></th>
               <th scope="col"></th>
               <th scope="col"></th>
+              <th scope="col"></th>
             </tr>
           </thead>
           <tbody>
-            {% for i in orgs %}
+            {% for i in projects %}
             <tr>
               <th scope="row">{{loop.index}}</th>
+              <td>{{i.org.title}}</td>
               <td>{{i.title}}</td>
-              <td><a href='{{url_for('orgPage', org_id = i.id)}}'>View</a></td>
-              <td><a href='{{url_for('editOrg', org_id = i.id)}}'>Edit</a></td>
-              <td><a href='{{url_for('delOrg', org_id = i.id)}}'>Delete</a></td>
+              <td><a href='{{url_for('projectPage', org_id = i.org.id,  project_id = i.id)}}'>View Dashboard</a></td>
+              <td><a href='{{url_for('delProject', org_id = i.org.id,  project_id = i.id)}}'>Delete</a></td>
             </tr>
             {% endfor %}
           </tbody>
@@ -36,7 +37,8 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <a class="btn btn-primary" href="/new" role="button">Add an Org &raquo;</a>
+        <!-- Need "create a project" form with dropdown of avail orgs -->
+        <a class="btn btn-primary" href="#" role="button">Add a Project &raquo;</a>
         <!--<button type="button" class="btn btn-primary">Save changes</button>-->
       </div>
     </div>
