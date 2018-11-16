@@ -22,13 +22,13 @@ Base.metadata.bind = engine
 
 DBSession = sessionmaker(bind=engine)
 session = DBSession()
-
+allorgs = session.query(Org).all()
+allprojects = session.query(Project).all()
 
 @app.route('/')
 def mainPage():
-    orgs = session.query(Org).all()
-    projects = session.query(Project).all()
-    return render_template('main.html', orgs=orgs, projects=projects)
+    return render_template('main.html', allorgs=allorgs,
+                            allprojects=allprojects)
 
 
 # query specified org object & all project objects associated with org
@@ -37,7 +37,8 @@ def mainPage():
 def orgPage(org_id):
     org = session.query(Org).filter_by(id=org_id).one()
     projects = session.query(Project).filter_by(org_id=org.id).all()
-    return render_template('org.html', org=org, projects=projects)
+    return render_template('org.html', org=org, projects=projects,
+                            allorgs=allorgs, allproject=allprojects)
 
 
 # query specified org & project objects
@@ -56,7 +57,8 @@ def projectPage(org_id, project_id):
     return render_template('project.html', org=org,
                            project=project, roles=roles,
                            screens=screens, fgs=fgs,
-                           functions=functions, projects=projects)
+                           functions=functions, projects=projects,
+                           allorgs=allorgs, allprojects=allprojects)
 
 
 # serves new org form for get request, adds form data to db for post
