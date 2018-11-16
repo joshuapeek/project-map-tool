@@ -25,7 +25,6 @@
       <div class="collapse navbar-collapse" id="navbarCollapse">
         <ul class="navbar-nav mr-auto">
           <li class="nav-item active">
-            <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
           </li>
         </ul>
         <form class="form-inline mt-2 mt-md-0">
@@ -50,11 +49,11 @@
             <hr class="mb-4">
             <div class="row">
               <div class="col-md-6 mb-3">
-                <button class="btn btn-primary btn-lg btn-block" type="Edit">Continue</button>
+                <button class="btn btn-danger btn-lg btn-block" type="Edit">Continue</button>
               </div>
           </form>
               <div class="col-md-6 mb-3">
-                <form action="/">
+                <form action="{{url_for('projectPage', org_id = o.id,  project_id = i.id)}}">
                   <button class="btn btn-secondary btn-lg btn-block" type="submit">Cancel</button>
                 </form>
               </div>

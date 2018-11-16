@@ -25,7 +25,6 @@
       <div class="collapse navbar-collapse" id="navbarCollapse">
         <ul class="navbar-nav mr-auto">
           <li class="nav-item active">
-            <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
           </li>
         </ul>
         <form class="form-inline mt-2 mt-md-0">
@@ -73,7 +72,7 @@
               </div>
           </form>
               <div class="col-md-6 mb-3">
-                <form action="/">
+                <form action="{{url_for('orgPage', org_id = org.id)}}">
                   <button class="btn btn-secondary btn-lg btn-block" type="submit">Cancel</button>
                 </form>
               </div>

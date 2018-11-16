@@ -107,6 +107,7 @@ def fgdump():
 def projectPage(org_id, project_id):
     org = session.query(Org).filter_by(id=org_id).one()
     project = session.query(Project).filter_by(id=project_id).one()
+    projects = session.query(Project).filter_by(org_id=org.id).all()
     roles = session.query(Role).filter_by(org_id=org.id).all()
     screens = session.query(Screen).filter_by(project_id=project.id).all()
     fgs = session.query(Functgroup).filter_by(project_id=project.id).all()
@@ -114,18 +115,14 @@ def projectPage(org_id, project_id):
     return render_template('project.html', org=org,
                            project=project, roles=roles,
                            screens=screens, fgs=fgs,
-                           functions=functions)
+                           functions=functions, projects=projects)
 
 
 @app.route('/<int:org_id>/')
 def orgPage(org_id):
     org = session.query(Org).filter_by(id=org_id).one()
-    sprojects = session.query(Project).filter_by(
-        org_id=org.id,stage="Started").all()
-    nsprojects = session.query(Project).filter_by(
-        org_id=org.id,stage="Not Started").all()
-    return render_template('org.html', org=org,
-        sprojects=sprojects, nsprojects=nsprojects)
+    projects = session.query(Project).filter_by(org_id=org.id).all()
+    return render_template('org.html', org=org, projects=projects)
 
 
 @app.route('/new', methods=['GET', 'POST'])

@@ -19,7 +19,8 @@
 
 
   <body>
-
+  {% include "orgselect.html" %}
+  {% include "projectselect.html" %}
     <!--<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
       <a class="navbar-brand" href="/">Project-Map</a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
@@ -42,25 +43,29 @@
       <div class="jumbotron">
         <h1>Welcome to SoCon Project-Map</h1>
         <p class="lead">A tool for making sense of requirements gathering,
-          developed by Joshua Peek.<br>
-          Select an org or project below to resume,
-          or use the "Add" button to get started.</p>
+          developed by Joshua Peek.</p>
         <!--<a class="btn btn-lg btn-primary" href="../../components/navbar/" role="button">View navbar docs &raquo;</a>-->
       </div>
 
       <div class="container">
         <!-- Example row of columns -->
         <div class="row">
-          <div class="col-md-6">
-            <h2>Orgs</h2>
-            {% for i in orgs %}
-              <b>{{i.title}}</b>
-              <a href='{{url_for('orgPage',
-                org_id = i.id)}}'>Click Here</a><br><br>
-            {% endfor %}
-            <p><a class="btn btn-secondary" href="/new" role="button">Add an Org &raquo;</a></p>
+          <div class="col-md-4">
+            <!--<h2>Orgs</h2>-->
+              <p><button type="button" class="btn btn-secondary btn-block" data-toggle="modal" data-target="#org-select">Adjust Orgs &raquo;</button></p>
+              <p><button type="button" class="btn btn-secondary btn-block" data-toggle="modal" data-target="#project-select">Adjust Projects &raquo;</button></p>
           </div>
-          <div class="col-md-6">
+          <div class="col-md-4">
+            <h2>Projects</h2>
+            {% for i in projects %}
+              <b>{{i.org.title}} - {{i.title}}</b>
+              <a href='{{url_for('projectPage',
+                org_id = i.org.id,
+                project_id = i.id)}}'>Click Here</a><br>
+              <i>(ID: {{i.id}})</i> {{i.description}}<br><br>
+            {% endfor %}
+          </div>
+          <div class="col-md-4">
             <h2>Projects</h2>
             {% for i in projects %}
               <b>{{i.org.title}} - {{i.title}}</b>

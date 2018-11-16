@@ -27,14 +27,7 @@
       </button>
       <div class="collapse navbar-collapse" id="navbarCollapse">
         <ul class="navbar-nav mr-auto">
-          <li class="nav-item active">
-            <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
-          </li>
-          <!--<li class="nav-item">
-            <a class="nav-link" href="#">Link</a>
-          </li>-->
           <li class="nav-item">
-            <span class="nav-link disabled">Currently viewing: {{org.title}}</span>
           </li>
         </ul>
         <form class="form-inline mt-2 mt-md-0">
@@ -48,32 +41,37 @@
       <div class="jumbotron">
         <h1>{{org.title}}</h1>
         <p class="lead">{{org.description}}</p>
-        <!--<a class="btn btn-lg btn-primary" href="../../components/navbar/" role="button">View navbar docs &raquo;</a>-->
+        <p><a class="btn btn-lg btn btn-outline-light" href="{{url_for('editOrg', org_id = org.id)}}" role="button">Edit &raquo;</a></p>
       </div>
 
       <div class="container">
         <!-- Example row of columns -->
         <div class="row">
-          <div class="col-md-6">
-            <h2>Started</h2>
-            {% for i in sprojects %}
-              <b>{{i.title}}</b>
-              <a href='{{url_for('projectPage',
-                org_id = org.id,
-                project_id = i.id)}}'>Click Here</a><br>
-              <i>(ID: {{i.id}})</i> {{i.description}}<br><br>
-            {% endfor %}
-            <!--<p><a class="btn btn-secondary" href="#" role="button">View details &raquo;</a></p>-->
-          </div>
-          <div class="col-md-6">
-            <h2>Not Started</h2>
-            {% for i in nsprojects %}
-              <b>{{i.title}}</b>
-              <a href='{{url_for('projectPage',
-                org_id = org.id,
-                project_id = i.id)}}'>Click Here</a><br>
-              <i>(ID: {{i.id}})</i> {{i.description}}<br><br>
-            {% endfor %}
+          <div class="col-md-12">
+            <h2>Projects</h2>
+
+            <table class="table-responsive table-sm table-hover">
+              <thead class="thead-light">
+                <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">Title</th>
+                  <th scope="col"></th>
+                  <th scope="col"></th>
+                  <th scope="col"></th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for i in projects %}
+                <tr>
+                  <th scope="row">{{loop.index}}</th>
+                  <td>{{i.org.title}}</td>
+                  <td>{{i.title}}</td>
+                  <td><a href='{{url_for('projectPage', org_id = org.id,  project_id = i.id)}}'>View Dashboard</a></td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+
             <!--<p><a class="btn btn-secondary" href="#" role="button">View details &raquo;</a></p>-->
           </div>
         </div>
