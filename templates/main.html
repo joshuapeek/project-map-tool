@@ -25,9 +25,9 @@
         <div class="row">
           <div class="col-md-4">
             <h2>Quick Links</h2>
-            <p><button type="button" class="btn btn-secondary btn-block" data-toggle="modal" data-target="#add-org">Add an Org &raquo;</button></p>
+            <!--<p><button type="button" class="btn btn-secondary btn-block" data-toggle="modal" data-target="#add-org">Add an Org &raquo;</button></p>
             <p><button type="button" class="btn btn-secondary btn-block" data-toggle="modal" data-target="#add-project">Add a Project &raquo;</button></p>
-            <form action="#">
+            <form action="#">-->
               <p><button type="button" class="btn btn-secondary btn-block">Adjust a Template &raquo;</button></p>
             </form>
             <p><button type="button" class="btn btn-secondary btn-block" data-toggle="modal" data-target="#org-select">Adjust Orgs &raquo;</button></p>
@@ -57,6 +57,9 @@
                   {% endfor %}
                 </tbody>
               </table>
+            <span style="float:right;">
+              <p><button type="button" class="btn btn-secondary btn-sm" data-toggle="modal" data-target="#add-project">Add a Project &raquo;</button></p>
+            </span>
           </div>
         </div>
 
@@ -89,6 +92,9 @@
                   {% endfor %}
                 </tbody>
               </table>
+            <span style="float:right;">
+              <p><button type="button" class="btn btn-secondary btn-sm" data-toggle="modal" data-target="#add-org">Add an Org &raquo;</button></p>
+            </span>
           </div>
         </div>
 
