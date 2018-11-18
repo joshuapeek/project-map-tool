@@ -22,11 +22,11 @@ Base.metadata.bind = engine
 
 DBSession = sessionmaker(bind=engine)
 session = DBSession()
-allorgs = session.query(Org).all()
-allprojects = session.query(Project).all()
 
 @app.route('/')
 def mainPage():
+    allorgs = session.query(Org).all()
+    allprojects = session.query(Project).all()
     return render_template('main.html', allorgs=allorgs,
                             allprojects=allprojects)
 
@@ -35,6 +35,8 @@ def mainPage():
 # serves objects to org page template
 @app.route('/<int:org_id>/')
 def orgPage(org_id):
+    allorgs = session.query(Org).all()
+    allprojects = session.query(Project).all()
     org = session.query(Org).filter_by(id=org_id).one()
     projects = session.query(Project).filter_by(org_id=org.id).all()
     return render_template('org.html', org=org, projects=projects,
@@ -47,6 +49,8 @@ def orgPage(org_id):
 # pass objects to project page template
 @app.route('/<int:org_id>/<int:project_id>/')
 def projectPage(org_id, project_id):
+    allorgs = session.query(Org).all()
+    allprojects = session.query(Project).all()
     org = session.query(Org).filter_by(id=org_id).one()
     project = session.query(Project).filter_by(id=project_id).one()
     projects = session.query(Project).filter_by(org_id=org.id).all()
@@ -73,14 +77,6 @@ def newOrg():
         session.commit()
         flash("New org created!")
         org = session.query(Org).filter_by(title=request.form['orgtitle']).one()
-        if request.form['projtitle'] is not None:
-            newProj = Project(title=request.form['projtitle'],
-                              description=request.form['projdesc'],
-                              stage="Not Started",
-                              org_id=org.id)
-            session.add(newProj)
-            session.commit()
-            flash("New project created!")
         return redirect(url_for('orgPage',org_id=org.id))
     else:
         return render_template('newOrg.html')
@@ -92,6 +88,8 @@ def newOrg():
 @app.route('/<int:org_id>/edit', methods=['GET', 'POST'])
 def editOrg(org_id):
     editOrg=session.query(Org).filter_by(id=org_id).one()
+    allorgs = session.query(Org).all()
+    allprojects = session.query(Project).all()
     if request.method == 'POST':
         if request.form['orgtitle']:
             editOrg.title = request.form['orgtitle']
@@ -112,6 +110,8 @@ def editOrg(org_id):
 def delOrg(org_id):
     delOrg = session.query(Org).filter_by(id=org_id).one()
     delProjects = session.query(Project).filter_by(org_id=org_id).all()
+    allorgs = session.query(Org).all()
+    allprojects = session.query(Project).all()
     if request.method == 'POST':
         for i in delProjects:
             session.delete(i)
@@ -128,6 +128,8 @@ def delOrg(org_id):
 def delProject(org_id, project_id):
     delOrg = session.query(Org).filter_by(id=org_id).one()
     delProject = session.query(Project).filter_by(id=project_id).one()
+    allorgs = session.query(Org).all()
+    allprojects = session.query(Project).all()
     if request.method == 'POST':
         session.delete(delProject)
         session.commit()
