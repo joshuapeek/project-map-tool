@@ -11,13 +11,43 @@
         </button>
       </div>
       <div class="modal-body">
-        Form for editing Org Details
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <!-- Need "create a project" form with dropdown of avail orgs -->
-        <a class="btn btn-primary" href="#" role="button">Continue</a>
-        <!--<button type="button" class="btn btn-primary">Save changes</button>-->
+
+        <div class="row">
+          <div class="col-md-12 order-md-1">
+            <form class="needs-validation" action='{{url_for('editOrg', org_id=org.id)}}' method='post' novalidate>
+              <div class="row">
+                <div class="col-md-6 mb-3">
+                  <label for="orgtitle">Org title</label>
+                  <input type="text" class="form-control" id="orgtitle" placeholder="{{org.title}}" name="orgtitle" required>
+                  <div class="invalid-feedback">
+                    Valid Org name is required.
+                  </div>
+                </div>
+              </div>
+
+              <div class="mb-3">
+                <label for="orgdesc">Org Description <span class="test-muted">(Optional)</span></label>
+                <input type="text" class="form-control" id="orgdesc" placeholder="{{org.description}}" name="orgdesc">
+                <div class="invalid-feedback">
+                  Please enter a valid org description.
+                </div>
+              </div>
+
+              <hr class="mb-4">
+              <div class="row">
+                <div class="col-md-6 mb-3">
+                  <button class="btn btn-primary btn-lg btn-block" type="Edit">Continue</button>
+                </div>
+            </form>
+                <div class="col-md-6 mb-3">
+                  <form action="{{url_for('orgPage', org_id = org.id)}}">
+                    <button class="btn btn-secondary btn-lg btn-block" type="submit">Cancel</button>
+                  </form>
+                </div>
+              </div>
+          </div>
+        </div>
+
       </div>
     </div>
   </div>

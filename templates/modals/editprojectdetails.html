@@ -11,13 +11,45 @@
         </button>
       </div>
       <div class="modal-body">
-        Form for editing Project Details
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <!-- Need "create a project" form with dropdown of avail orgs -->
-        <a class="btn btn-primary" href="#" role="button">Continue</a>
-        <!--<button type="button" class="btn btn-primary">Save changes</button>-->
+
+
+        <div class="row">
+          <div class="col-md-12 order-md-1">
+            <form class="needs-validation" action='{{url_for('editProject', org_id=org.id, project_id=project.id)}}' method='post' novalidate>
+              <div class="row">
+                <div class="col-md-6 mb-3">
+                  <label for="projecttitle">Project title</label>
+                  <input type="text" class="form-control" id="projecttitle" placeholder="{{project.title}}" name="projecttitle" required>
+                  <div class="invalid-feedback">
+                    Valid Project name is required.
+                  </div>
+                </div>
+              </div>
+
+              <div class="mb-3">
+                <label for="projectdesc">Project Description <span class="test-muted">(Optional)</span></label>
+                <input type="text" class="form-control" id="projectdesc" placeholder="{{project.description}}" name="projectdesc">
+                <div class="invalid-feedback">
+                  Please enter a valid project description.
+                </div>
+              </div>
+
+              <hr class="mb-4">
+              <div class="row">
+                <div class="col-md-6 mb-3">
+                  <button class="btn btn-primary btn-lg btn-block" type="Edit">Continue</button>
+                </div>
+            </form>
+                <div class="col-md-6 mb-3">
+                  <form action="{{url_for('projectPage', org_id = org.id, project_id=project.id)}}">
+                    <button class="btn btn-secondary btn-lg btn-block" type="submit">Cancel</button>
+                  </form>
+                </div>
+              </div>
+          </div>
+        </div>
+
+
       </div>
     </div>
   </div>

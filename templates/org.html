@@ -9,7 +9,6 @@
     {% include "modals/allorgs.html" %}
     {% include "modals/allprojects.html" %}
     {% include "modals/createproject.html" %}
-    {% include "modals/editprojectdetails.html" %}
     {% include "modals/editorgdetails.html" %}
 
     <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
@@ -35,8 +34,7 @@
       <div class="jumbotron" style="padding:1rem 2rem;">
         <h1>{{org.title}}</h1>
         <p class="lead">{{org.description}}</p>
-        <a class="btn btn-md btn btn-outline-light" href="{{url_for('editOrg', org_id = org.id)}}" role="button">Edit Details &raquo;</a>
-        <button type="button" class="btn btn-md btn btn-outline-light" data-toggle="modal" data-target="#edit-org-details">Edit Details (Modal) &raquo;</button>
+        <button type="button" class="btn btn-md btn btn-outline-light" data-toggle="modal" data-target="#edit-org-details">Edit Details &raquo;</button>
       </div>
 
 <!-- Projects Row -->
@@ -53,9 +51,8 @@
               <thead class="thead-light">
                 <tr>
                   <th scope="col" width="35px">#</th>
-                  <th scope="col" width="40px"></th>
-                  <th scope="col" width="150px">Title</th>
-                  <th scope="col" width="507px">Description</th>
+                  <th scope="col" width="170px">Title</th>
+                  <th scope="col" width="527px">Description</th>
                   <th scope="col" width="70px"></th>
                 </tr>
               </thead>
@@ -63,7 +60,6 @@
                 {% for i in projects %}
                 <tr>
                   <th scope="row">{{loop.index}}</th>
-                  <td>Edit</td>
                   <td>{{i.title}}</td>
                   <td>{{i.description}}</td>
                   <td><a href="{{url_for('projectPage', org_id = i.org.id,  project_id = i.id)}}">Dashboard</a></td>

@@ -102,6 +102,26 @@ def editOrg(org_id):
         return render_template('editOrg.html', org=editOrg)
 
 
+# query specified org & project
+# serve edit project page for get, update form data for post
+@app.route('/<int:org_id>/<int:project_id>/edit', methods=['GET', 'POST'])
+def editProject(org_id, project_id):
+    editOrg=session.query(Org).filter_by(id=org_id).one()
+    editProject=session.query(Project).filter_by(id=project_id).one()
+    allorgs = session.query(Org).all()
+    allprojects = session.query(Project).all()
+    if request.method == 'POST':
+        if request.form['projecttitle']:
+            editProject.title = request.form['projecttitle']
+            editProject.description = request.form['projectdesc']
+        session.add(editProject)
+        session.commit()
+        flash("Project Edited!")
+        return redirect(url_for('projectPage',org_id=editOrg.id, project_id=editProject.id))
+    else:
+        return render_template('editProject.html', org=editOrg, project=editProject)
+
+
 # DELETE Pages-------------------------
 
 # query specified org, serve delete form for get
