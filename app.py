@@ -54,7 +54,7 @@ def projectPage(org_id, project_id):
     org = session.query(Org).filter_by(id=org_id).one()
     project = session.query(Project).filter_by(id=project_id).one()
     projects = session.query(Project).filter_by(org_id=org.id).all()
-    roles = session.query(Role).filter_by(org_id=org.id).all()
+    roles = session.query(Role).filter_by(project_id=project.id).all()
     screens = session.query(Screen).filter_by(project_id=project.id).all()
     fgs = session.query(Functgroup).filter_by(project_id=project.id).all()
     functions = session.query(Function).filter_by(project_id=project.id).all()

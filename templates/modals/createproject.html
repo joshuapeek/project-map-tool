@@ -11,13 +11,33 @@
         </button>
       </div>
       <div class="modal-body">
-        Form for adding a Project
+      <div class="row">
+      <div class="col-md-6">
+        <form>
+          <div class="form-group">
+            <label for="formGroupExampleInput">Project Name</label>
+            <input type="text" class="form-control" id="formGroupExampleInput" placeholder="Example input">
+          </div>
+          <div class="form-group">
+            <label for="exampleFormControlSelect1">Select Parent Org</label>
+            <select class="form-control" id="exampleFormControlSelect1">
+              {% for i in allorgs %}
+                <option>{{i.title}}</option>
+              {% endfor %}
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="formGroupExampleInput">Description</label>
+            <input type="text" class="form-control" id="formGroupExampleInput" placeholder="Example input">
+          </div>
+        </form>
       </div>
+      </div>
+      </div><!--endbody-->
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
         <!-- Need "create a project" form with dropdown of avail orgs -->
         <a class="btn btn-primary" href="#" role="button">Continue</a>
-        <!--<button type="button" class="btn btn-primary">Save changes</button>-->
       </div>
     </div>
   </div>
