@@ -75,6 +75,7 @@
                 <tr>
                   <th scope="col" width="35px">#</th>
                   <th scope="col" width="40px"></th>
+                  <th scope="col" width="40px"></th>
                   <th scope="col" width="200px">Title</th>
                   <th scope="col" width="457px">Description</th>
                   <th scope="col" width="70px">Private</th>
@@ -85,6 +86,7 @@
                 <tr>
                   <th scope="row">{{loop.index}}</th>
                   <td>Edit</td>
+                  <td><a href="{{url_for('delRole', role_id = i.id)}}">Delete</a></td>
                   <td>{{i.title}}</td>
                   <td>{{i.description}}</td>
                   <td>{{i.authRequired}}</td>
