@@ -100,6 +100,24 @@ def newProject():
         return render_template('create/org.html')
 
 
+# serves new role form for get request, adds form data to db for post
+@app.route('/<int:project_id>/newrole', methods=['GET', 'POST'])
+def newRole(project_id):
+    project = session.query(Project).filter_by(id=project_id).one()
+    if request.method == 'POST':
+        newRole = Role(title=request.form['title'],
+                     description=request.form['description'],
+                     authRequired=request.form['authRequired'],
+                     org_id=project.org.id,
+                     project_id=project.id)
+        session.add(newRole)
+        session.commit()
+        flash("New role created!")
+        return redirect(url_for('projectPage',org_id=project.org.id, project_id=project.id))
+    else:
+        return render_template('create/role.html', project=project)
+
+
 # serves new screen form for get request, adds form data to db for post
 @app.route('/<int:project_id>/newscreen', methods=['GET', 'POST'])
 def newScreen(project_id):

@@ -63,7 +63,10 @@
           <div class="col-md-3">
             <h3>User Roles</h3>
               <p>Description</p>
-              <p><button type="button" class="btn btn-secondary btn-sm" data-toggle="modal" data-target="#add-role">Add a Role &raquo;</button></p>
+              <!--<p><button type="button" class="btn btn-secondary btn-sm" data-toggle="modal" data-target="#add-role">Add a Role &raquo;</button></p>-->
+              <form action="{{url_for('newRole', project_id = project.id)}}">
+                <p><button type="submit" class="btn btn-secondary btn-sm">Add a Role &raquo;</button></p>
+              </form>
               <br>
           </div>
           <div class="col-md-9">
