@@ -16,6 +16,8 @@
     {% include "modals/createproject.html" %}
     {% include "modals/editprojectdetails.html" %}
 
+
+<!-- Menu -->
     <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
       <a class="navbar-brand" href="/">Project-Map</a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
@@ -49,13 +51,32 @@
         </form>-->
       </div>
     </nav>
+<!-- End Menu -->
 
+
+<!-- Jumbotron -->
     <main role="main" class="container">
       <div class="jumbotron" style="padding:1rem 2rem;">
         <h1>{{org.title}} - {{project.title}}</h1>
         <p class="lead">{{project.description}}</p>
         <button type="button" class="btn btn-md btn btn-outline-light" data-toggle="modal" data-target="#edit-project-details">Edit Details &raquo;</button>
       </div>
+<!-- End Jumbotron -->
+
+
+<!-- Instructions Row -->
+<div class="container">
+  <div class="row">
+    <div class="col-md-8 mb-4 mx-auto">
+      <p>
+        To guide in how you input the items, remember that User Stories will output as follows:<br>
+        <i>"As a(n) <code>&lt;User Role Title&gt;</code> on <code>&lt;Screen Title&gt;</code> screen, <code>&lt;Function Description&gt;</code>."</i>
+      </p>
+    </div>
+  </div>
+</div>
+<!-- End Instructions -->
+
 
 <!-- User Roles Row -->
       <div class="container">

@@ -215,6 +215,7 @@ def delOrg(org_id):
         # NEED TO REMOVE ALL PROJECT ELEMENTS ALSO!
         # TO BE PYTHONIC, LEAN ON EXISTING delProject()
         for i in delProjects:
+            remProjectElements(i.id)
             session.delete(i)
         session.delete(delOrg)
         session.commit()
@@ -230,16 +231,43 @@ def delOrg(org_id):
 def delProject(org_id, project_id):
     delOrg = session.query(Org).filter_by(id=org_id).one()
     delProject = session.query(Project).filter_by(id=project_id).one()
-    allorgs = session.query(Org).all()
-    allprojects = session.query(Project).all()
     if request.method == 'POST':
+        remProjectElements(project_id)
         session.delete(delProject)
         session.commit()
-        # NEED TO REMOVE ALL PROJECT ELEMENTS ALSO!
         flash("Project Removed")
         return redirect(url_for('mainPage'))
     else:
         return render_template('delete/project.html', i=delProject, o=delOrg)
+
+def remProjectElements(project_id):
+    delRoles = session.query(Role).filter_by(id=project_id).all()
+    delScreens = session.query(Screen).filter_by(id=project_id).all()
+    delFunctions = session.query(Function).filter_by(id=project_id).all()
+    for i in delRoles:
+        session.delete(i)
+    for i in delScreens:
+        session.delete(i)
+    for i in delFunctions:
+        session.delete(i)
+    session.commit()
+    return
+
+# query specified role, observe org & project id's in role object
+# serve delete form for get; on post, delete function
+@app.route('/roledel/<int:role_id>', methods=['GET', 'POST'])
+def delRole(role_id):
+    delRole = session.query(Role).filter_by(id=role_id).one()
+    org_id=delRole.org_id
+    project_id=delRole.project_id
+    if request.method == 'POST':
+        session.delete(delRole)
+        session.commit()
+        flash("Role Removed")
+        return redirect(url_for('projectPage',org_id=org_id,
+                                 project_id=project_id))
+    else:
+        return render_template('delete/role.html', i=delRole)
 
 
 # query specified screen, observe org & project id's in role object
@@ -276,23 +304,6 @@ def delFunction(function_id):
                                  project_id=project_id))
     else:
         return render_template('delete/function.html', i=delFunction)
-
-
-# query specified role, observe org & project id's in role object
-# serve delete form for get; on post, delete function
-@app.route('/roledel/<int:role_id>', methods=['GET', 'POST'])
-def delRole(role_id):
-    delRole = session.query(Role).filter_by(id=role_id).one()
-    org_id=delRole.org_id
-    project_id=delRole.project_id
-    if request.method == 'POST':
-        session.delete(delRole)
-        session.commit()
-        flash("Role Removed")
-        return redirect(url_for('projectPage',org_id=org_id,
-                                 project_id=project_id))
-    else:
-        return render_template('delete/role.html', i=delRole)
 
 
 # JSON Pages---------------------------
