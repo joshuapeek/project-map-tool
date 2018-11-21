@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request, redirect
 from flask import url_for, flash, jsonify
-from sqlalchemy import create_engine
+from sqlalchemy import create_engine, and_
 from sqlalchemy.orm import sessionmaker
 from database_setup import Org, Project, Role, Screen, Function, Functgroup, Base
 from sqlalchemy.pool import StaticPool
@@ -71,6 +71,11 @@ def projectPage(org_id, project_id):
 @app.route('/new', methods=['GET', 'POST'])
 def newOrg():
     if request.method == 'POST':
+        # check for org with same title
+        check = session.query(Org).filter_by(title=request.form['orgtitle']).one()
+        if check is not None:
+            flash("Org with this title already exists.")
+            return redirect(url_for('orgPage', org_id=check.id))
         newOrg = Org(title=request.form['orgtitle'],
                      description=request.form['orgdesc'])
         session.add(newOrg)
@@ -87,18 +92,35 @@ def newOrg():
 def newProject():
     if request.method == 'POST':
         org = session.query(Org).filter_by(title=request.form['org_title']).one()
-        newProject = Project(title=request.form['title'],
-                     description=request.form['description'],
-                     org_id=org.id,
-                     stage=request.form['stage'])
-        session.add(newProject)
-        session.commit()
-        flash("New project created!")
-        project = session.query(Project).filter_by(title=request.form['title']).one()
-        return redirect(url_for('projectPage',org_id=org.id, project_id=project.id))
+        unique= checkUniqueTitle(org.id, request.form['title'])
+        if unique == "confirmed":
+            newProject = Project(title=request.form['title'],
+                         description=request.form['description'],
+                         org_id=org.id,
+                         stage=request.form['stage'])
+            session.add(newProject)
+            session.commit()
+            flash("New project created!")
+            # project = session.query(Project).filter_by(title=request.form['title']).one()
+            title=request.form['title']
+            project = session.query(Project).\
+                filter(Project.title==title, Project.org_id==org.id).one()
+            return redirect(url_for('projectPage',org_id=org.id, project_id=project.id))
+        else:
+            flash("Duplicate project detected")
+            return redirect(url_for('mainPage'))
     else:
         return render_template('create/org.html')
 
+def checkUniqueTitle(org_id, project_title):
+    projects = session.query(Project).filter_by(org_id=org_id).all()
+    unique = "1"
+    for i in projects:
+        if i.title == project_title:
+            unique="0"
+    if unique == "1":
+        unique = "confirmed"
+    return unique
 
 # serves new role form for get request, adds form data to db for post
 @app.route('/<int:project_id>/newrole', methods=['GET', 'POST'])
