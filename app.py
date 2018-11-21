@@ -177,7 +177,7 @@ def editOrg(org_id):
         flash("Org Edited!")
         return redirect(url_for('orgPage',org_id=editOrg.id))
     else:
-        return render_template('editOrg.html', org=editOrg)
+        return render_template('update/org.html', org=editOrg)
 
 
 # query specified org & project
@@ -212,8 +212,6 @@ def delOrg(org_id):
     allorgs = session.query(Org).all()
     allprojects = session.query(Project).all()
     if request.method == 'POST':
-        # NEED TO REMOVE ALL PROJECT ELEMENTS ALSO!
-        # TO BE PYTHONIC, LEAN ON EXISTING delProject()
         for i in delProjects:
             remProjectElements(i.id)
             session.delete(i)
@@ -252,6 +250,7 @@ def remProjectElements(project_id):
         session.delete(i)
     session.commit()
     return
+
 
 # query specified role, observe org & project id's in role object
 # serve delete form for get; on post, delete function
