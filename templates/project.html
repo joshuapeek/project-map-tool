@@ -12,6 +12,7 @@
     {% include "modals/createscreen.html" %}
     {% include "modals/createfunction.html" %}
     {% include "modals/createfunctiongroup.html" %}
+    {% include "modals/createscreen.html" %}
     {% include "modals/editprojectdetails.html" %}
 
     <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
@@ -100,7 +101,12 @@
           <div class="col-md-3">
             <h3>Screens</h3>
             <p>Description</p>
-              <p><button type="button" class="btn btn-secondary btn-sm" data-toggle="modal" data-target="#add-screen">Add a Screen &raquo;</button></p>
+              <!--<p><button type="button" class="btn btn-secondary btn-sm"
+                  data-toggle="modal" data-target="#add-screen"
+                  data-authRequired="No">Add a Screen &raquo;</button></p>-->
+              <form action="{{url_for('newScreen', project_id = project.id)}}">
+                <p><button type="submit" class="btn btn-secondary btn-sm">Add a Screen &raquo;</button></p>
+              </form>
               <br>
           </div>
           <div class="col-md-9">
@@ -108,6 +114,7 @@
               <thead class="thead-light">
                 <tr>
                   <th scope="col" width="35px">#</th>
+                  <th scope="col" width="40px"></th>
                   <th scope="col" width="40px"></th>
                   <th scope="col" width="200px">Title</th>
                   <th scope="col" width="457px">Description</th>
@@ -119,6 +126,7 @@
                 <tr>
                   <th scope="row">{{loop.index}}</th>
                   <td>Edit</td>
+                  <td><a href="{{url_for('delScreen', screen_id = i.id)}}">Delete</a></td>
                   <td>{{i.title}}</td>
                   <td>{{i.description}}</td>
                   <td>{{i.authRequired}}</td>
@@ -139,7 +147,9 @@
           <div class="col-md-3">
             <h3>Functions</h3>
             <p>Description</p>
-              <p><button type="button" class="btn btn-secondary btn-sm" data-toggle="modal" data-target="#add-function">Add a Function &raquo;</button></p>
+            <form action="{{url_for('newFunction', project_id = project.id)}}">
+              <p><button type="submit" class="btn btn-secondary btn-sm">Add a Function &raquo;</button></p>
+            </form>
               <br>
           </div>
           <div class="col-md-9">
@@ -147,6 +157,7 @@
               <thead class="thead-light">
                 <tr>
                   <th scope="col" width="35px">#</th>
+                  <th scope="col" width="40px"></th>
                   <th scope="col" width="40px"></th>
                   <th scope="col" width="200px">Title</th>
                   <th scope="col" width="457px">Description</th>
@@ -158,6 +169,7 @@
                 <tr>
                   <th scope="row">{{loop.index}}</th>
                   <td>Edit</td>
+                  <td><a href="{{url_for('delFunction', function_id=i.id)}}">Delete</a></td>
                   <td>{{i.title}}</td>
                   <td>{{i.description}}</td>
                   <td>{{i.authRequired}}</td>

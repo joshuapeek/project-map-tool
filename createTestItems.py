@@ -120,8 +120,7 @@ funct1 = Function(title="Public Function",
                   authRequired="No",
                   roles="1",
                   org_id="1",
-                  project_id="1",
-                  screen_id="1")
+                  project_id="1")
 session.add(funct1)
 session.commit()
 
@@ -131,8 +130,7 @@ funct2 = Function(title="Private Function",
                   authRequired="Yes",
                   roles="2",
                   org_id="1",
-                  project_id="1",
-                  screen_id="1")
+                  project_id="1")
 session.add(funct2)
 session.commit()
 
@@ -142,8 +140,7 @@ funct3 = Function(title="Public Function",
                   authRequired="No",
                   roles="1",
                   org_id="1",
-                  project_id="1",
-                  screen_id="2")
+                  project_id="1")
 session.add(funct3)
 session.commit()
 
@@ -153,8 +150,7 @@ funct4 = Function(title="Private Function",
                   authRequired="Yes",
                   roles="2",
                   org_id="1",
-                  project_id="1",
-                  screen_id="2")
+                  project_id="1")
 session.add(funct4)
 session.commit()
 

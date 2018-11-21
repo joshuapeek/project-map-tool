@@ -51,7 +51,8 @@
               <thead class="thead-light">
                 <tr>
                   <th scope="col" width="35px">#</th>
-                  <th scope="col" width="170px">Title</th>
+                  <th scope="col" width="30px"></th>
+                  <th scope="col" width="140px">Title</th>
                   <th scope="col" width="527px">Description</th>
                   <th scope="col" width="70px"></th>
                 </tr>
@@ -60,6 +61,7 @@
                 {% for i in projects %}
                 <tr>
                   <th scope="row">{{loop.index}}</th>
+                  <td>Edit</td>
                   <td>{{i.title}}</td>
                   <td>{{i.description}}</td>
                   <td><a href="{{url_for('projectPage', org_id = i.org.id,  project_id = i.id)}}">Dashboard</a></td>

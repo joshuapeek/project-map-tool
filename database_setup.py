@@ -70,7 +70,7 @@ class Screen(Base):
     title = Column(String(250), nullable=False)
     description = Column(String(500))
     authRequired = Column(String(5))
-    roles = Column(String(100))
+    roles = Column(String(500))
     org_id = Column(Integer, ForeignKey('org.id'))
     org = relationship(Org)
     project_id = Column(Integer, ForeignKey('project.id'))
@@ -95,13 +95,12 @@ class Function(Base):
     title = Column(String(250), nullable=False)
     description = Column(String(500))
     authRequired = Column(String(5))
-    roles = Column(String(100))
+    roles = Column(String(500))
+    screens = Column(String(500))
     org_id = Column(Integer, ForeignKey('org.id'))
     org = relationship(Org)
     project_id = Column(Integer, ForeignKey('project.id'))
     project = relationship(Project)
-    screen_id = Column(Integer, ForeignKey('screen.id'))
-    screen = relationship(Screen)
 
     @property
     def serialize(self):
@@ -111,9 +110,10 @@ class Function(Base):
             'description': self.description,
             'authRequired': self.authRequired,
             'roles': self.roles,
+            'screens': self.screens,
             'org_id': self.org_id,
             'project_id': self.project_id,
-            'screen_id': self.screen_id
+            'fg_id': self.functgroup.id
         }
 
 
@@ -127,6 +127,8 @@ class Functgroup(Base):
     org = relationship(Org)
     project_id = Column(Integer, ForeignKey('project.id'))
     project = relationship(Project)
+    function_id = Column(Integer, ForeignKey('function.id'))
+    function = relationship(Function)
 
     @property
     def serialize(self):

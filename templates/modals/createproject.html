@@ -11,34 +11,72 @@
         </button>
       </div>
       <div class="modal-body">
-      <div class="row">
-      <div class="col-md-6">
-        <form>
-          <div class="form-group">
-            <label for="formGroupExampleInput">Project Name</label>
-            <input type="text" class="form-control" id="formGroupExampleInput" placeholder="Example input">
-          </div>
-          <div class="form-group">
-            <label for="exampleFormControlSelect1">Select Parent Org</label>
-            <select class="form-control" id="exampleFormControlSelect1">
-              {% for i in allorgs %}
-                <option>{{i.title}}</option>
-              {% endfor %}
-            </select>
-          </div>
-          <div class="form-group">
-            <label for="formGroupExampleInput">Description</label>
-            <input type="text" class="form-control" id="formGroupExampleInput" placeholder="Example input">
-          </div>
-        </form>
-      </div>
-      </div>
+
+        <div class="row">
+        <div class="col-md-12 mb-3">
+          <form class="needs-validation" action='{{url_for('newProject')}}' method='post' novalidate>
+
+            <!-- row -->
+            <div class="row">
+              <div class="col-md-12 mb-3">
+                <label for="formGroupExampleInput">Project Name</label>
+                <input type="text" class="form-control" id="title" name="title">
+              </div>
+            </div>
+            <!-- end of row -->
+
+            <!-- row -->
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <label for="exampleFormControlSelect1">Select Parent Org</label>
+                <select class="form-control" id="org_title" name="org_title">
+                  {% for i in allorgs %}
+                    <option>{{i.title}}</option>
+                  {% endfor %}
+                </select>
+              </div>
+              <div class="col-md-6 mb-3">
+                <label for="stage">Stage</label>
+                <select class="form-control" id="stage" name="stage">
+                  <option>Not Started</option>
+                  <option>Started</option>
+                </select>
+              </div>
+            </div>
+            <!-- end of row -->
+
+            <!-- row -->
+            <div class="row">
+              <div class="col-md-12 mb-3">
+                <label for="description">Description</label>
+                <textarea class="form-control" id="description" rows="3" name="description" required>
+                </textarea>
+                <div class="invalid-feedback">
+                  Please enter a valid description.
+                </div>
+              </div>
+            </div>
+            <!-- end of row -->
+
+            <!-- row -->
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <button class="btn btn-primary btn-lg btn-block" type="Create">Continue</button>
+              </div>
+          </form>
+              <div class="col-md-6 mb-3">
+                <form action="/">
+                  <button class="btn btn-secondary btn-lg btn-block" type="submit">Cancel</button>
+                </form>
+              </div>
+            </div>
+            <!-- end of row -->
+
+        </div>
+        </div>
+
       </div><!--endbody-->
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <!-- Need "create a project" form with dropdown of avail orgs -->
-        <a class="btn btn-primary" href="#" role="button">Continue</a>
-      </div>
+
     </div>
   </div>
 </div>

@@ -11,13 +11,48 @@
         </button>
       </div>
       <div class="modal-body">
-        Form for adding a Screen
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <!-- Need "create a project" form with dropdown of avail orgs -->
-        <a class="btn btn-primary" href="#" role="button">Continue</a>
-        <!--<button type="button" class="btn btn-primary">Save changes</button>-->
+
+        <div class="row">
+          <div class="col-md-12 order-md-1">
+            <!-- HARDCODED TO PROJECT_ID 1 UNTIL JAVASCRIPT SOLUTION RESOLVED -->
+            <form class="needs-validation" action='{{url_for('newScreen', project_id="1")}}' method='post' novalidate>
+              <input type="hidden" id="project_id" name="project_id" value="">
+              <input type="hidden" id="org_id" name="org_id" value="">
+              <input type="hidden" id="authRequired" name="authRequired" value="">
+              <div class="row">
+                <div class="col-md-6 mb-3">
+                  <label for="screentitle">Screen title</label>
+                  <input type="text" class="form-control" id="screentitle" placeholder="" name="screentitle" required>
+                  <div class="invalid-feedback">
+                    Valid screen title is required.
+                  </div>
+                </div>
+              </div>
+
+              <div class="mb-3">
+                <label for="screendesc">Org Description <span class="test-muted">(Optional)</span></label>
+                <input type="textarea" rows="3" class="form-control" id="screendesc" placeholder="The goal of this screen is..." name="screendesc">
+                <div class="invalid-feedback">
+                  Please enter a valid screen description.
+                </div>
+              </div>
+
+              <hr class="mb-4">
+              <div class="row">
+                <div class="col-md-6 mb-3">
+                  <button class="btn btn-primary btn-lg btn-block" type="Create">Continue</button>
+                </div>
+            </form>
+                <div class="col-md-6 mb-3">
+                  <form action="/">
+                    <button class="btn btn-secondary btn-lg btn-block" type="submit">Cancel</button>
+                  </form>
+                </div>
+              </div>
+          </div>
+        </div>
+
+
       </div>
     </div>
   </div>

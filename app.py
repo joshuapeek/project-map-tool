@@ -79,7 +79,83 @@ def newOrg():
         org = session.query(Org).filter_by(title=request.form['orgtitle']).one()
         return redirect(url_for('orgPage',org_id=org.id))
     else:
-        return render_template('newOrg.html')
+        return render_template('create/org.html')
+
+
+# serves new org form for get request, adds form data to db for post
+@app.route('/newproject', methods=['GET', 'POST'])
+def newProject():
+    if request.method == 'POST':
+        org = session.query(Org).filter_by(title=request.form['org_title']).one()
+        newProject = Project(title=request.form['title'],
+                     description=request.form['description'],
+                     org_id=org.id,
+                     stage=request.form['stage'])
+        session.add(newProject)
+        session.commit()
+        flash("New project created!")
+        project = session.query(Project).filter_by(title=request.form['title']).one()
+        return redirect(url_for('projectPage',org_id=org.id, project_id=project.id))
+    else:
+        return render_template('create/org.html')
+
+
+# serves new screen form for get request, adds form data to db for post
+@app.route('/<int:project_id>/newscreen', methods=['GET', 'POST'])
+def newScreen(project_id):
+    project = session.query(Project).filter_by(id=project_id).one()
+    if request.method == 'POST':
+        newScreen = Screen(title=request.form['title'],
+                     description=request.form['description'],
+                     authRequired=request.form['authRequired'],
+                     project_id=project.id,
+                     org_id=project.org.id)
+        session.add(newScreen)
+        session.commit()
+        flash("New Screen created!")
+        screen = session.query(Screen).filter_by(title=request.form['title']).one()
+        return redirect(url_for('projectPage',org_id=project.org.id, project_id=project_id))
+    else:
+        return render_template('create/screen.html', project=project)
+
+
+# serves new function form for get, adds form data to db for post
+@app.route('/<int:project_id>/newfunction', methods=['GET', 'POST'])
+def newFunction(project_id):
+    project = session.query(Project).filter_by(id=project_id).one()
+    if request.method == 'POST':
+        newFunction = Function(title=request.form['title'],
+                        description=request.form['description'],
+                        authRequired=request.form['authRequired'],
+                        org_id=project.org.id,
+                        project_id=project.id,)
+        # if request.form['roles'] is not None:
+        #     newFunction.roles = request.form['roles']
+        # if request.form['screens'] is not None:
+        #     newFunction.roles = request.form['screens']
+        session.add(newFunction)
+        session.commit()
+        flash("New Function created!")
+        function = session.query(Function).filter_by(title=request.form['title']).one()
+        return redirect(url_for('projectPage',org_id=project.org.id, project_id=project_id))
+    else:
+        return render_template('create/function.html', project=project)
+
+
+# serves new project form for get request, adds form data to db for post
+# @app.route('/<int:org_id>/new', methods=['GET', 'POST'])
+# def newProject(org_id):
+#     if request.method == 'POST':
+#         newProject = Project(title=request.form['projecttitle'],
+#                      description=request.form['projectdesc'],
+#                      org_id=request.form['projectparent'])
+#         session.add(newProject)
+#         session.commit()
+#         flash("New project created!")
+#         project = session.query(Project).filter_by(title=request.form['projecttitle']).one()
+#         return redirect(url_for('projectPage', org_id=org.id, project_id=project.id))
+#     else:
+#         return render_template('newProject.html', org_id=org.id)
 
 
 # UPDATE Pages-------------------------
@@ -140,7 +216,43 @@ def delOrg(org_id):
         flash("Org & Associated Projects Removed")
         return redirect(url_for('mainPage'))
     else:
-        return render_template('delOrg.html', i=delOrg)
+        return render_template('delete/org.html', i=delOrg)
+
+
+# query specified screen, serve delete form for get
+# on post, delete screen
+@app.route('/_screendel/<int:screen_id>', methods=['GET', 'POST'])
+def delScreen(screen_id):
+    delScreen = session.query(Screen).filter_by(id=screen_id).one()
+    org_id=delScreen.org.id
+    project_id=delScreen.project.id
+    allorgs = session.query(Org).all()
+    allprojects = session.query(Project).all()
+    if request.method == 'POST':
+        session.delete(delScreen)
+        session.commit()
+        flash("Screen Removed")
+        return redirect(url_for('projectPage',org_id=org_id,
+                                 project_id=project_id))
+    else:
+        return render_template('delete/screen.html', i=delScreen)
+
+
+# query specified function, serve delete form for get
+# on post, delete function
+@app.route('/functiondel/<int:function_id>', methods=['GET', 'POST'])
+def delFunction(function_id):
+    delFunction = session.query(Function).filter_by(id=function_id).one()
+    org_id=delFunction.org_id
+    project_id=delFunction.project_id
+    if request.method == 'POST':
+        session.delete(delFunction)
+        session.commit()
+        flash("Function Removed")
+        return redirect(url_for('projectPage',org_id=org_id,
+                                 project_id=project_id))
+    else:
+        return render_template('delete/function.html', i=delFunction)
 
 
 # query specified project, org; serve delete form for get, delete db for post
@@ -156,7 +268,47 @@ def delProject(org_id, project_id):
         flash("Project Removed")
         return redirect(url_for('mainPage'))
     else:
-        return render_template('delProject.html', i=delProject, o=delOrg)
+        return render_template('delete/project.html', i=delProject, o=delOrg)
+
+
+# JSON Pages---------------------------
+
+# JSON Project page:
+# displays project info in db, serialized
+@app.route('/<int:org_id>/<int:project_id>/JSON')
+def projectJSON(org_id, project_id):
+    org = session.query(Org).filter_by(id=org_id).one()
+    project = session.query(Project).filter_by(
+        org_id=org_id, id=project_id).one()
+    return jsonify(Project=project.serialize)
+
+
+# JSON Org page:
+# displays org info in db, serialized
+@app.route('/<int:org_id>/JSON')
+def orgJSON(org_id):
+    org = session.query(Org).filter_by(id=org_id).one()
+    projects = session.query(Project).filter_by(org_id=org_id).all()
+    # return jsonify(Projects=[i.serialize for i in projects])
+    return jsonify(Org=org.serialize)
+
+
+# JSON Org Projects page:
+# displays info for all of an orgs projects in db, serialized
+@app.route('/<int:org_id>/projects/JSON')
+def orgProjectsJSON(org_id):
+    org = session.query(Org).filter_by(id=org_id).one()
+    projects = session.query(Project).filter_by(org_id=org_id).all()
+    # return jsonify(Projects=[i.serialize for i in projects])
+    return jsonify(Projects=[i.serialize for i in projects])
+
+
+# JSON Project page:
+# displays info for a given project in db, serialized
+@app.route('/_get_project/<int:project_id>')
+def get_project(project_id):
+    project = session.query(Project).filter_by(id=project_id).one()
+    return jsonify(Project=project.serialize)
 
 
 if __name__ == '__main__':

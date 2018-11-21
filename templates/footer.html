@@ -19,3 +19,6 @@
 <script>window.jQuery || document.write('<script src="../../../static/js/jquery-slim.min.js"><\/script>')</script>
 <script src="../../../../static/js/popper.min.js"></script>
 <script src="../../../../static/js/bootstrap.min.js"></script>
+<script type=text/javascript>
+  $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
+</script>
