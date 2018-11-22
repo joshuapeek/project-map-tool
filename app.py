@@ -67,12 +67,17 @@ def projectPage(org_id, project_id):
 
 # CREATE Pages-------------------------
 
-# serves new org form for get request, adds form data to db for post
+# serves new org form for get request,
+# for post, searches for duplicate org title,
+#   if none found, adds form data to db
 @app.route('/new', methods=['GET', 'POST'])
 def newOrg():
     if request.method == 'POST':
         # check for org with same title
-        check = session.query(Org).filter_by(title=request.form['orgtitle']).one()
+        try:
+            check = session.query(Org).filter_by(title=request.form['orgtitle']).one()
+        except:
+            check = None
         if check is not None:
             flash("Org with this title already exists.")
             return redirect(url_for('orgPage', org_id=check.id))
@@ -87,7 +92,9 @@ def newOrg():
         return render_template('create/org.html')
 
 
-# serves new org form for get request, adds form data to db for post
+# serves new org form for get request,
+# for post, searches for duplicate project titles within the org,
+#   if none found, adds form data to db
 @app.route('/newproject', methods=['GET', 'POST'])
 def newProject():
     if request.method == 'POST':
@@ -121,6 +128,7 @@ def checkUniqueTitle(org_id, project_title):
     if unique == "1":
         unique = "confirmed"
     return unique
+
 
 # serves new role form for get request, adds form data to db for post
 @app.route('/<int:project_id>/newrole', methods=['GET', 'POST'])
