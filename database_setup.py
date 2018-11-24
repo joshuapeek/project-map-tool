@@ -70,7 +70,6 @@ class Screen(Base):
     title = Column(String(250), nullable=False)
     description = Column(String(500))
     authRequired = Column(String(5))
-    roles = Column(String(500))
     org_id = Column(Integer, ForeignKey('org.id'))
     org = relationship(Org)
     project_id = Column(Integer, ForeignKey('project.id'))
@@ -83,7 +82,6 @@ class Screen(Base):
             'title': self.title,
             'description': self.description,
             'authRequired': self.authRequired,
-            'roles': self.roles,
             'org_id': self.org_id,
             'project_id': self.project_id
         }
@@ -95,8 +93,6 @@ class Function(Base):
     title = Column(String(250), nullable=False)
     description = Column(String(500))
     authRequired = Column(String(5))
-    roles = Column(String(500))
-    screens = Column(String(500))
     org_id = Column(Integer, ForeignKey('org.id'))
     org = relationship(Org)
     project_id = Column(Integer, ForeignKey('project.id'))
@@ -109,11 +105,68 @@ class Function(Base):
             'title': self.title,
             'description': self.description,
             'authRequired': self.authRequired,
-            'roles': self.roles,
-            'screens': self.screens,
             'org_id': self.org_id,
+            'project_id': self.project_id
+        }
+
+
+class FunctScreen(Base):
+    __tablename__ = 'functscreen'
+    id = Column(Integer, primary_key=True)
+    project_id = Column(Integer, ForeignKey('project.id'))
+    project = relationship(Project)
+    function_id = Column(Integer, ForeignKey('function.id'))
+    function = relationship(Function)
+    screen_id = Column(Integer, ForeignKey('screen.id'))
+    screen = relationship(Screen)
+
+    @property
+    def serialize(self):
+        return {
+            'id': self.id,
             'project_id': self.project_id,
-            'fg_id': self.functgroup.id
+            'function_id': self.function_id,
+            'screen_id': self.screen_id
+        }
+
+
+class FunctRole(Base):
+    __tablename__ = 'functrole'
+    id = Column(Integer, primary_key=True)
+    project_id = Column(Integer, ForeignKey('project.id'))
+    project = relationship(Project)
+    function_id = Column(Integer, ForeignKey('function.id'))
+    function = relationship(Function)
+    role_id = Column(Integer, ForeignKey('role.id'))
+    role = relationship(Role)
+
+    @property
+    def serialize(self):
+        return {
+            'id': self.id,
+            'project_id': self.project_id,
+            'function_id': self.function_id,
+            'role_id': self.role_id
+        }
+
+
+class ScreenRole(Base):
+    __tablename__ = 'screenrole'
+    id = Column(Integer, primary_key=True)
+    project_id = Column(Integer, ForeignKey('project.id'))
+    project = relationship(Project)
+    screen_id = Column(Integer, ForeignKey('screen.id'))
+    screen = relationship(Screen)
+    role_id = Column(Integer, ForeignKey('role.id'))
+    role = relationship(Role)
+
+    @property
+    def serialize(self):
+        return {
+            'id': self.id,
+            'project_id': self.project_id,
+            'screen_id': self.screen_id,
+            'role_id': self.role_id
         }
 
 
@@ -122,7 +175,6 @@ class Functgroup(Base):
     id = Column(Integer, primary_key=True)
     title = Column(String(250), nullable=False)
     description = Column(String(500))
-    functions = Column(String(100))
     org_id = Column(Integer, ForeignKey('org.id'))
     org = relationship(Org)
     project_id = Column(Integer, ForeignKey('project.id'))
@@ -136,9 +188,35 @@ class Functgroup(Base):
             'id': self.id,
             'title': self.title,
             'description': self.description,
-            'functions': self.roles,
             'org_id': self.org_id,
-            'project_id': self.project_id
+            'project_id': self.project_id,
+            'function_id': self.function_id
+        }
+
+
+class Screengroup(Base):
+    __tablename__ = 'screengroup'
+    id = Column(Integer, primary_key=True)
+    title = Column(String(250), nullable=False)
+    description = Column(String(500))
+    authRequired = Column(String(5))
+    org_id = Column(Integer, ForeignKey('org.id'))
+    org = relationship(Org)
+    project_id = Column(Integer, ForeignKey('project.id'))
+    project = relationship(Project)
+    screen_id = Column(Integer, ForeignKey('screen.id'))
+    screen = relationship(Screen)
+
+    @property
+    def serialize(self):
+        return {
+            'id': self.id,
+            'title': self.title,
+            'description': self.description,
+            'authRequired': self.authRequired,
+            'org_id': self.org_id,
+            'project_id': self.project_id,
+            'screen_id':self.screen_id
         }
 
 

@@ -168,26 +168,35 @@ def newScreen(project_id):
 
 
 # serves new function form for get, adds form data to db for post
+#
+# NOTE: Adding Function, then Committing - this may cause an issue! Test!
+# Iterating over screens returned from multiselect, adding each to FunctScreen
 @app.route('/<int:project_id>/newfunction', methods=['GET', 'POST'])
 def newFunction(project_id):
-    project = session.query(Project).filter_by(id=project_id).one()
+    targetproject = session.query(Project).filter_by(id=project_id).one()
+    projectscreens = session.query(Screen).filter_by(project_id=project_id).all()
+    roles = session.query(Role).filter_by(project_id=project_id).all()
     if request.method == 'POST':
+        # receive form with title, description, authRequired, screens (list)
         newFunction = Function(title=request.form['title'],
                         description=request.form['description'],
                         authRequired=request.form['authRequired'],
-                        org_id=project.org.id,
-                        project_id=project.id,)
-        # if request.form['roles'] is not None:
-        #     newFunction.roles = request.form['roles']
-        # if request.form['screens'] is not None:
-        #     newFunction.roles = request.form['screens']
+                        org_id=targetproject.org.id,
+                        project_id=targetproject.id,)
         session.add(newFunction)
         session.commit()
+        # NEED TO STORE THE ASSOCIATED SCREENS
+        # NEED TO STORE THE ASSOCIATED ROLES
+        # title=request.form['title']
+        # function = session.query(Project).\
+        #     filter(Project.title==title, Function.org_id==targetproject.org.id,
+        #            function.project_id==targetproject.id).one()
+        # screens = request.form.getlist('screens')
         flash("New Function created!")
-        function = session.query(Function).filter_by(title=request.form['title']).one()
-        return redirect(url_for('projectPage',org_id=project.org.id, project_id=project_id))
+        return redirect(url_for('projectPage',org_id=targetproject.org.id, project_id=targetproject.id))
     else:
-        return render_template('create/function.html', project=project)
+        return render_template('create/function.html', project=targetproject,
+                               roles=roles, screens=projectscreens)
 
 
 # UPDATE Pages-------------------------
