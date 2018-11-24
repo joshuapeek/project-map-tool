@@ -12,45 +12,61 @@
       </div>
       <div class="modal-body">
 
+        <!-- start body row -->
         <div class="row">
           <div class="col-md-12 order-md-1">
-            <!-- HARDCODED TO PROJECT_ID 1 UNTIL JAVASCRIPT SOLUTION RESOLVED -->
-            <form class="needs-validation" action='{{url_for('newScreen', project_id="1")}}' method='post' novalidate>
-              <input type="hidden" id="project_id" name="project_id" value="">
-              <input type="hidden" id="org_id" name="org_id" value="">
-              <input type="hidden" id="authRequired" name="authRequired" value="">
+            <form class="needs-validation" action='{{url_for('newScreen', project_id=project.id)}}' method='post' novalidate>
+
+              <!-- start row -->
               <div class="row">
                 <div class="col-md-6 mb-3">
-                  <label for="screentitle">Screen title</label>
-                  <input type="text" class="form-control" id="screentitle" placeholder="" name="screentitle" required>
+                  <label for="title">Screen title</label>
+                  <input type="text" class="form-control" id="title" name="title" required>
                   <div class="invalid-feedback">
-                    Valid screen title is required.
+                    Please enter a valid title.
+                  </div>
+                </div>
+                <div class="col-md-6 mb-3">
+                  <div class="form-group">
+                    <label for="authRequired">Authentication Required?</label>
+                    <select class="form-control" id="authRequired" name="authRequired">
+                      <option>No</option>
+                      <option>Yes</option>
+                    </select>
                   </div>
                 </div>
               </div>
+              <!-- end row -->
 
-              <div class="mb-3">
-                <label for="screendesc">Org Description <span class="test-muted">(Optional)</span></label>
-                <input type="textarea" rows="3" class="form-control" id="screendesc" placeholder="The goal of this screen is..." name="screendesc">
-                <div class="invalid-feedback">
-                  Please enter a valid screen description.
+              <!-- start row -->
+              <div class=row>
+                <div class="col-md-12 mb-3">
+                  <label for="description">Screen Description</label>
+                  <textarea class="form-control" id="description" rows="3" name="description" required>
+                  </textarea>
+                  <div class="invalid-feedback">
+                    Please enter a valid description.
+                  </div>
                 </div>
               </div>
+              <!-- end row -->
 
               <hr class="mb-4">
+
               <div class="row">
                 <div class="col-md-6 mb-3">
-                  <button class="btn btn-primary btn-lg btn-block" type="Create">Continue</button>
+                  <button class="btn btn-primary btn-lg btn-block" type="Edit">Continue</button>
                 </div>
             </form>
                 <div class="col-md-6 mb-3">
-                  <form action="/">
+                  <form action="{{url_for('projectPage', org_id=project.org.id, project_id=project.id)}}">
                     <button class="btn btn-secondary btn-lg btn-block" type="submit">Cancel</button>
                   </form>
                 </div>
               </div>
           </div>
         </div>
+        <!-- end body row -->
 
 
       </div>

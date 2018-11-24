@@ -31,7 +31,7 @@
         <p class="lead">Use the form below to create a Screen.</p>
       </div>
 
-      <!-- start row -->
+      <!-- start body row -->
       <div class="row">
         <div class="col-md-12 order-md-1">
           <form class="needs-validation" action='{{url_for('newScreen', project_id=project.id)}}' method='post' novalidate>
@@ -97,6 +97,9 @@
             </div>
         </div>
       </div>
+      <!-- end body row -->
+
+
     </div>
 
   {% include "footer.html" %}

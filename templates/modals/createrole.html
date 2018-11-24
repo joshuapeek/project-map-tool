@@ -11,13 +11,66 @@
         </button>
       </div>
       <div class="modal-body">
-        Form for adding a User Role
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <!-- Need "create a project" form with dropdown of avail orgs -->
-        <a class="btn btn-primary" href="#" role="button">Continue</a>
-        <!--<button type="button" class="btn btn-primary">Save changes</button>-->
+
+
+        <!-- start body row -->
+        <div class="row">
+          <div class="col-md-12 order-md-1">
+            <form class="needs-validation" action='{{url_for('newRole', project_id=project.id)}}' method='post' novalidate>
+
+              <!-- start row: title, authRequired -->
+              <div class="row">
+                <div class="col-md-6 mb-3">
+                  <label for="title">Role title</label>
+                  <input type="text" class="form-control" id="title" name="title" required>
+                  <div class="invalid-feedback">
+                    Please enter a valid title.
+                  </div>
+                </div>
+                <div class="col-md-6 mb-3">
+                  <div class="form-group">
+                    <label for="authRequired">Authentication Required?</label>
+                    <select class="form-control" id="authRequired" name="authRequired">
+                      <option>No</option>
+                      <option>Yes</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <!-- end row -->
+
+              <!-- start row: description -->
+              <div class="row">
+                <div class="col-md-12 mb-3">
+                  <label for="description">Role Description</label>
+                  <textarea class="form-control" id="description" rows="3" name="description" required>
+                  </textarea>
+                  <div class="invalid-feedback">
+                    Please enter a valid description.
+                  </div>
+                </div>
+              </div>
+              <!-- end row -->
+
+              <hr class="mb-4">
+
+              <div class="row">
+                <div class="col-md-6 mb-3">
+                  <button class="btn btn-primary btn-lg btn-block" type="Edit">Continue</button>
+                </div>
+            </form>
+                <div class="col-md-6 mb-3">
+                  <form action="{{url_for('projectPage', org_id=project.org.id, project_id=project.id)}}">
+                    <button class="btn btn-secondary btn-lg btn-block" type="submit">Cancel</button>
+                  </form>
+                </div>
+              </div>
+
+          </div>
+        </div>
+        <!-- end body row -->
+
+
       </div>
     </div>
   </div>

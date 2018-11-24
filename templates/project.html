@@ -85,9 +85,8 @@
             <h3>User Roles</h3>
               <p>Description</p>
               <!--<p><button type="button" class="btn btn-secondary btn-sm" data-toggle="modal" data-target="#add-role">Add a Role &raquo;</button></p>-->
-              <form action="{{url_for('newRole', project_id = project.id)}}">
-                <p><button type="submit" class="btn btn-secondary btn-sm">Add a Role &raquo;</button></p>
-              </form>
+              <p><button type="button" class="btn btn-secondary btn-sm" data-toggle="modal" data-target="#add-role">Add a User Role &raquo;</button></p>
+                <br>
               <br>
           </div>
           <div class="col-md-9">
@@ -131,9 +130,9 @@
               <!--<p><button type="button" class="btn btn-secondary btn-sm"
                   data-toggle="modal" data-target="#add-screen"
                   data-authRequired="No">Add a Screen &raquo;</button></p>-->
-              <form action="{{url_for('newScreen', project_id = project.id)}}">
-                <p><button type="submit" class="btn btn-secondary btn-sm">Add a Screen &raquo;</button></p>
-              </form>
+              <p><button type="button" class="btn btn-secondary btn-sm" data-toggle="modal" data-target="#add-screen">Add a Screen &raquo;</button></p>
+                <br>
+
               <br>
           </div>
           <div class="col-md-9">
@@ -174,9 +173,7 @@
           <div class="col-md-3">
             <h3>Functions</h3>
             <p>Description</p>
-            <form action="{{url_for('newFunction', project_id = project.id)}}">
-              <p><button type="submit" class="btn btn-secondary btn-sm">Add a Function &raquo;</button></p>
-            </form>
+            <p><button type="button" class="btn btn-secondary btn-sm" data-toggle="modal" data-target="#add-function">Add a Function &raquo;</button></p>
               <br>
           </div>
           <div class="col-md-9">
