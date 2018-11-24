@@ -57,6 +57,11 @@
 <!-- Jumbotron -->
     <main role="main" class="container">
       <div class="jumbotron" style="padding:1rem 2rem;">
+        <div style="float:right;text-align:right;">
+          <p class=lead>Remember! User Stories output as:</p>
+          <i>"As a(n) <kbd>&lt;User Role Title&gt;</kbd>, on <kbd>&lt;Screen Title&gt;</kbd> screen,<br>
+          <kbd>&lt;Function Description&gt;</kbd>."</i>
+        </div>
         <h1>{{org.title}} - {{project.title}}</h1>
         <p class="lead">{{project.description}}</p>
         <button type="button" class="btn btn-md btn btn-outline-light" data-toggle="modal" data-target="#edit-project-details">Edit Details &raquo;</button>
@@ -68,10 +73,12 @@
 <div class="container">
   <div class="row">
     <div class="col-md-8 mb-4 mx-auto">
+      <!--
       <p class=lead>
         User Stories will output as follows:<br>
         <i>"As a(n) <code>&lt;User Role Title&gt;</code> on <code>&lt;Screen Title&gt;</code> screen, <code>&lt;Function Description&gt;</code>."</i>
       </p>
+      -->
     </div>
   </div>
 </div>
