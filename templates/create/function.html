@@ -32,7 +32,12 @@
       <!-- title section -->
       <div class="py-5 text-center">
         <h2>Creating Function for {{project.org.title}} - {{project.title}}</h2>
-        <p class="lead">Use the form below to create a Function.</p>
+        <!--<p class="lead">Use the form below to create a Function.</p>-->
+        <br>
+        <p>
+          User Stories will output as follows:<br>
+          <i>"As a(n) <code>&lt;User Role Title&gt;</code> on <code>&lt;Screen Title&gt;</code> screen, <code>&lt;Function Description&gt;</code>."</i>
+        </p>
       </div>
       <!-- end title section -->
 
@@ -42,6 +47,8 @@
 
             <!-- start row: function title, authRequired -->
             <div class="row">
+                <div class="col-md-2 mb-3 mx-auto">
+                </div>
                 <div class="col-md-4 mb-3 mx-auto">
                   <label for="title">Function title</label>
                   <input type="text" class="form-control" id="title" name="title" required>
@@ -58,12 +65,16 @@
                     </select>
                   </div>
                 </div>
+                <div class="col-md-2 mb-3 mx-auto">
+                </div>
             </div>
             <!-- end row -->
 
             <!-- start row: description -->
             <div class="row">
-              <div class="col-md-8 mb-3 mx-auto">
+              <div class="col-md-2 mb-4 mx-auto">
+              </div>
+              <div class="col-md-8 mb-4 mx-auto">
                 <label for="description">Function Description</label>
                 <textarea class="form-control" id="description" rows="3" name="description" required>
                 </textarea>
@@ -71,13 +82,17 @@
                   Please enter a valid description.
                 </div>
               </div>
+              <div class="col-md-2 mb-4 mx-auto">
+              </div>
             </div>
             <!-- end row -->
 
-            <!-- start row: select screens -->
+            <!-- start row: select screens, roles -->
             <div class="row">
-              <div class="col-md-8 mb-3 mx-auto">
-                <p>Please select the screens where this function should appear:</p>
+              <div class="col-md-2 mb-3 mx-auto">
+              </div>
+              <div class="col-md-4 mb-3 mx-auto">
+                <p>Should be available on these screens:</p>
                 <div class="form-check" id="roles">
                   {% for i in screens %}
                   <input class="form-check-input" type="checkbox" name="{{i.title}}" value="{{i.id}}" id="role_{{i.title}}">
@@ -87,14 +102,9 @@
                   {% endfor %}
                 </div>
               </div>
-            </div>
-            <!-- end row -->
 
-
-            <!-- start row: select roles -->
-            <div class="row">
-              <div class="col-md-8 mb-3 mx-auto">
-                <p>Please select the roles who should have access to this function:</p>
+              <div class="col-md-4 mb-3 mx-auto">
+                <p>Should be available to these user roles:</p>
                 <div class="form-check" id="roles">
                   {% for i in roles %}
                   <input class="form-check-input" type="checkbox" name="{{i.title}}" value="{{i.id}}" id="role_{{i.title}}">
@@ -104,22 +114,27 @@
                   {% endfor %}
                 </div>
               </div>
+              <div class="col-md-2 mb-3 mx-auto">
+              </div>
             </div>
             <!-- end row -->
-
 
             <hr class="mb-4">
 
             <!-- start row -->
             <div class="row">
-              <div class="col-md-6 mb-3">
+              <div class="col-md-2 mb-3 mx-auto">
+              </div>
+              <div class="col-md-4 mb-3">
                 <button class="btn btn-primary btn-lg btn-block" type="Edit">Continue</button>
               </div>
           </form>
-              <div class="col-md-6 mb-3">
+              <div class="col-md-4 mb-3">
                 <form action="{{url_for('projectPage', org_id=project.org.id, project_id=project.id)}}">
                   <button class="btn btn-secondary btn-lg btn-block" type="submit">Cancel</button>
                 </form>
+              </div>
+              <div class="col-md-2 mb-3 mx-auto">
               </div>
             </div>
             <!-- end row -->

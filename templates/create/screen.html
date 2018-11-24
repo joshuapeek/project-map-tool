@@ -31,18 +31,23 @@
         <p class="lead">Use the form below to create a Screen.</p>
       </div>
 
+      <!-- start row -->
       <div class="row">
         <div class="col-md-12 order-md-1">
           <form class="needs-validation" action='{{url_for('newScreen', project_id=project.id)}}' method='post' novalidate>
+
+            <!-- start row -->
             <div class="row">
-              <div class="col-md-6 mb-3">
+              <div class="col-md-2 mb-3">
+              </div>
+              <div class="col-md-4 mb-3">
                 <label for="title">Screen title</label>
                 <input type="text" class="form-control" id="title" name="title" required>
                 <div class="invalid-feedback">
                   Please enter a valid title.
                 </div>
               </div>
-              <div class="col-md-6 mb-3">
+              <div class="col-md-4 mb-3">
                 <div class="form-group">
                   <label for="authRequired">Authentication Required?</label>
                   <select class="form-control" id="authRequired" name="authRequired">
@@ -51,27 +56,43 @@
                   </select>
                 </div>
               </div>
-            </div>
-
-            <div class="mb-3">
-              <label for="description">Screen Description</label>
-              <textarea class="form-control" id="description" rows="3" name="description" required>
-              </textarea>
-              <div class="invalid-feedback">
-                Please enter a valid description.
+              <div class="col-md-2 mb-3">
               </div>
             </div>
+            <!-- end row -->
+
+            <!-- start row -->
+            <div class=row>
+              <div class="col-md-2 mb-3">
+              </div>
+              <div class="col-md-8 mb-3">
+                <label for="description">Screen Description</label>
+                <textarea class="form-control" id="description" rows="3" name="description" required>
+                </textarea>
+                <div class="invalid-feedback">
+                  Please enter a valid description.
+                </div>
+              </div>
+              <div class="col-md-2 mb-3">
+              </div>
+            </div>
+            <!-- end row -->
 
             <hr class="mb-4">
+
             <div class="row">
-              <div class="col-md-6 mb-3">
+              <div class="col-md-2 mb-3">
+              </div>
+              <div class="col-md-4 mb-3">
                 <button class="btn btn-primary btn-lg btn-block" type="Edit">Continue</button>
               </div>
           </form>
-              <div class="col-md-6 mb-3">
+              <div class="col-md-4 mb-3">
                 <form action="{{url_for('projectPage', org_id=project.org.id, project_id=project.id)}}">
                   <button class="btn btn-secondary btn-lg btn-block" type="submit">Cancel</button>
                 </form>
+              </div>
+              <div class="col-md-2 mb-3">
               </div>
             </div>
         </div>
