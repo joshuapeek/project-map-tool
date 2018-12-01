@@ -23,6 +23,19 @@ Base.metadata.bind = engine
 DBSession = sessionmaker(bind=engine)
 session = DBSession()
 
+# @app.route('_getscreen/<int:screen_id>')
+# def screen(screen_id):
+#     screen = session.query(Screen).filter_by(id=screen_id).one()
+#     try:
+#         lang = request.args.get('proglang')
+#         if str(lang).lower() == 'python':
+#             return jsonify(result='You are wise!')
+#         else:
+#             return jsonify(result='Try again')
+#     except Exception, e:
+#         return(str(e))
+
+
 @app.route('/')
 def mainPage():
     allorgs = session.query(Org).all()
@@ -103,8 +116,7 @@ def newProject():
         if unique == "confirmed":
             newProject = Project(title=request.form['title'],
                          description=request.form['description'],
-                         org_id=org.id,
-                         stage=request.form['stage'])
+                         org_id=org.id)
             session.add(newProject)
             session.commit()
             flash("New project created!")
@@ -138,7 +150,6 @@ def newRole(project_id):
         newRole = Role(title=request.form['title'],
                      description=request.form['description'],
                      authRequired=request.form['authRequired'],
-                     org_id=project.org.id,
                      project_id=project.id)
         session.add(newRole)
         session.commit()
@@ -155,7 +166,6 @@ def newScreen(project_id):
     if request.method == 'POST':
         newScreen = Screen(title=request.form['title'],
                      description=request.form['description'],
-                     authRequired=request.form['authRequired'],
                      project_id=project.id,
                      org_id=project.org.id)
         session.add(newScreen)

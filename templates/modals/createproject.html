@@ -27,19 +27,12 @@
 
             <!-- row -->
             <div class="row">
-              <div class="col-md-6 mb-3">
+              <div class="col-md-12 mb-3">
                 <label for="exampleFormControlSelect1">Select Parent Org</label>
                 <select class="form-control" id="org_title" name="org_title">
                   {% for i in allorgs %}
                     <option>{{i.title}}</option>
                   {% endfor %}
-                </select>
-              </div>
-              <div class="col-md-6 mb-3">
-                <label for="stage">Stage</label>
-                <select class="form-control" id="stage" name="stage">
-                  <option>Not Started</option>
-                  <option>Started</option>
                 </select>
               </div>
             </div>
