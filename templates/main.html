@@ -20,19 +20,19 @@
 
       <div class="container">
         <!-- Example row of columns -->
-        <div class="row">
+        <div class="row mb-4">
           <div class="col-md-4">
-            <h3>Quick Links</h3>
+            <h3>Projects</h3>
+            View all Projects in the system.
             <!--<p><button type="button" class="btn btn-secondary btn-block" data-toggle="modal" data-target="#add-org">Add an Org &raquo;</button></p>
             <p><button type="button" class="btn btn-secondary btn-block" data-toggle="modal" data-target="#add-project">Add a Project &raquo;</button></p>
             <form action="#">-->
-              <p><button type="button" class="btn btn-secondary btn-block">Adjust a Template &raquo;</button></p>
-            </form>
+              <!--<p><button type="button" class="btn btn-secondary btn-block">Adjust a Template &raquo;</button></p>-->
+            <!--</form>-->
             <!--<p><button type="button" class="btn btn-secondary btn-block" data-toggle="modal" data-target="#org-select">Adjust Orgs &raquo;</button></p>-->
             <!--<p><button type="button" class="btn btn-secondary btn-block" data-toggle="modal" data-target="#project-select">Adjust Projects &raquo;</button></p>-->
           </div>
           <div class="col-md-8">
-            <h3>Projects</h3>
               <table class="table table-responsive table-sm table-hover" width="100%">
                 <thead class="thead-light">
                   <tr>
@@ -61,13 +61,13 @@
           </div>
         </div>
 
-        <div class="row">
+        <!-- Orgs Row -->
+        <div class="row mb-4">
           <div class="col-md-4">
-            <h3>Templates</h3>
-              <p>This is where a list of templates will live, with the ability to edit them.</p>
+            <h3>Orgs</h3>
+              <p>View all Orgs in the system.</p>
           </div>
           <div class="col-md-8">
-            <h3>Orgs</h3>
               <table class="table table-responsive table-sm table-hover" width="100%">
                 <thead class="thead-light">
                   <tr>
@@ -95,6 +95,46 @@
             </span>
           </div>
         </div>
+        <!-- Orgs Row End -->
+
+        <!-- Users Row -->
+        <div class="row mb-4">
+          <div class="col-md-4">
+            <h3>Users</h3>
+              <p>View all Users in the system.</p>
+          </div>
+          <div class="col-md-8">
+              <table class="table table-responsive table-sm table-hover" width="100%">
+                <thead class="thead-light">
+                  <tr>
+                    <th scope="col" width="55px">#</th>
+                    <th scope="col" width="170px">First</th>
+                    <th scope="col" width="170px">Last</th>
+                    <th scope="col" width="300px">Org</th>
+                    <th scope="col" width="70px"></th>
+                    <th scope="col" width="71px"></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for i in userOrgs %}
+                  <tr>
+                    <th scope="row">{{loop.index}}</th>
+                    <td>{{i.user.firstname}}</td>
+                    <td>{{i.user.lastname}}</td>
+                    <td>{{i.org.title}}</td>
+                    <td>Edit</td>
+                    <td>Delete</td>
+                  </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+            <span style="float:right;">
+              <p><button type="button" class="btn btn-secondary btn-sm" data-toggle="modal" data-target="#add-org">Add a User &raquo;</button></p>
+            </span>
+          </div>
+        </div>
+        <!-- Users Row End
+
 
       </div>
 

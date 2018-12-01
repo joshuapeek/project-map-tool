@@ -2,7 +2,7 @@ from flask import Flask, render_template, request, redirect
 from flask import url_for, flash, jsonify
 from sqlalchemy import create_engine, and_
 from sqlalchemy.orm import sessionmaker
-from database_setup import Org, Project, Role, Screen, Function, Functgroup, Base
+from database_setup import Org, Project, Role, Screen, Function, Functgroup, Action, Story, Section, Element, roleScreen, roleSection, storyScreen, user, userProject, userOrg, super, Base
 from sqlalchemy.pool import StaticPool
 from flask import session as login_session
 import random
@@ -40,8 +40,10 @@ session = DBSession()
 def mainPage():
     allorgs = session.query(Org).all()
     allprojects = session.query(Project).all()
+    userOrgs = session.query(userOrg).all()
     return render_template('main.html', allorgs=allorgs,
-                            allprojects=allprojects)
+                            allprojects=allprojects,
+                            userOrgs=userOrgs)
 
 
 # query specified org object & all project objects associated with org

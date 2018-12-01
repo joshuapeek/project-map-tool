@@ -87,6 +87,8 @@ class Action(Base):
     id = Column(Integer, primary_key=True)
     title = Column(String(250), nullable=False)
     description = Column(String(500))
+    screen_id = Column(Integer, ForeignKey('screen.id'))
+    screen = relationship(Screen)
     project_id = Column(Integer, ForeignKey('project.id'))
     project = relationship(Project)
 
@@ -96,6 +98,7 @@ class Action(Base):
             'id': self.id,
             'title': self.title,
             'description': self.description,
+            'screen_id': self.screen_id,
             'project_id': self.project_id
         }
 
@@ -127,6 +130,8 @@ class Section(Base):
     description = Column(String(500))
     project_id = Column(Integer, ForeignKey('project.id'))
     project = relationship(Project)
+    screen_id = Column(Integer, ForeignKey('screen.id'))
+    screen = relationship(Screen)
 
     @property
     def serialize(self):
@@ -134,7 +139,8 @@ class Section(Base):
             'id': self.id,
             'title': self.title,
             'description': self.description,
-            'project_id': self.project_id
+            'project_id': self.project_id,
+            'screen_id': self.screen_id
         }
 
 
