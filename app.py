@@ -190,7 +190,7 @@ def newUser():
         session.add(newUser)
         session.commit()
         session.refresh(newUser)
-        newUserOrg = userOrg(access="1",
+        newUserOrg = userOrg(access=request.form['access'],
                              user_id=newUser.id,
                              org_id=org.id)
         session.add(newUserOrg)

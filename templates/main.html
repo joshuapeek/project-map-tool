@@ -109,11 +109,12 @@
                 <thead class="thead-light">
                   <tr>
                     <th scope="col" width="55px">#</th>
-                    <th scope="col" width="170px">First</th>
-                    <th scope="col" width="170px">Last</th>
+                    <th scope="col" width="165px">First</th>
+                    <th scope="col" width="165px">Last</th>
+                    <th scope="col" width="50px">Access</th>
                     <th scope="col" width="300px">Org</th>
-                    <th scope="col" width="70px"></th>
-                    <th scope="col" width="71px"></th>
+                    <th scope="col" width="50px"></th>
+                    <th scope="col" width="51px"></th>
                   </tr>
                 </thead>
                 <tbody>
@@ -122,6 +123,17 @@
                     <th scope="row">{{loop.index}}</th>
                     <td>{{i.user.firstname}}</td>
                     <td>{{i.user.lastname}}</td>
+                    <td>
+                      {% if i.access == "0" %}
+                      None
+                      {% elif i.access == "1" %}
+                      Read
+                      {% elif i.access == "2" %}
+                      Edit
+                      {% else %}
+                      Error
+                      {% endif %}
+                    </td>
                     <td>{{i.org.title}}</td>
                     <td>Edit</td>
                     <td><a href='{{url_for('delUser', user_id = i.user.id)}}'>Delete</a></td>
