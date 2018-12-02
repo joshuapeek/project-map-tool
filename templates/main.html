@@ -9,6 +9,7 @@
   {% include "modals/createfunctiongroup.html" %}
   {% include "modals/createorg.html" %}
   {% include "modals/createproject.html" %}
+  {% include "modals/createuser.html" %}
 
     <main role="main" class="container">
       <div class="jumbotron">
@@ -123,13 +124,13 @@
                     <td>{{i.user.lastname}}</td>
                     <td>{{i.org.title}}</td>
                     <td>Edit</td>
-                    <td>Delete</td>
+                    <td><a href='{{url_for('delUser', user_id = i.user.id)}}'>Delete</a></td>
                   </tr>
                   {% endfor %}
                 </tbody>
               </table>
             <span style="float:right;">
-              <p><button type="button" class="btn btn-secondary btn-sm" data-toggle="modal" data-target="#add-org">Add a User &raquo;</button></p>
+              <p><button type="button" class="btn btn-secondary btn-sm" data-toggle="modal" data-target="#add-user">Add a User &raquo;</button></p>
             </span>
           </div>
         </div>

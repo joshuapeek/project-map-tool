@@ -179,6 +179,28 @@ def newScreen(project_id):
         return render_template('create/screen.html', project=project)
 
 
+# serves new screen form for get request, adds form data to db for post
+@app.route('/newuser', methods=['GET', 'POST'])
+def newUser():
+    if request.method == 'POST':
+        org = session.query(Org).filter_by(title=request.form['orgtitle']).one()
+        newUser = user(firstname=request.form['firstname'],
+                     lastname=request.form['lastname'],
+                     email=request.form['email'])
+        session.add(newUser)
+        session.commit()
+        session.refresh(newUser)
+        newUserOrg = userOrg(access="1",
+                             user_id=newUser.id,
+                             org_id=org.id)
+        session.add(newUserOrg)
+        session.commit()
+        flash("New User created!")
+        return redirect(url_for('mainPage'))
+    else:
+        return redirect(url_for('mainPage'))
+
+
 # serves new function form for get, adds form data to db for post
 #
 # NOTE: Adding Function, then Committing - this may cause an issue! Test!
@@ -354,6 +376,24 @@ def delFunction(function_id):
                                  project_id=project_id))
     else:
         return render_template('delete/function.html', i=delFunction)
+
+
+# receive user_id, query userOrg (and in the future, userProject) rows matching,
+# delete userOrg rows, then user record
+# serve delete form for get; on post, delete user
+@app.route('/userdel/<int:user_id>', methods=['GET', 'POST'])
+def delUser(user_id):
+    delUser = session.query(user).filter_by(id=user_id).one()
+    delUserOrg = session.query(userOrg).filter_by(user_id=user_id).all()
+    if request.method == 'POST':
+        for i in delUserOrg:
+            session.delete(i)
+        session.delete(delUser)
+        session.commit()
+        flash("User Removed")
+        return redirect(url_for('mainPage'))
+    else:
+        return render_template('delete/user.html', i=delUser)
 
 
 # JSON Pages---------------------------

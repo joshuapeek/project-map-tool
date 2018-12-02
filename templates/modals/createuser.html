@@ -1,0 +1,77 @@
+<!-- Large modal -->
+<!--<button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-lg">Large modal</button>-->
+
+<div class="modal bd-example-modal-lg" id="add-user" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Add a User</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+
+        <div class="row">
+          <div class="col-md-12 order-md-1">
+            <form class="needs-validation" action='{{url_for('newUser')}}' method='post' novalidate>
+              <div class="row">
+                <div class="col-md-6 mb-3">
+                  <label for="firstname">User First Name</label>
+                  <input type="text" class="form-control" id="firstname" placeholder="" name="firstname" required>
+                  <div class="invalid-feedback">
+                    Valid First Name is required.
+                  </div>
+                </div>
+                <div class="col-md-6 mb-3">
+                  <label for="lastname">User Last Name</label>
+                  <input type="text" class="form-control" id="lastname" placeholder="" name="lastname" required>
+                  <div class="invalid-feedback">
+                    Valid Last Name is required.
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-md-12 mb-3">
+                  <label for="email">Email</label>
+                  <input type="text" class="form-control" id="email" placeholder="" name="email" required>
+                  <div class="invalid-feedback">
+                    Valid Email is required.
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-md-6 mb-3">
+                  <div class="form-group">
+                    <label for="orgtitle">Org?</label>
+                    <select class="form-control" id="orgtitle" name="orgtitle">
+                      {% for i in allorgs %}
+                      <option>{{i.title}}</option>
+                      {% endfor %}
+                    </select>
+                  </div>
+                </div>
+              </div>
+
+              <hr class="mb-4">
+              <div class="row">
+                <div class="col-md-6 mb-3">
+                  <button class="btn btn-primary btn-lg btn-block" type="Create">Continue</button>
+                </div>
+            </form>
+                <div class="col-md-6 mb-3">
+                  <form action="/">
+                    <button class="btn btn-secondary btn-lg btn-block" type="submit">Cancel</button>
+                  </form>
+                </div>
+              </div>
+          </div>
+        </div>
+
+
+      </div>
+    </div>
+  </div>
+</div>
