@@ -54,8 +54,10 @@ def orgPage(org_id):
     allprojects = session.query(Project).all()
     org = session.query(Org).filter_by(id=org_id).one()
     projects = session.query(Project).filter_by(org_id=org.id).all()
+    userOrgs = session.query(userOrg).filter_by(org_id=org.id).all()
     return render_template('org.html', org=org, projects=projects,
-                            allorgs=allorgs, allprojects=allprojects)
+                            allorgs=allorgs, allprojects=allprojects,
+                            userOrgs=userOrgs)
 
 
 # query specified org & project objects

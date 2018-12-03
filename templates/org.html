@@ -38,9 +38,59 @@
         <button type="button" class="btn btn-md btn btn-outline-light" data-toggle="modal" data-target="#edit-org-details">Edit Details &raquo;</button>
       </div>
 
+<!-- Users Row -->
+      <div class="container">
+        <div class="row mb-4">
+          <div class="col-md-3">
+            <h3>Users</h3>
+              <p>View all users within the Org</p>
+              <p><button type="button" class="btn btn-secondary btn-sm" data-toggle="modal" data-target="#add-project">Add a Project &raquo;</button></p>
+              <br>
+          </div>
+          <div class="col-md-9">
+            <br><br>
+            <table class="table table-responsive table-sm table-hover" width="100%">
+              <thead class="thead-light">
+                <tr>
+                  <th scope="col" width="55px">#</th>
+                  <th scope="col" width="165px">First</th>
+                  <th scope="col" width="165px">Last</th>
+                  <th scope="col" width="50px">Access</th>
+                  <th scope="col" width="350px">Project</th>
+                  <th scope="col" width="51px"></th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for i in userOrgs %}
+                <tr>
+                  <th scope="row">{{loop.index}}</th>
+                  <td>{{i.user.firstname}}</td>
+                  <td>{{i.user.lastname}}</td>
+                  <td>
+                    {% if i.access == "0" %}
+                    None
+                    {% elif i.access == "1" %}
+                    Read
+                    {% elif i.access == "2" %}
+                    Edit
+                    {% else %}
+                    Error
+                    {% endif %}
+                  </td>
+                  <td>{{i.org.title}}</td>
+                  <td>Edit</td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+<!-- Users Row END -->
+
 <!-- Projects Row -->
       <div class="container">
-        <div class="row">
+        <div class="row mb-4">
           <div class="col-md-3">
             <h3>Projects</h3>
               <p>Description</p>
@@ -48,6 +98,7 @@
               <br>
           </div>
           <div class="col-md-9">
+            <br><br>
             <table class="table table-responsive table-sm table-hover" width="100%">
               <thead class="thead-light">
                 <tr>
