@@ -1,0 +1,61 @@
+<!-- prepare allorgs & allprojects modals -->
+{% if allorgs is defined %}
+{% include "modals/allorgs.html" %}
+{% endif %}
+
+{% if allprojects is defined %}
+{% include "modals/allprojects.html" %}
+{% endif %}
+
+<!-- Menu -->
+<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+  <a class="navbar-brand" href="/">Project-Map</a>
+  <!-- hamburger icon -->
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarCollapse">
+    <ul class="navbar-nav mr-auto">
+
+      <!-- Org Link -->
+      {% if org is defined %}
+      <li class="nav-item">
+        <a class="nav-link" href="{{url_for('orgPage', org_id=org.id)}}">
+          {{org.title}} Main
+        </a>
+      </li>
+      {% endif %}
+      <!-- END Org Link -->
+
+      <!-- Project(s) Dropdown -->
+      {% if projects is defined %}
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Projects
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          {% for i in projects %}
+            <a class="dropdown-item" href="{{url_for('projectPage', org_id = org.id,
+                     project_id = i.id)}}">{{i.title}}</a>
+          {% endfor %}
+        </div>
+      </li>
+      {% endif %}
+      <!-- END Project(s) & Org Dropdown -->
+
+    </ul>
+
+    <!-- Orgs & Projects buttons -->
+    {% if allorgs is defined %}
+    {% include "modals/allorgs.html" %}
+    <button type="button" class="btn btn-secondary btn-sm my-2 my-sm-0" data-toggle="modal" data-target="#org-select">Orgs &raquo;</button>&nbsp;
+    {% endif %}
+    {% if allprojects is defined %}
+    <button type="button" class="btn btn-secondary btn-sm my-2 my-sm-0" data-toggle="modal" data-target="#project-select">Projects &raquo;</button>&nbsp;
+    {% endif %}
+    <!-- END Orgs & Projects buttons -->
+
+  </div>
+</nav>
+<!-- End Menu -->

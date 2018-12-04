@@ -25,7 +25,7 @@
 
     <div class="container">
       <div class="py-5 text-center">
-        <h2>Deleting role {{i.title}} from {{i.org.title}} - {{i.project.title}}</h2>
+        <h2>Deleting role {{i.title}} from {{project.title}} - {{i.project.title}}</h2>
         <p class="lead">Are you sure you'd like to delete role {{i.title}}?</p>
       </div>
 
@@ -39,7 +39,7 @@
               </div>
           </form>
               <div class="col-md-6 mb-3">
-                <form action="{{url_for('projectPage', org_id=i.org.id, project_id=i.project.id)}}">
+                <form action="{{url_for('projectPage', org_id=project.org.id, project_id=i.project.id)}}">
                   <button class="btn btn-secondary btn-lg btn-block" type="submit">Cancel</button>
                 </form>
               </div>
