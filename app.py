@@ -6,7 +6,7 @@ from database_setup import Org, Project, Role
 from database_setup import Screen, Function, Functgroup
 from database_setup import Action, Story, Section
 from database_setup import Element, roleScreen, roleSection
-from database_setup import storyScreen, user, userProject
+from database_setup import storyScreen, user, userProject, ScreenSection
 from database_setup import userOrg, super, Base
 from sqlalchemy.pool import StaticPool
 from flask import session as login_session
@@ -198,8 +198,7 @@ def newScreen(project_id):
     if request.method == 'POST':
         newScreen = Screen(title=request.form['title'],
                      description=request.form['description'],
-                     project_id=project.id,
-                     org_id=project.org.id)
+                     project_id=project.id)
         session.add(newScreen)
         session.commit()
         flash("New Screen created!")
@@ -248,6 +247,38 @@ def newFunction(project_id):
 
 
 # UPDATE Pages-------------------------
+
+# TEST for adding a section
+# query specified project, then identify screens for that project;
+# on get, serve form, passing in screens for project, project
+# on post, first create section from form fields, then
+# add entry to ScreenSection, tying to screens specified
+# query specified org, serve edit org page for get, update form data for post
+@app.route('/addsctn/p<int:project_id>', methods=['GET', 'POST'])
+def createSection(project_id):
+    project = session.query(Project).filter_by(id=project_id).one()
+    screens = session.query(Screen).filter_by(project_id=project_id).all()
+    if request.method == 'POST':
+        newSection = Section(title=request.form['title'],
+                           description=request.form['description'],
+                           project_id=project_id)
+        session.add(newSection)
+        session.commit()
+        session.refresh(newSection)
+        flash("Section Created!")
+        screen_id=request.form['screen']
+        tiedToScreen = session.query(Screen).filter_by(id=screen_id).one()
+        newScreenSection = ScreenSection(screen_id=tiedToScreen.id,
+            section_id=newSection.id)
+        session.add(newScreenSection)
+        session.commit()
+        flash("Section added to Screen!")
+        return redirect(url_for('projectPage', org_id=project.org.id,
+            project_id=project.id))
+    else:
+        return render_template('create/section.html', screens=screens,
+            project=project)
+
 
 # query specified org, serve edit org page for get, update form data for post
 @app.route('/o?<int:org_id>&ed', methods=['GET', 'POST'])
@@ -385,7 +416,7 @@ def delRole(role_id):
 @app.route('/scrn?<int:screen_id>&d', methods=['GET', 'POST'])
 def delScreen(screen_id):
     delScreen = session.query(Screen).filter_by(id=screen_id).one()
-    org_id=delScreen.org.id
+    org_id=delScreen.project.org.id
     project_id=delScreen.project.id
     allorgs = session.query(Org).all()
     allprojects = session.query(Project).all()

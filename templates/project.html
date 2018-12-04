@@ -20,12 +20,10 @@
 <!-- Jumbotron -->
     <main role="main" class="container">
       <div class="jumbotron" style="padding:1rem 2rem;">
-        <div style="float:right;text-align:right;">
+        <div style="float:right;text-align:right;padding:2rem;">
           <p class=lead>User Stories output as:</p>
-          <i>"As a(n) <kbd>&lt;User Role Title&gt;</kbd>,<br>
-            on <kbd>&lt;Screen Title&gt;</kbd> screen,<br>
-          When I <kbd>&lt;Action Description&gt;</kbd>,<br>
-          <kbd>&lt;Story Description&gt;</kbd>."</i>
+          <i>"As a(n) <kbd>&lt;User Role Title&gt;</kbd>, on <kbd>&lt;Screen Title&gt;</kbd> screen,<br>
+          When I <kbd>&lt;Action Description&gt;</kbd>, <kbd>&lt;Story Description&gt;</kbd>."</i>
         </div>
         <h1>{{org.title}} - {{project.title}}</h1>
         <p class="lead">{{project.description}}</p>
@@ -93,90 +91,47 @@
 
       <hr>
 
-<!-- Screens Row -->
+<!-- Screens IMAGE Row -->
       <div class="container">
         <div class="row">
-          <div class="col-md-3">
+          <div class="col-md-12 mb-3">
             <h3>Screens</h3>
-            <p>Description</p>
-              <!--<p><button type="button" class="btn btn-secondary btn-sm"
-                  data-toggle="modal" data-target="#add-screen"
-                  data-authRequired="No">Add a Screen &raquo;</button></p>-->
-              <p><button type="button" class="btn btn-secondary btn-sm" data-toggle="modal" data-target="#add-screen">Add a Screen &raquo;</button></p>
-                <br>
+          </div>
+        </div>
 
-              <br>
+        <div class="row">
+
+        <!-- Screen Card -->
+          {% for i in screens %}
+          <div class="col-md-4" style="margin-bottom:2rem;">
+            <div class="card">
+              <div class="card-body">
+                <h5 class="card-title">{{i.title}}</h5>
+                <p class="card-text">{{i.description}} {% if authRequired is defined %}<i>(Private: {{i.authRequired}})</i>{% endif %}</p>
+                <span style="float:right;"><a href="#" class="btn btn-sm btn-primary">View</a>&nbsp;
+                <a href="{{url_for('delScreen', screen_id = i.id)}}" class="btn btn-sm btn-outline-danger">Delete</a></span>
+              </div>
+            </div>
           </div>
-          <div class="col-md-9">
-            <table class="table table-responsive table-sm table-hover" width="100%">
-              <thead class="thead-light">
-                <tr>
-                  <th scope="col" width="35px">#</th>
-                  <th scope="col" width="40px"></th>
-                  <th scope="col" width="40px"></th>
-                  <th scope="col" width="200px">Title</th>
-                  <th scope="col" width="457px">Description</th>
-                  <th scope="col" width="70px">Private</th>
-                </tr>
-              </thead>
-              <tbody>
-                {% for i in screens %}
-                <tr>
-                  <th scope="row">{{loop.index}}</th>
-                  <td>Edit</td>
-                  <td><a href="{{url_for('delScreen', screen_id = i.id)}}">Delete</a></td>
-                  <td>{{i.title}}</td>
-                  <td>{{i.description}}</td>
-                  <td>{{i.authRequired}}</td>
-                </tr>
-                {% endfor %}
-              </tbody>
-            </table>
+          {% endfor %}
+          <!-- END Screen Card -->
+
+          <!-- ADD Ghost-Box -->
+          <div class="col-md-4" style="margin-bottom:2rem;">
+            <div class="card" style="background-clip: text;color: #999;border: 1px solid #C9C9C9;">
+              <div class="card-body">
+                <h5 class="card-title">Need More?</h5>
+                <p class="card-text">Add another screen. It's easy!</p>
+                <!--<a href="#" class="btn btn-sm btn-secondary" style="float:right;">Click Here</a>-->
+                <p><button type="button" class="btn btn-secondary btn-sm" data-toggle="modal" data-target="#add-screen" style="float:right;">Click Here &raquo;</button></p>
+              </div>
+            </div>
           </div>
+          <!-- END Ghost-Box -->
+
         </div>
       </div>
 <!-- Screens Row END -->
-
-        <hr>
-
-<!-- Functions Row -->
-      <div class="container">
-        <div class="row">
-          <div class="col-md-3">
-            <h3>Functions</h3>
-            <p>Description</p>
-            <p><button type="button" class="btn btn-secondary btn-sm" data-toggle="modal" data-target="#add-function">Add a Function &raquo;</button></p>
-              <br>
-          </div>
-          <div class="col-md-9">
-            <table class="table table-responsive table-sm table-hover" width="100%">
-              <thead class="thead-light">
-                <tr>
-                  <th scope="col" width="35px">#</th>
-                  <th scope="col" width="40px"></th>
-                  <th scope="col" width="40px"></th>
-                  <th scope="col" width="200px">Title</th>
-                  <th scope="col" width="457px">Description</th>
-                  <th scope="col" width="70px">Private</th>
-                </tr>
-              </thead>
-              <tbody>
-                {% for i in functions %}
-                <tr>
-                  <th scope="row">{{loop.index}}</th>
-                  <td>Edit</td>
-                  <td><a href="{{url_for('delFunction', function_id=i.id)}}">Delete</a></td>
-                  <td>{{i.title}}</td>
-                  <td>{{i.description}}</td>
-                  <td>{{i.authRequired}}</td>
-                </tr>
-                {% endfor %}
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </div>
-<!-- Functions Row END -->
 
     </main>
 

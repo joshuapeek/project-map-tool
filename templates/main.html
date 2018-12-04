@@ -19,9 +19,49 @@
       </div>
 
       <div class="container">
-        <!-- Example row of columns -->
+
+        <!-- Orgs Row -->
         <div class="row mb-4">
-          <div class="col-md-4">
+          <div class="col-md-3">
+            <h3>Orgs</h3>
+              <p>View all Orgs in the system.</p>
+          </div>
+          <div class="col-md-9">
+              <table class="table table-responsive table-sm table-hover" width="100%">
+                <thead class="thead-light">
+                  <tr>
+                    <th scope="col" width="35px">#</th>
+                    <th scope="col" width="80px">Abbrev.</th>
+                    <th scope="col" width="508px">Title</th>
+                    <th scope="col" width="70px"></th>
+                    <th scope="col" width="70px"></th>
+                    <th scope="col" width="70px"></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for i in allorgs %}
+                  <tr>
+                    <th scope="row">{{loop.index}}</th>
+                    <td>{{i.title}}</td>
+                    <td></td>
+                    <td><a href='{{url_for('orgPage', org_id = i.id)}}'>View</a></td>
+                    <td><a href='{{url_for('editOrg', org_id = i.id)}}'>Edit</a></td>
+                    <td><a href='{{url_for('delOrg', org_id = i.id)}}'>Delete</a></td>
+                  </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+            <span style="float:right;">
+              <p><button type="button" class="btn btn-secondary btn-sm" data-toggle="modal" data-target="#add-org">Add an Org &raquo;</button></p>
+            </span>
+          </div>
+        </div>
+        <!-- Orgs Row End -->
+
+        {% if allorgs is defined %}
+        <!-- Projects Row -->
+        <div class="row mb-4">
+          <div class="col-md-3">
             <h3>Projects</h3>
             View all Projects in the system.
             <!--<p><button type="button" class="btn btn-secondary btn-block" data-toggle="modal" data-target="#add-org">Add an Org &raquo;</button></p>
@@ -32,15 +72,15 @@
             <!--<p><button type="button" class="btn btn-secondary btn-block" data-toggle="modal" data-target="#org-select">Adjust Orgs &raquo;</button></p>-->
             <!--<p><button type="button" class="btn btn-secondary btn-block" data-toggle="modal" data-target="#project-select">Adjust Projects &raquo;</button></p>-->
           </div>
-          <div class="col-md-8">
+          <div class="col-md-9">
               <table class="table table-responsive table-sm table-hover" width="100%">
                 <thead class="thead-light">
                   <tr>
-                    <th scope="col" width="45px">#</th>
+                    <th scope="col" width="35px">#</th>
                     <th scope="col" width="80px">Org</th>
-                    <th scope="col" width="425px">Project</th>
+                    <th scope="col" width="553px">Project</th>
                     <th scope="col" width="95px"></th>
-                    <th scope="col" width="65px"></th>
+                    <th scope="col" width="70px"></th>
                   </tr>
                 </thead>
                 <tbody>
@@ -60,68 +100,33 @@
             </span>
           </div>
         </div>
+        {% endif %}
 
-        <!-- Orgs Row -->
-        <div class="row mb-4">
-          <div class="col-md-4">
-            <h3>Orgs</h3>
-              <p>View all Orgs in the system.</p>
-          </div>
-          <div class="col-md-8">
-              <table class="table table-responsive table-sm table-hover" width="100%">
-                <thead class="thead-light">
-                  <tr>
-                    <th scope="col" width="55px">#</th>
-                    <th scope="col" width="501px">Title</th>
-                    <th scope="col" width="70px"></th>
-                    <th scope="col" width="70px"></th>
-                    <th scope="col" width="70px"></th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {% for i in allorgs %}
-                  <tr>
-                    <th scope="row">{{loop.index}}</th>
-                    <td>{{i.title}}</td>
-                    <td><a href='{{url_for('orgPage', org_id = i.id)}}'>View</a></td>
-                    <td><a href='{{url_for('editOrg', org_id = i.id)}}'>Edit</a></td>
-                    <td><a href='{{url_for('delOrg', org_id = i.id)}}'>Delete</a></td>
-                  </tr>
-                  {% endfor %}
-                </tbody>
-              </table>
-            <span style="float:right;">
-              <p><button type="button" class="btn btn-secondary btn-sm" data-toggle="modal" data-target="#add-org">Add an Org &raquo;</button></p>
-            </span>
-          </div>
-        </div>
-        <!-- Orgs Row End -->
-
+        {% if allprojects is defined %}
         <!-- Users Row -->
         <div class="row mb-4">
-          <div class="col-md-4">
+          <div class="col-md-3">
             <h3>Users</h3>
               <p>View all Users in the system.</p>
           </div>
-          <div class="col-md-8">
+          <div class="col-md-9">
               <table class="table table-responsive table-sm table-hover" width="100%">
                 <thead class="thead-light">
                   <tr>
-                    <th scope="col" width="55px">#</th>
-                    <th scope="col" width="165px">First</th>
-                    <th scope="col" width="165px">Last</th>
-                    <th scope="col" width="50px">Access</th>
-                    <th scope="col" width="300px">Org</th>
-                    <th scope="col" width="50px"></th>
-                    <th scope="col" width="51px"></th>
+                    <th scope="col" width="35px">#</th>
+                    <th scope="col" width="70px">Org</th>
+                    <th scope="col" width="70px">Access</th>
+                    <th scope="col" width="254px">First</th>
+                    <th scope="col" width="254px">Last</th>
+                    <th scope="col" width="70px"></th>
+                    <th scope="col" width="70px"></th>
                   </tr>
                 </thead>
                 <tbody>
                   {% for i in userOrgs %}
                   <tr>
                     <th scope="row">{{loop.index}}</th>
-                    <td>{{i.user.firstname}}</td>
-                    <td>{{i.user.lastname}}</td>
+                    <td>{{i.org.title}}</td>
                     <td>
                       {% if i.access == "0" %}
                       None
@@ -133,7 +138,8 @@
                       Error
                       {% endif %}
                     </td>
-                    <td>{{i.org.title}}</td>
+                    <td>{{i.user.firstname}}</td>
+                    <td>{{i.user.lastname}}</td>
                     <td>Edit</td>
                     <td><a href='{{url_for('delUser', user_id = i.user.id)}}'>Delete</a></td>
                   </tr>
@@ -145,8 +151,8 @@
             </span>
           </div>
         </div>
-        <!-- Users Row End
-
+        <!-- Users Row End -->
+        {% endif %}
 
       </div>
 
