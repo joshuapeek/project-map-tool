@@ -21,9 +21,9 @@
           <div class="col-md-8 mb-3">
 
             <div class="row">
-              <div class="col-md-12 mb-3">
+              <div class="col-md-12 mb-5 text-center">
                 <br>
-                <h2>Editing {{editRole.title}}</h2>
+                <h2>Editing {{editRole.title}} Role</h2>
               </div>
             </div>
 
@@ -54,7 +54,7 @@
               <div class="row">
                 <div class="col-md-12 mb-3">
                   <label for="description">Role Description</label>
-                  <textarea class="form-control" id="description" rows="3" name="description" value="{{editRole.description}}" required></textarea>
+                  <textarea class="form-control" id="description" rows="3" name="description" required>{{editRole.description}}</textarea>
                   <div class="invalid-feedback">
                     Please enter a valid description.
                   </div>

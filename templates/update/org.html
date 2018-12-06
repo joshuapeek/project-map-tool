@@ -13,8 +13,6 @@
     <div class="container">
       <div class="py-5 text-center">
         <h2>Editing {{org.title}}</h2>
-        <p class="lead">Use the form below to edit {{org.title}},
-        but be careful!</p>
       </div>
 
 
@@ -28,7 +26,7 @@
             <div class="row">
               <div class="col-md-6 mb-3">
                 <label for="orgtitle">Org title</label>
-                <input type="text" class="form-control" id="orgtitle" placeholder="{{org.title}}" name="orgtitle" required>
+                <input type="text" class="form-control" id="orgtitle" value="{{org.title}}" name="orgtitle" required>
                 <div class="invalid-feedback">
                   Valid Org name is required.
                 </div>
@@ -37,7 +35,7 @@
 
             <div class="mb-3">
               <label for="orgdesc">Org Description <span class="test-muted">(Optional)</span></label>
-              <input type="text" class="form-control" id="orgdesc" placeholder="{{org.description}}" name="orgdesc">
+              <textarea class="form-control" id="orgdesc" rows="3" name="orgdesc">{{org.description}}</textarea>
               <div class="invalid-feedback">
                 Please enter a valid org description.
               </div>

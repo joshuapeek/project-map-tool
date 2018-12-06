@@ -19,7 +19,7 @@
               <div class="row">
                 <div class="col-md-6 mb-3">
                   <label for="projecttitle">Project title</label>
-                  <input type="text" class="form-control" id="projecttitle" placeholder="{{project.title}}" name="projecttitle" required>
+                  <input type="text" class="form-control" id="projecttitle" value="{{project.title}}" name="projecttitle" required>
                   <div class="invalid-feedback">
                     Valid Project name is required.
                   </div>
@@ -28,7 +28,7 @@
 
               <div class="mb-3">
                 <label for="projectdesc">Project Description <span class="test-muted">(Optional)</span></label>
-                <input type="text" class="form-control" id="projectdesc" placeholder="{{project.description}}" name="projectdesc">
+                <textarea class="form-control" id="projectdesc" rows="3" name="projectdesc">{{project.description}}</textarea>
                 <div class="invalid-feedback">
                   Please enter a valid project description.
                 </div>
