@@ -329,7 +329,6 @@ def editRole(role_id):
         project_id=editRole.project.id).all()
     if request.method == 'POST':
         if request.form['title']:
-            # THIS NEEDS TO BE DONE
             editRole.title = request.form['title']
             editRole.description = request.form['description']
             editRole.authRequired = request.form['authRequired']
