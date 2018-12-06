@@ -48,46 +48,58 @@
 <!-- End Instructions -->
 
 
-<!-- User Roles Row -->
-      <div class="container">
-        <div class="row">
-          <div class="col-md-3">
-            <h3>User Roles</h3>
-              <p>Description</p>
-              <!--<p><button type="button" class="btn btn-secondary btn-sm" data-toggle="modal" data-target="#add-role">Add a Role &raquo;</button></p>-->
-              <p><button type="button" class="btn btn-secondary btn-sm" data-toggle="modal" data-target="#add-role">Add a User Role &raquo;</button></p>
-                <br>
-              <br>
-          </div>
-          <div class="col-md-9">
-            <table class="table table-responsive table-sm table-hover" width="100%">
-              <thead class="thead-light">
-                <tr>
-                  <th scope="col" width="35px">#</th>
-                  <th scope="col" width="40px"></th>
-                  <th scope="col" width="40px"></th>
-                  <th scope="col" width="200px">Title</th>
-                  <th scope="col" width="457px">Description</th>
-                  <th scope="col" width="70px">Private</th>
-                </tr>
-              </thead>
-              <tbody>
+      <!-- VISUAL User Roles Row -->
+            <div class="container">
+              <!-- Header Row -->
+              <div class="row">
+                <div class="col-md-12 mb-3">
+                  <h3>User Roles</h3>
+                </div>
+              </div>
+              <!-- END Header Row -->
+
+              <!-- Card Row -->
+              <div class="row">
+
                 {% for i in roles %}
-                <tr>
-                  <th scope="row">{{loop.index}}</th>
-                  <td>Edit</td>
-                  <td><a href="{{url_for('delRole', role_id = i.id)}}">Delete</a></td>
-                  <td>{{i.title}}</td>
-                  <td>{{i.description}}</td>
-                  <td>{{i.authRequired}}</td>
-                </tr>
+                <!-- ROLE Card -->
+                <div class="col-md-3" style="margin-bottom:2rem;">
+                  <div class="card mx-auto">
+                    <div class="card-body mx-auto">
+                      <center><img src="../../../static/images/profile.png" width="50%"></center><br>
+                      <h5 class="card-title">{{i.title}}</h5>
+                      <p class="card-text">{{i.description}}
+                        {% if authRequired is defined %}(Authenticated: {{i.authRequired}}){% endif %}</p>
+                      <!--<a href="#" class="btn btn-sm btn-secondary" style="float:right;">Click Here</a>-->
+                      <span style="float:right;"><a href="#" class="btn btn-sm btn-primary">View</a>&nbsp;
+                      <a href="{{url_for('delRole', role_id = i.id)}}" class="btn btn-sm btn-outline-danger">Delete</a></span>
+                    </div>
+                  </div>
+                </div>
+                <!-- END Role Card -->
                 {% endfor %}
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </div>
-<!-- User Roles Row END -->
+
+
+                <!-- GHOST Card -->
+                <div class="col-md-3" style="margin-bottom:2rem;">
+                  <div class="card mx-auto" style="background-clip: text;color: #999;border: 1px solid #C9C9C9;">
+                    <div class="card-body">
+                      <!-- <center><img src="../../../static/images/profile.png" width="50%"></center><br> -->
+                      <h5 class="card-title">Need More?</h5>
+                      <p class="card-text">Not a problem.</p>
+                      <!--<a href="#" class="btn btn-sm btn-secondary" style="float:right;">Click Here</a>-->
+                      <p><button type="button" class="btn btn-secondary btn-sm" data-toggle="modal" data-target="#add-role" style="float:right;">Add a Role &raquo;</button></p>
+                    </div>
+                  </div>
+                </div>
+                <!-- END Ghost -->
+
+
+              </div>
+              <!-- END Card Row -->
+
+            </div>
+      <!-- User VISUAL Roles Row END -->
 
       <hr>
 
@@ -121,9 +133,9 @@
             <div class="card" style="background-clip: text;color: #999;border: 1px solid #C9C9C9;">
               <div class="card-body">
                 <h5 class="card-title">Need More?</h5>
-                <p class="card-text">Add another screen. It's easy!</p>
+                <p class="card-text">Not a problem.</p>
                 <!--<a href="#" class="btn btn-sm btn-secondary" style="float:right;">Click Here</a>-->
-                <p><button type="button" class="btn btn-secondary btn-sm" data-toggle="modal" data-target="#add-screen" style="float:right;">Click Here &raquo;</button></p>
+                <p><button type="button" class="btn btn-secondary btn-sm" data-toggle="modal" data-target="#add-screen" style="float:right;">Add a Screen &raquo;</button></p>
               </div>
             </div>
           </div>
