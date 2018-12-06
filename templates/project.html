@@ -26,8 +26,9 @@
           When I <kbd>&lt;Action Description&gt;</kbd>, <kbd>&lt;Story Description&gt;</kbd>."</i>
         </div>
         <h1>{{org.title}} - {{project.title}}</h1>
-        <p class="lead">{{project.description}}</p>
-        <button type="button" class="btn btn-md btn btn-outline-light" data-toggle="modal" data-target="#edit-project-details">Edit Details &raquo;</button>
+        <p class="lead">{{project.description}}
+          {% if project.description == "" %}<br>{% endif %}</p>
+        <button type="button" class="btn btn-sm btn btn-outline-light" data-toggle="modal" data-target="#edit-project-details">Edit Details &raquo;</button>
       </div>
 <!-- End Jumbotron -->
 
@@ -65,8 +66,8 @@
                 <!-- ROLE Card -->
                 <div class="col-md-3" style="margin-bottom:2rem;">
                   <div class="card mx-auto">
-                    <div class="card-body mx-auto">
-                      <center><img src="../../../static/images/profile.png" width="50%"></center><br>
+                    <div class="card-body mx-auto" style="padding:">
+                      <center><img src="../../../static/images/profile.png" width="30%"></center><br>
                       <h5 class="card-title">{{i.title}}</h5>
                       <p class="card-text">{{i.description}}
                         {% if authRequired is defined %}(Authenticated: {{i.authRequired}}){% endif %}</p>
@@ -81,14 +82,13 @@
 
 
                 <!-- GHOST Role Card -->
-                <div class="col-md-3" style="margin-bottom:2rem;">
+                <div class="col-md-2" style="margin-bottom:2rem;">
                   <div class="card mx-auto" style="background-clip: text;color: #999;border: 1px solid #C9C9C9;">
                     <div class="card-body">
                       <!-- <center><img src="../../../static/images/profile.png" width="50%"></center><br> -->
                       <h5 class="card-title">Need More?</h5>
-                      <p class="card-text">Not a problem.</p>
                       <!--<a href="#" class="btn btn-sm btn-secondary" style="float:right;">Click Here</a>-->
-                      <p><button type="button" class="btn btn-secondary btn-sm" data-toggle="modal" data-target="#add-role" style="float:right;">Add a Role &raquo;</button></p>
+                      <center><button type="button" class="btn btn-secondary btn-sm" data-toggle="modal" data-target="#add-role">Add a Role &raquo;</button></center>
                     </div>
                   </div>
                 </div>
@@ -129,13 +129,12 @@
           <!-- END Screen Card -->
 
           <!-- ADD Ghost-Box -->
-          <div class="col-md-4" style="margin-bottom:2rem;">
+          <div class="col-md-2" style="margin-bottom:2rem;">
             <div class="card" style="background-clip: text;color: #999;border: 1px solid #C9C9C9;">
               <div class="card-body">
                 <h5 class="card-title">Need More?</h5>
-                <p class="card-text">Not a problem.</p>
                 <!--<a href="#" class="btn btn-sm btn-secondary" style="float:right;">Click Here</a>-->
-                <p><button type="button" class="btn btn-secondary btn-sm" data-toggle="modal" data-target="#add-screen" style="float:right;">Add a Screen &raquo;</button></p>
+                <center><button type="button" class="btn btn-secondary btn-sm" data-toggle="modal" data-target="#add-screen">Add a Screen &raquo;</button></center>
               </div>
             </div>
           </div>
