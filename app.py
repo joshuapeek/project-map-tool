@@ -331,14 +331,15 @@ def editRole(role_id):
         if request.form['title']:
             # THIS NEEDS TO BE DONE
             editRole.title = request.form['title']
-            editRole.description = request.form['desc']
+            editRole.description = request.form['description']
+            editRole.authRequired = request.form['authRequired']
         session.add(editRole)
         session.commit()
         flash("Role Edited!")
         return redirect(url_for('projectPage',org_id=editRole.project.org.id,
                                  project_id=editRole.project.id))
     else:
-        return render_template('editProject.html', editRole=editRole,
+        return render_template('update/role.html', editRole=editRole,
             section=sections, screens=screens)
 
 

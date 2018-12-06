@@ -71,7 +71,7 @@
                       <p class="card-text">{{i.description}}
                         {% if authRequired is defined %}(Authenticated: {{i.authRequired}}){% endif %}</p>
                       <!--<a href="#" class="btn btn-sm btn-secondary" style="float:right;">Click Here</a>-->
-                      <span style="float:right;"><a href="#" class="btn btn-sm btn-primary">View</a>&nbsp;
+                      <span style="float:right;"><a href="{{url_for('editRole', role_id = i.id)}}" class="btn btn-sm btn-primary">Edit</a>&nbsp;
                       <a href="{{url_for('delRole', role_id = i.id)}}" class="btn btn-sm btn-outline-danger">Delete</a></span>
                     </div>
                   </div>
@@ -80,7 +80,7 @@
                 {% endfor %}
 
 
-                <!-- GHOST Card -->
+                <!-- GHOST Role Card -->
                 <div class="col-md-3" style="margin-bottom:2rem;">
                   <div class="card mx-auto" style="background-clip: text;color: #999;border: 1px solid #C9C9C9;">
                     <div class="card-body">
