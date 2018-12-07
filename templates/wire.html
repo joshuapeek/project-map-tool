@@ -4,30 +4,17 @@
 
 
   <body>
-    <title>Project-Map - {{org.title}} - {{project.title}}</title>
+    <title>Project-Map - {{screen.title}}</title>
 
-    {% include "modals/createrole.html" %}
-    {% include "modals/createscreen.html" %}
-    {% include "modals/createfunction.html" %}
-    {% include "modals/createfunctiongroup.html" %}
-    {% include "modals/createscreen.html" %}
-    {% include "modals/createproject.html" %}
-    {% include "modals/createorg.html" %}
-    {% include "modals/editprojectdetails.html" %}
     {% include "menu.html" %}
 
 
 <!-- Jumbotron -->
     <main role="main" class="container">
       <div class="jumbotron" style="padding:1rem 2rem;">
-        <div style="float:right;text-align:right;padding:2rem;">
-          <p class=lead>User Stories output as:</p>
-          <i>"As a(n) <kbd>&lt;User Role Title&gt;</kbd>, on <kbd>&lt;Screen Title&gt;</kbd> screen,<br>
-          When I <kbd>&lt;Action Description&gt;</kbd>, <kbd>&lt;Story Description&gt;</kbd>."</i>
-        </div>
-        <h1>{{org.title}} - {{project.title}}</h1>
-        <p class="lead">{{project.description}}
-          {% if project.description == "" %}<br>{% endif %}</p>
+        <h1>{{screen.title}}</h1>
+        <p class="lead">{{screen.description}}
+          {% if screen.description == "" %}<br>{% endif %}</p>
         <button type="button" class="btn btn-sm btn btn-outline-light" data-toggle="modal" data-target="#edit-project-details">Edit Details &raquo;</button>
       </div>
 <!-- End Jumbotron -->
@@ -35,112 +22,86 @@
 <!-- ROLE ACCESS -->
 <div class="container">
   <div class="row">
-    <h3>Role Access</h3>
-  </div>
-  <div class="row">
-    This screen can be accessed by the following Roles:
-    
+    <div class="col-md-6">
+      <div class="row">
+        <h3>Role Access</h3>
+      </div>
+      <div class="row">
+        <table class="table table-responsive table-sm table-hover" width="100%">
+          <thead class="thead-light">
+            <tr>
+              <th scope="col" width="55px">#</th>
+              <th scope="col" width="200px">Role</th>
+              <th scope="col" width="200px">Can access this screen?</th>
+              <th scope="col" width="70px"></th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for i in rolescreenaccess %}
+            <tr>
+              <th scope="row">{{loop.index}}</th>
+              <td>{{i.Role.title}}</td>
+              <td>
+                <!-- KNOWN ISSUE
+                If a new ROLE is created, it won't show up here until it has
+                an entry in table RoleScreen. Likely will need to adjust the
+                query in app.py for rolescreenaccess, to make it a left-join
+                which would get all ROLES, and then append the RoleScreen data.
+                This way, the "ELSE" statement below will take care of them
+                automatically, showing them in the list, but giving "0" access
+                -->
+                {% if i.RoleScreen.access == "1" %}
+                  YES
+                {% else %}
+                  NO
+                {% endif %}</td>
+              <td><a href='{{url_for('flipRoleScreen', role_id=i.RoleScreen.role_id, screen_id=i.RoleScreen.screen.id)}}'>Edit</a></td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+
+      </div>
+    </div>
+
+    <div class="col-md-6">
+      <h3>This page contains a KNOWN ISSUE</h3>
+      <p>ROLES won't show up here until they have an entry in table RoleScreen.
+      Likely will need to adjust the query in app.py for rolescreenaccess,
+      to make it a left-join which would get all ROLES, and then append the
+      RoleScreen table data. This way, the "ELSE" statement below will take
+      care of them automatically, showing them in the list,
+      but giving "0" access.</p>
+
+      <p>Currently, I'm using an Inner Join, which also creates the issue of
+      duplicate entries in the Role Access table, when a ROLE does have an
+      entry in the RoleScreen table.</p>
+    </div>
   </div>
 </div>
 
 <!-- END ROLE ACCESS -->
 
+<!-- SECTIONS -->
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      <h3>Sections</h3>
+      <p>Sections will appear here as colored "boxes". Title/description will
+        appear at top of each box, with an edit and delete button. Cards
+        will appear within for each defined "element" that will appear in the
+        section. Cards will contain edit button, allowing adjustment of
+        title/description as well as a delete element button. Similar to
+        "Project" page's Roles/Screens, a 'ghost' card will also exist,
+        allowing addition of new elements within the section.</p>
+        <p>Below the last section, a button will appear, allowing the addition
+          of a new section. Will need to give some thought to allowing
+          user to reorder the sections, as likely this will become a ux issue.<p>
+    </div>
+  </div>
+</div>
+<!-- END SECTIONS -->
 
-
-      <!-- VISUAL User Roles Row -->
-            <div class="container">
-              <!-- Header Row -->
-              <div class="row">
-                <div class="col-md-12 mb-3">
-                  <h3>User Roles</h3>
-                </div>
-              </div>
-              <!-- END Header Row -->
-
-              <!-- Card Row -->
-              <div class="row">
-
-                {% for i in roles %}
-                <!-- ROLE Card -->
-                <div class="col-md-3" style="margin-bottom:2rem;">
-                  <div class="card mx-auto">
-                    <div class="card-body mx-auto" style="padding:">
-                      <center><img src="../../../static/images/profile.png" width="30%"></center><br>
-                      <h5 class="card-title">{{i.title}}</h5>
-                      <p class="card-text">{{i.description}}
-                        {% if authRequired is defined %}(Authenticated: {{i.authRequired}}){% endif %}</p>
-                      <!--<a href="#" class="btn btn-sm btn-secondary" style="float:right;">Click Here</a>-->
-                      <span style="float:right;"><a href="{{url_for('editRole', role_id = i.id)}}" class="btn btn-sm btn-primary">Edit</a>&nbsp;
-                      <a href="{{url_for('delRole', role_id = i.id)}}" class="btn btn-sm btn-outline-danger">Delete</a></span>
-                    </div>
-                  </div>
-                </div>
-                <!-- END Role Card -->
-                {% endfor %}
-
-
-                <!-- GHOST Role Card -->
-                <div class="col-md-2" style="margin-bottom:2rem;">
-                  <div class="card mx-auto" style="background-clip: text;color: #999;border: 1px solid #C9C9C9;">
-                    <div class="card-body">
-                      <!-- <center><img src="../../../static/images/profile.png" width="50%"></center><br> -->
-                      <h5 class="card-title">Need More?</h5>
-                      <!--<a href="#" class="btn btn-sm btn-secondary" style="float:right;">Click Here</a>-->
-                      <center><button type="button" class="btn btn-secondary btn-sm" data-toggle="modal" data-target="#add-role">Add a Role &raquo;</button></center>
-                    </div>
-                  </div>
-                </div>
-                <!-- END Ghost -->
-
-
-              </div>
-              <!-- END Card Row -->
-
-            </div>
-      <!-- User VISUAL Roles Row END -->
-
-      <hr>
-
-<!-- Screens IMAGE Row -->
-      <div class="container">
-        <div class="row">
-          <div class="col-md-12 mb-3">
-            <h3>Screens</h3>
-          </div>
-        </div>
-
-        <div class="row">
-
-        <!-- Screen Card -->
-          {% for i in screens %}
-          <div class="col-md-4" style="margin-bottom:2rem;">
-            <div class="card">
-              <div class="card-body">
-                <h5 class="card-title">{{i.title}}</h5>
-                <p class="card-text">{{i.description}} {% if authRequired is defined %}<i>(Private: {{i.authRequired}})</i>{% endif %}</p>
-                <span style="float:right;"><a href="#" class="btn btn-sm btn-primary">View</a>&nbsp;
-                <a href="{{url_for('delScreen', screen_id = i.id)}}" class="btn btn-sm btn-outline-danger">Delete</a></span>
-              </div>
-            </div>
-          </div>
-          {% endfor %}
-          <!-- END Screen Card -->
-
-          <!-- ADD Ghost-Box -->
-          <div class="col-md-2" style="margin-bottom:2rem;">
-            <div class="card" style="background-clip: text;color: #999;border: 1px solid #C9C9C9;">
-              <div class="card-body">
-                <h5 class="card-title">Need More?</h5>
-                <!--<a href="#" class="btn btn-sm btn-secondary" style="float:right;">Click Here</a>-->
-                <center><button type="button" class="btn btn-secondary btn-sm" data-toggle="modal" data-target="#add-screen">Add a Screen &raquo;</button></center>
-              </div>
-            </div>
-          </div>
-          <!-- END Ghost-Box -->
-
-        </div>
-      </div>
-<!-- Screens Row END -->
 
     </main>
 

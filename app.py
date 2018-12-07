@@ -5,8 +5,9 @@ from sqlalchemy.orm import sessionmaker
 from database_setup import Org, Project, Role
 from database_setup import Screen, Function, Functgroup
 from database_setup import Action, Story, Section
-from database_setup import Element, roleScreen, roleSection
-from database_setup import storyScreen, user, userProject, ScreenSection
+from database_setup import Element, RoleScreen, RoleSection
+from database_setup import StoryScreen, user, userProject
+from database_setup import SectionElement, ScreenSection
 from database_setup import userOrg, super, Base
 from sqlalchemy.pool import StaticPool
 from flask import session as login_session
@@ -85,6 +86,44 @@ def projectPage(org_id, project_id):
                            screens=screens, fgs=fgs,
                            functions=functions, projects=projects,
                            allorgs=allorgs, allprojects=allprojects)
+
+
+# query specified project & screen
+# query roleScreen, roleSection, storyScreen for related screen
+# pass info to template to display wireframe of screen, with user stories, etc
+@app.route('/p<int:project_id>/scrn<int:screen_id>')
+def screenPage(project_id, screen_id):
+    allorgs = session.query(Org).all()
+    allprojects = session.query(Project).all()
+    project = session.query(Project).filter_by(id=project_id).one()
+    org = session.query(Org).filter_by(id=project.org.id).one()
+    projects = session.query(Project).filter_by(org_id=org.id).all()
+    rolescreenaccess = session.query(Role,RoleScreen).\
+        filter(Role.project_id==RoleScreen.project_id).\
+        filter(Role.id==RoleScreen.role_id).\
+        filter(RoleScreen.screen_id==screen_id).all()
+    roleaccess = session.query(Role,Screen,RoleScreen).\
+        filter(Role.id==RoleScreen.role_id).\
+        filter(Screen.id==RoleScreen.screen_id).\
+        filter(Screen.id==screen_id).all()
+    screen = session.query(Screen).filter_by(id=screen_id).one()
+    screenSection = session.query(ScreenSection).\
+        filter_by(screen_id=screen_id).all()
+    # ss = session.query(ScreenSection).subquery()
+    sectionElement = session.query(SectionElement).\
+        filter(SectionElement.section_id.in_(screenSection))
+    roleScreen = session.query(RoleScreen).filter_by(screen_id=screen_id).all()
+    roleSection = session.query(RoleSection).\
+        filter(RoleSection.section_id.in_(screenSection))
+    storyScreen = session.query(StoryScreen).\
+        filter_by(screen_id=screen_id).all()
+    return render_template('wire.html', screen=screen,
+        screenSection=screenSection,
+        sectionElement=sectionElement, roleScreen=roleScreen,
+        roleSection=roleSection, storyScreen=storyScreen,
+         rolescreenaccess=rolescreenaccess, allorgs=allorgs,
+         allprojects=allprojects,
+        projects=projects, org=org)
 
 
 # CREATE Pages-------------------------
@@ -340,6 +379,45 @@ def editRole(role_id):
     else:
         return render_template('update/role.html', editRole=editRole,
             section=sections, screens=screens)
+
+
+@app.route('/_fliprolescreen/r?<int:role_id>/scrn?<int:screen_id>')
+def flipRoleScreen(role_id, screen_id):
+    screen=session.query(Screen).filter_by(id=screen_id).one()
+    try:
+        check = session.query(RoleScreen).filter(and_(RoleScreen.role_id==role_id, RoleScreen.screen_id==screen_id)).one()
+    except:
+        check = "nf"
+    if check == "nf":
+        newRow = RoleScreen(project_id=screen.project.id,
+            screen_id=screen.id, role_id=role_id, access="1")
+        session.add(newRow)
+        session.commit()
+        return redirect(url_for('screenPage', project_id=screen.project.id, screen_id=screen.id))
+    if check.access == "1":
+        check.access = "0"
+        session.add(check)
+        session.commit()
+        flash("Role's access to screen revoked.")
+        return redirect(url_for('screenPage', project_id=screen.project.id, screen_id=screen.id))
+    if check.access == "0":
+        check.access = "1"
+        session.add(check)
+        session.commit()
+        flash("Role granted access to screen.")
+        return redirect(url_for('screenPage', project_id=screen.project.id, screen_id=screen.id))
+    else:
+        output=""
+        test1=check.role_id
+        test2=check.screen_id
+        test3=check.access
+        output+="role_id: " + str(test1) + "<br>"
+        output+="screen_id: " + str(test2)+ "<br>"
+        output+="access: " + str(test3)+ "<br>"
+        return output
+        # check is a list of RoleScreens, which have attributes:
+        # id, access, project_id, role_id, screen_id
+
 
 
 # DELETE Pages-------------------------

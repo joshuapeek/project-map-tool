@@ -164,7 +164,7 @@ class Element(Base):
 
 
 # MVP table 9
-class roleScreen(Base):
+class RoleScreen(Base):
     __tablename__ = 'rolescreen'
     id = Column(Integer, primary_key=True)
     access = Column(String(1), nullable=False)
@@ -187,7 +187,7 @@ class roleScreen(Base):
 
 
 # MVP table 10
-class roleSection(Base):
+class RoleSection(Base):
     __tablename__ = 'rolesection'
     id = Column(Integer, primary_key=True)
     access = Column(String(1), nullable=False)
@@ -210,7 +210,7 @@ class roleSection(Base):
 
 
 # MVP table 11
-class storyScreen(Base):
+class StoryScreen(Base):
     __tablename__ = 'storyscreen'
     id = Column(Integer, primary_key=True)
     project_id = Column(Integer, ForeignKey('project.id'))
@@ -318,10 +318,26 @@ class ScreenSection(Base):
     def serialize(self):
         return {
             'id': self.id,
-            'title': self.title,
-            'description': self.description,
             'screen_id': self.screen_id,
             'section_id': self.section_id
+        }
+
+
+# MVP table 17
+class SectionElement(Base):
+    __tablename__ = 'sectionelement'
+    id = Column(Integer, primary_key=True)
+    section_id = Column(Integer, ForeignKey('section.id'))
+    section = relationship(Section)
+    element_id = Column(Integer, ForeignKey('element.id'))
+    element = relationship(Element)
+
+    @property
+    def serialize(self):
+        return {
+            'id': self.id,
+            'section_id': self.section_id,
+            'element_id': self.element_id
         }
 
 
