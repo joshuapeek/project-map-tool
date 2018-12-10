@@ -114,22 +114,14 @@ def screenPage(project_id, screen_id):
             newrole=Role(id=i.id, title=i.title)
             newroles.append(newrole)
     screen = session.query(Screen).filter_by(id=screen_id).one()
-    screenSection = session.query(ScreenSection).\
+    screenSections = session.query(ScreenSection).\
         filter_by(screen_id=screen_id).all()
-    # ss = session.query(ScreenSection).subquery()
-    sectionElement = session.query(SectionElement).\
-        filter(SectionElement.section_id.in_(screenSection))
     roleScreen = session.query(RoleScreen).filter_by(screen_id=screen_id).all()
-    roleSection = session.query(RoleSection).\
-        filter(RoleSection.section_id.in_(screenSection))
-    storyScreen = session.query(StoryScreen).\
-        filter_by(screen_id=screen_id).all()
     return render_template('wire.html', screen=screen,
-        screenSection=screenSection,
-        sectionElement=sectionElement, roleScreen=roleScreen,
-        roleSection=roleSection, storyScreen=storyScreen,
+        screenSections=screenSections,
+        roleScreen=roleScreen,
         allorgs=allorgs,
-         allprojects=allprojects, roleaccess=roleaccess,
+        allprojects=allprojects, roleaccess=roleaccess,
         projects=projects, org=org, newroles=newroles)
 
 
@@ -248,13 +240,32 @@ def newScreen(project_id):
         session.add(newScreen)
         session.commit()
         flash("New Screen created!")
-        screen = session.query(Screen).filter_by(
-            title=request.form['title']).one()
         return redirect(url_for('projectPage',org_id=project.org.id,
                                  project_id=project_id))
     else:
         return render_template('create/screen.html', project=project)
 
+
+# serves new section form for get request, adds form data to db for post
+@app.route('/scrn?<int:screen_id>&+sctn', methods=['GET', 'POST'])
+def newSection(screen_id):
+    screen = session.query(Screen).filter_by(id=screen_id).one()
+    if request.method == 'POST':
+        newSection = Section(title=request.form['title'],
+                     description=request.form['description'],
+                     project_id=screen.project.id)
+        session.add(newSection)
+        session.commit()
+        session.refresh(newSection)
+        newScreenSection = ScreenSection(screen_id=screen_id,
+            section_id=newSection.id)
+        session.add(newScreenSection)
+        session.commit()
+        flash("New Section created!")
+        return redirect(url_for('screenPage',project_id=screen.project.id,
+                                 screen_id=screen_id))
+    else:
+        return render_template('create/section.html', screen=screen)
 
 
 # serves new function form for get, adds form data to db for post
@@ -294,38 +305,6 @@ def newFunction(project_id):
 
 # UPDATE Pages-------------------------
 
-# TEST for adding a section
-# query specified project, then identify screens for that project;
-# on get, serve form, passing in screens for project, project
-# on post, first create section from form fields, then
-# add entry to ScreenSection, tying to screens specified
-# query specified org, serve edit org page for get, update form data for post
-@app.route('/addsctn/p<int:project_id>', methods=['GET', 'POST'])
-def createSection(project_id):
-    project = session.query(Project).filter_by(id=project_id).one()
-    screens = session.query(Screen).filter_by(project_id=project_id).all()
-    if request.method == 'POST':
-        newSection = Section(title=request.form['title'],
-                           description=request.form['description'],
-                           project_id=project_id)
-        session.add(newSection)
-        session.commit()
-        session.refresh(newSection)
-        flash("Section Created!")
-        screen_id=request.form['screen']
-        tiedToScreen = session.query(Screen).filter_by(id=screen_id).one()
-        newScreenSection = ScreenSection(screen_id=tiedToScreen.id,
-            section_id=newSection.id)
-        session.add(newScreenSection)
-        session.commit()
-        flash("Section added to Screen!")
-        return redirect(url_for('projectPage', org_id=project.org.id,
-            project_id=project.id))
-    else:
-        return render_template('create/section.html', screens=screens,
-            project=project)
-
-
 # query specified org, serve edit org page for get, update form data for post
 @app.route('/o?<int:org_id>&ed', methods=['GET', 'POST'])
 def editOrg(org_id):
@@ -362,6 +341,25 @@ def editProject(org_id, project_id):
     else:
         return render_template('editProject.html', org=editOrg,
                                 project=editProject)
+
+
+# query specified org & project
+# serve edit project page for get, update form data for post
+@app.route('/scrn?<int:screen_id>&ed', methods=['GET', 'POST'])
+def editScreen(screen_id):
+    editScreen=session.query(Screen).filter_by(id=screen_id).one()
+    if request.method == 'POST':
+        if request.form['title']:
+            editScreen.title = request.form['title']
+            editScreen.description = request.form['description']
+        session.add(editScreen)
+        session.commit()
+        flash("Screen Edited!")
+        return redirect(url_for('screenPage',project_id=editScreen.project.id,
+                                 screen_id=editScreen.id))
+    else:
+        return redirect(url_for('screenPage',project_id=editScreen.project.id,
+                                 screen_id=editScreen.id))
 
 
 # query specified role; find screens & sections from related project

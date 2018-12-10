@@ -1,0 +1,65 @@
+<!-- Large modal -->
+<!--<button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-lg">Large modal</button>-->
+
+<div class="modal bd-example-modal-lg" id="add-section" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Add a Section</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+
+        <!-- start body row -->
+        <div class="row">
+          <div class="col-md-12 order-md-1">
+            <form class="needs-validation" action='{{url_for('newSection', screen_id=screen.id)}}' method='post' novalidate>
+
+              <!-- start row -->
+              <div class="row">
+                <div class="col-md-12 mb-3">
+                  <label for="title">Section title</label>
+                  <input type="text" class="form-control" id="title" name="title" required>
+                  <div class="invalid-feedback">
+                    Please enter a valid title.
+                  </div>
+                </div>
+              </div>
+              <!-- end row -->
+
+              <!-- start row -->
+              <div class=row>
+                <div class="col-md-12 mb-3">
+                  <label for="description">Section Description</label>
+                  <textarea class="form-control" id="description" rows="3" name="description" required></textarea>
+                  <div class="invalid-feedback">
+                    Please enter a valid description.
+                  </div>
+                </div>
+              </div>
+              <!-- end row -->
+
+              <hr class="mb-4">
+
+              <div class="row">
+                <div class="col-md-6 mb-3">
+                  <button class="btn btn-primary btn-lg btn-block" type="Create">Continue</button>
+                </div>
+            </form>
+                <div class="col-md-6 mb-3">
+                  <form action="{{url_for('screenPage', project_id=screen.project.id, screen_id=screen.id)}}">
+                    <button class="btn btn-secondary btn-lg btn-block" type="submit">Cancel</button>
+                  </form>
+                </div>
+              </div>
+          </div>
+        </div>
+        <!-- end body row -->
+
+
+      </div>
+    </div>
+  </div>
+</div>

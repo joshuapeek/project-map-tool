@@ -7,54 +7,46 @@
     <title>Project-Map - {{screen.title}}</title>
 
     {% include "menu.html" %}
-
+    {% include "modals/createsection.html" %}
+    {% include "modals/editscreen.html" %}
 
 <!-- Jumbotron -->
     <main role="main" class="container">
       <div class="jumbotron" style="padding:1rem 2rem;">
-        <h1>{{screen.title}}</h1>
-        <p class="lead">{{screen.description}}
+        <h1>{{screen.title}} Screen</h1>
+        <!--<p class="lead">{{screen.description}}
           {% if screen.description == "" %}<br>{% endif %}</p>
-        <button type="button" class="btn btn-sm btn btn-outline-light" data-toggle="modal" data-target="#edit-project-details">Edit Details &raquo;</button>
+        <button type="button" class="btn btn-sm btn btn-outline-light" data-toggle="modal" data-target="#edit-project-details">Edit Details &raquo;</button>-->
       </div>
 <!-- End Jumbotron -->
 
 <!-- ROLE ACCESS -->
 <div class="container">
   <div class="row">
-    <div class="col-md-6">
-      <div class="row">
+    <div class="col-md-6 mb-3">
         <h3>Role Access</h3>
-      </div>
-      <div class="row">
         <table class="table table-responsive table-sm table-hover" width="100%">
           <thead class="thead-light">
             <tr>
-              <th scope="col" width="222px">Role</th>
-              <th scope="col" width="222px">Can access this screen?</th>
-              <th scope="col" width="70px"></th>
+              <th scope="col" width="245px">Role</th>
+              <th scope="col" width="200px">Can access this screen?</th>
+              <th scope="col" width="45px"></th>
             </tr>
           </thead>
           <tbody>
+            <!-- adding rows for roles that ARE in RoleScreen already -->
             {% for i in roleaccess %}
             <tr>
               <td>{{i.title}}</td>
-              <td>
-                {% if i.access == "1" %}
-                  YES
-                {% else %}
-                  NO
-                {% endif %}</td>
+              <td>{% if i.access == "1" %}YES
+                {% else %}NO{% endif %}</td>
               <td><a href='{{url_for('flipRoleScreen', role_id=i.id, screen_id=screen.id)}}'>Edit</a></td>
             </tr>
             {% endfor %}
-
+            <!-- adding rows for roles that are NOT in RoleScreen already -->
             {% for i in newroles %}
             <tr>
-              <td>{{i.title}}</td>
-              <td>
-                  NO
-              </td>
+              <td>{{i.title}}</td><td>NO</td>
               <td><a href='{{url_for('flipRoleScreen', role_id=i.id, screen_id=screen.id)}}'>Edit</a></td>
             </tr>
             {% endfor %}
@@ -62,37 +54,42 @@
           </tbody>
         </table>
       </div>
-    </div>
 
     <div class="col-md-6">
-      <h3>This page NO LONGER contains a KNOWN ISSUE</h3>
-      <p>This KNOWN ISSUE was resolved by running two queries: one for project
-        roles already listed in ROLESCREEN table for this screen,
-        and one for those roles who do not have an entry in this screen in
-        ROLESCREEN. Both are then written into the table.</p>
+      <h3>Description</h3>
+      <p>{{screen.description}}</p>
+      <p>Need edit and delete buttons for Sections. Will need to give some thought to allowing user to reorder the sections, as likely this will become a ux issue.<p>
+      <button type="button" class="btn btn-sm btn btn-outline-secondary" data-toggle="modal" data-target="#edit-screen">Edit Details &raquo;</button>
     </div>
   </div>
 </div>
-
 <!-- END ROLE ACCESS -->
 
 <!-- SECTIONS -->
 <div class="container">
   <div class="row">
-    <div class="col-md-12">
+    <div class="col-md-12 mb-3">
       <h3>Sections</h3>
-      <p>Sections will appear here as colored "boxes". Title/description will
-        appear at top of each box, with an edit and delete button. Cards
-        will appear within for each defined "element" that will appear in the
-        section. Cards will contain edit button, allowing adjustment of
-        title/description as well as a delete element button. Similar to
-        "Project" page's Roles/Screens, a 'ghost' card will also exist,
-        allowing addition of new elements within the section.</p>
-        <p>Below the last section, a button will appear, allowing the addition
-          of a new section. Will need to give some thought to allowing
-          user to reorder the sections, as likely this will become a ux issue.<p>
+      <p><button type="button" class="btn btn-secondary btn-sm" data-toggle="modal" data-target="#add-section">Add a Section &raquo;</button></p>
     </div>
   </div>
+  {% for i in screenSections %}
+  <div class="row mb-3">
+    <div class="col-md-12">
+      <div class="card text-center" style="background-color:#fefefe;">
+        <div class="card-header text-left">
+          <span style="float:left;"><h5>{{i.section.title}}</h5></span>
+          <span style="float:right;text-align:right;padding:.2rem;"><p class="card-text">{{i.section.description}}</p></span>
+        </div>
+        <div class="card-body">
+          <!--<h5 class="card-title">Special title treatment</h5>-->
+          <p class="card-text">Element Cards for the section will go here, including title, description, and remove button.
+          Will also have a "Ghost" card, to add new elements.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  {% endfor %}
 </div>
 <!-- END SECTIONS -->
 
