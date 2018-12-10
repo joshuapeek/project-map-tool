@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request, redirect
 from flask import url_for, flash, jsonify
-from sqlalchemy import create_engine, and_
+from sqlalchemy import create_engine, and_, or_
 from sqlalchemy.orm import sessionmaker
 from database_setup import Org, Project, Role
 from database_setup import Screen, Function, Functgroup
@@ -98,14 +98,21 @@ def screenPage(project_id, screen_id):
     project = session.query(Project).filter_by(id=project_id).one()
     org = session.query(Org).filter_by(id=project.org.id).one()
     projects = session.query(Project).filter_by(org_id=org.id).all()
-    rolescreenaccess = session.query(Role,RoleScreen).\
-        filter(Role.project_id==RoleScreen.project_id).\
-        filter(Role.id==RoleScreen.role_id).\
+    roleaccess = session.query(Role.id, Role.title, RoleScreen.access).\
+        join(RoleScreen).\
+        filter(Role.project_id==project_id).\
         filter(RoleScreen.screen_id==screen_id).all()
-    roleaccess = session.query(Role,Screen,RoleScreen).\
-        filter(Role.id==RoleScreen.role_id).\
-        filter(Screen.id==RoleScreen.screen_id).\
-        filter(Screen.id==screen_id).all()
+    knownroles=[]
+    for i in roleaccess:
+        knownroles.append(i.id)
+    getnewroles = session.query(Role).\
+        filter(Role.project_id==project_id).\
+        filter(Role.id not in knownroles).all()
+    newroles = []
+    for i in getnewroles:
+        if i.id not in knownroles:
+            newrole=Role(id=i.id, title=i.title)
+            newroles.append(newrole)
     screen = session.query(Screen).filter_by(id=screen_id).one()
     screenSection = session.query(ScreenSection).\
         filter_by(screen_id=screen_id).all()
@@ -121,9 +128,9 @@ def screenPage(project_id, screen_id):
         screenSection=screenSection,
         sectionElement=sectionElement, roleScreen=roleScreen,
         roleSection=roleSection, storyScreen=storyScreen,
-         rolescreenaccess=rolescreenaccess, allorgs=allorgs,
-         allprojects=allprojects,
-        projects=projects, org=org)
+        allorgs=allorgs,
+         allprojects=allprojects, roleaccess=roleaccess,
+        projects=projects, org=org, newroles=newroles)
 
 
 # CREATE Pages-------------------------

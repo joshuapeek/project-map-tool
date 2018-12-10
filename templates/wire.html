@@ -30,52 +30,46 @@
         <table class="table table-responsive table-sm table-hover" width="100%">
           <thead class="thead-light">
             <tr>
-              <th scope="col" width="55px">#</th>
-              <th scope="col" width="200px">Role</th>
-              <th scope="col" width="200px">Can access this screen?</th>
+              <th scope="col" width="222px">Role</th>
+              <th scope="col" width="222px">Can access this screen?</th>
               <th scope="col" width="70px"></th>
             </tr>
           </thead>
           <tbody>
-            {% for i in rolescreenaccess %}
+            {% for i in roleaccess %}
             <tr>
-              <th scope="row">{{loop.index}}</th>
-              <td>{{i.Role.title}}</td>
+              <td>{{i.title}}</td>
               <td>
-                <!-- KNOWN ISSUE
-                If a new ROLE is created, it won't show up here until it has
-                an entry in table RoleScreen. Likely will need to adjust the
-                query in app.py for rolescreenaccess, to make it a left-join
-                which would get all ROLES, and then append the RoleScreen data.
-                This way, the "ELSE" statement below will take care of them
-                automatically, showing them in the list, but giving "0" access
-                -->
-                {% if i.RoleScreen.access == "1" %}
+                {% if i.access == "1" %}
                   YES
                 {% else %}
                   NO
                 {% endif %}</td>
-              <td><a href='{{url_for('flipRoleScreen', role_id=i.RoleScreen.role_id, screen_id=i.RoleScreen.screen.id)}}'>Edit</a></td>
+              <td><a href='{{url_for('flipRoleScreen', role_id=i.id, screen_id=screen.id)}}'>Edit</a></td>
             </tr>
             {% endfor %}
+
+            {% for i in newroles %}
+            <tr>
+              <td>{{i.title}}</td>
+              <td>
+                  NO
+              </td>
+              <td><a href='{{url_for('flipRoleScreen', role_id=i.id, screen_id=screen.id)}}'>Edit</a></td>
+            </tr>
+            {% endfor %}
+
           </tbody>
         </table>
-
       </div>
     </div>
 
     <div class="col-md-6">
-      <h3>This page contains a KNOWN ISSUE</h3>
-      <p>ROLES won't show up here until they have an entry in table RoleScreen.
-      Likely will need to adjust the query in app.py for rolescreenaccess,
-      to make it a left-join which would get all ROLES, and then append the
-      RoleScreen table data. This way, the "ELSE" statement below will take
-      care of them automatically, showing them in the list,
-      but giving "0" access.</p>
-
-      <p>Currently, I'm using an Inner Join, which also creates the issue of
-      duplicate entries in the Role Access table, when a ROLE does have an
-      entry in the RoleScreen table.</p>
+      <h3>This page NO LONGER contains a KNOWN ISSUE</h3>
+      <p>This KNOWN ISSUE was resolved by running two queries: one for project
+        roles already listed in ROLESCREEN table for this screen,
+        and one for those roles who do not have an entry in this screen in
+        ROLESCREEN. Both are then written into the table.</p>
     </div>
   </div>
 </div>
