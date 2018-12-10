@@ -53,6 +53,9 @@
                 </form>
               </div>
             </div>
+            <form action="{{url_for('delSection', section_id=section.id)}}">
+              <p><br><button style="float:right;" class="btn btn-danger btn-sm" type="submit">Delete Section</button></p>
+            </form>
         </div>
         <!-- END FORM -->
 

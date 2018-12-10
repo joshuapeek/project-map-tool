@@ -117,6 +117,9 @@ def screenPage(project_id, screen_id):
     screenSections = session.query(ScreenSection).\
         filter_by(screen_id=screen_id).all()
     roleScreen = session.query(RoleScreen).filter_by(screen_id=screen_id).all()
+    # BROKEN
+    # sectionElements=session.query(SectionElement).\
+    #    filter(SectionElement.section_id.in_(screenSections[0])).all()
     return render_template('wire.html', screen=screen,
         screenSections=screenSections,
         roleScreen=roleScreen,
@@ -268,6 +271,30 @@ def newSection(screen_id):
         return render_template('create/section.html', screen=screen)
 
 
+# serves new element form for get request, adds form data to db for post
+@app.route('/sctn?<int:section_id>&+elem', methods=['GET', 'POST'])
+def newElement(section_id):
+    section = session.query(Section).filter_by(id=section_id).one()
+    ss=session.query(ScreenSection).filter_by(section_id=section.id).one()
+    if request.method == 'POST':
+        newElement = Element(title=request.form['title'],
+                     description=request.form['description'],
+                     project_id=section.project.id)
+        session.add(newElement)
+        session.commit()
+        session.refresh(newElement)
+        newSectionElement = SectionElement(section_id=section_id,
+            element_id=newElement.id)
+        session.add(new)
+        session.commit()
+        flash("New Element created!")
+        return redirect(url_for('screenPage',project_id=section.project.id,
+                                 screen_id=ss.screen_id))
+    else:
+        return redirect(url_for('screenPage',project_id=section.project.id,
+                                 screen_id=ss.screen_id))
+
+
 # serves new function form for get, adds form data to db for post
 #
 # NOTE: Adding Function, then Committing - this may cause an issue! Test!
@@ -292,8 +319,8 @@ def newFunction(project_id):
         # NEED TO STORE THE ASSOCIATED ROLES
         # title=request.form['title']
         # function = session.query(Project).\
-        #     filter(Project.title==title, Function.org_id==targetproject.org.id,
-        #            function.project_id==targetproject.id).one()
+        #   filter(Project.title==title, Function.org_id==targetproject.org.id,
+        #          function.project_id==targetproject.id).one()
         # screens = request.form.getlist('screens')
         flash("New Function created!")
         return redirect(url_for('projectPage',org_id=targetproject.org.id,
@@ -410,7 +437,9 @@ def editRole(role_id):
 def flipRoleScreen(role_id, screen_id):
     screen=session.query(Screen).filter_by(id=screen_id).one()
     try:
-        check = session.query(RoleScreen).filter(and_(RoleScreen.role_id==role_id, RoleScreen.screen_id==screen_id)).one()
+        check = session.query(RoleScreen).\
+            filter(and_(RoleScreen.role_id==role_id,
+                RoleScreen.screen_id==screen_id)).one()
     except:
         check = "nf"
     if check == "nf":
@@ -418,19 +447,22 @@ def flipRoleScreen(role_id, screen_id):
             screen_id=screen.id, role_id=role_id, access="1")
         session.add(newRow)
         session.commit()
-        return redirect(url_for('screenPage', project_id=screen.project.id, screen_id=screen.id))
+        return redirect(url_for('screenPage', project_id=screen.project.id,
+            screen_id=screen.id))
     if check.access == "1":
         check.access = "0"
         session.add(check)
         session.commit()
         flash("Role's access to screen revoked.")
-        return redirect(url_for('screenPage', project_id=screen.project.id, screen_id=screen.id))
+        return redirect(url_for('screenPage', project_id=screen.project.id,
+            screen_id=screen.id))
     if check.access == "0":
         check.access = "1"
         session.add(check)
         session.commit()
         flash("Role granted access to screen.")
-        return redirect(url_for('screenPage', project_id=screen.project.id, screen_id=screen.id))
+        return redirect(url_for('screenPage', project_id=screen.project.id,
+            screen_id=screen.id))
     else:
         output=""
         test1=check.role_id
@@ -527,10 +559,30 @@ def delScreen(screen_id):
         session.delete(delScreen)
         session.commit()
         flash("Screen Removed")
-        return redirect(url_for('projectPage',org_id=org_id,
-                                 project_id=project_id))
+
+        return redirect(url_for('projectPage', project_id=screen.project.id,
+            screen_id=screen_id))
     else:
         return render_template('delete/screen.html', i=delScreen)
+
+
+# query specified section, observe org & project id's in role object
+# serve delete form for get; on post, delete function
+@app.route('/sctn?<int:section_id>&d', methods=['GET', 'POST'])
+def delSection(section_id):
+    delSection = session.query(Section).filter_by(id=section_id).one()
+    ss=session.query(ScreenSection).filter_by(section_id=section_id).one()
+    screen_id=ss.screen_id
+    project_id=delSection.project.id
+    if request.method == 'POST':
+        session.delete(delSection)
+        session.delete(ss)
+        session.commit()
+        flash("Section Removed")
+        return redirect(url_for('screenPage', project_id=project_id,
+            screen_id=screen_id))
+    else:
+        return render_template('delete/section.html', i=delSection)
 
 
 # query specified function, observe org & project id's in role object
@@ -544,7 +596,7 @@ def delFunction(function_id):
         session.delete(delFunction)
         session.commit()
         flash("Function Removed")
-        return redirect(url_for('projectPage',org_id=org_id,
+        return redirect(url_for('screenPage',org_id=org_id,
                                  project_id=project_id))
     else:
         return render_template('delete/function.html', i=delFunction)

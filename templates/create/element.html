@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+  {% include "header.html" %}
+
+
+  <body>
+    <title>Project-Map - Create Element</title>
+
+    {% include "menu.html" %}
+
+  <body class="bg-light">
+
+    <div class="container">
+      <div class="py-5 text-center">
+        <h2>Creating Element for {{project.org.title}} - {{project.title}}</h2>
+        <p class="lead">Use the form below to create a Section.</p>
+      </div>
+
+      <!-- start body row -->
+      <div class="row">
+        <div class="col-md-12 order-md-1">
+          <form class="needs-validation" action='{{url_for('newElement', section_id=i.id)}}' method='post' novalidate>
+
+            <!-- start row -->
+            <div class="row">
+              <div class="col-md-12 mb-3">
+                <label for="title">Element title</label>
+                <input type="text" class="form-control" id="title" name="title" required>
+                <div class="invalid-feedback">
+                  Please enter a valid title.
+                </div>
+              </div>
+            </div>
+            <!-- end row -->
+
+            <!-- start row -->
+            <div class=row>
+              <div class="col-md-12 mb-3">
+                <label for="description">Element Description</label>
+                <textarea class="form-control" id="description" rows="3" name="description" required></textarea>
+                <div class="invalid-feedback">
+                  Please enter a valid description.
+                </div>
+              </div>
+            </div>
+            <!-- end row -->
+
+            <hr class="mb-4">
+
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <button class="btn btn-primary btn-lg btn-block" type="Create">Continue</button>
+              </div>
+          </form>
+              <div class="col-md-6 mb-3">
+                <form action="{{url_for('screenPage', project_id=i.project.id, screen_id=screen.id)}}">
+                  <button class="btn btn-secondary btn-lg btn-block" type="submit">Cancel</button>
+                </form>
+              </div>
+            </div>
+        </div>
+      </div>
+      <!-- end body row -->
+
+
+    </div>
+
+  {% include "footer.html" %}
+
+  </body>
+</html>

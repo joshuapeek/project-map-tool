@@ -334,7 +334,7 @@ class SectionElement(Base):
         return {
             'id': self.id,
             'section_id': self.section_id,
-            'element_id': self.element_id
+            'element_id': self.element_id,
         }
 
 
