@@ -78,8 +78,8 @@
     <div class="col-md-12">
       <div class="card text-center" style="background-color:#fefefe;">
         <div class="card-header text-left">
-          <span style="float:left;"><h5>{{i.section.title}}</h5></span>
-          <span style="float:right;text-align:right;padding:.2rem;"><p class="card-text">{{i.section.description}}</p></span>
+          <span style="float:left;"><h5>{{i.section.title}} <a href="{{url_for('editSection', section_id=i.section_id)}}" style="color:#999;font-size:.75rem;">[edit]</a></h5></span>
+          <span style="float:right;text-align:right;padding:.2rem;font-size:.8rem;"><p class="card-text">{{i.section.description}} <a href="{{url_for('editSection', section_id=i.section_id)}}" style="color:#999;font-size:.75rem;">[edit]</a></p></span>
         </div>
         <div class="card-body">
           <!--<h5 class="card-title">Special title treatment</h5>-->

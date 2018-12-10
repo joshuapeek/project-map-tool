@@ -343,8 +343,8 @@ def editProject(org_id, project_id):
                                 project=editProject)
 
 
-# query specified org & project
-# serve edit project page for get, update form data for post
+# query specified screen
+# serve edit screen page for get, update db from form data for post
 @app.route('/scrn?<int:screen_id>&ed', methods=['GET', 'POST'])
 def editScreen(screen_id):
     editScreen=session.query(Screen).filter_by(id=screen_id).one()
@@ -360,6 +360,26 @@ def editScreen(screen_id):
     else:
         return redirect(url_for('screenPage',project_id=editScreen.project.id,
                                  screen_id=editScreen.id))
+
+
+# query specified section
+# serve edit screen page for get, update db from form data for post
+@app.route('/sctn?<int:section_id>&ed', methods=['GET', 'POST'])
+def editSection(section_id):
+    editSection=session.query(Section).filter_by(id=section_id).one()
+    ss=session.query(ScreenSection).filter_by(section_id=section_id).one()
+    if request.method == 'POST':
+        if request.form['title']:
+            editSection.title = request.form['title']
+            editSection.description = request.form['description']
+        session.add(editSection)
+        session.commit()
+        flash("Section Edited!")
+        return redirect(url_for('screenPage',project_id=editSection.project.id,
+                                 screen_id=ss.screen_id))
+    else:
+        return render_template('update/section.html', section=editSection,
+            ScreenSection=ss)
 
 
 # query specified role; find screens & sections from related project

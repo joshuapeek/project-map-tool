@@ -149,8 +149,6 @@ class Element(Base):
     description = Column(String(500))
     project_id = Column(Integer, ForeignKey('project.id'))
     project = relationship(Project)
-    section_id = Column(Integer, ForeignKey('section.id'))
-    section = relationship(Section)
 
     @property
     def serialize(self):
@@ -158,8 +156,7 @@ class Element(Base):
             'id': self.id,
             'title': self.title,
             'description': self.description,
-            'project_id': self.project_id,
-            'section_id': self.section_id
+            'project_id': self.project_id
         }
 
 
