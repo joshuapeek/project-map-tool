@@ -576,9 +576,16 @@ def delScreen(screen_id):
 def delSection(section_id):
     delSection = session.query(Section).filter_by(id=section_id).one()
     ss=session.query(ScreenSection).filter_by(section_id=section_id).one()
+    try:
+        se = session.query(SectionElement).filter_by(section_id=section_id).all()
+    except:
+        se = ""
     screen_id=ss.screen_id
     project_id=delSection.project.id
     if request.method == 'POST':
+        if se != "":
+            for i in se:
+                session.delete(i)
         session.delete(delSection)
         session.delete(ss)
         session.commit()

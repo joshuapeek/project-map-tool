@@ -58,7 +58,7 @@
     <div class="col-md-6">
       <h3>Description</h3>
       <p>{{screen.description}}</p>
-      <p>Need edit and delete buttons for Sections. Will need to give some thought to allowing user to reorder the sections, as likely this will become a ux issue.<p>
+      <p>Need edit function for Sections. Will need to give some thought to allowing user to reorder the sections, as likely this will become a ux issue.<p>
       <button type="button" class="btn btn-sm btn btn-outline-secondary" data-toggle="modal" data-target="#edit-screen">Edit Details &raquo;</button>
     </div>
   </div>
@@ -70,6 +70,9 @@
   <div class="row">
     <div class="col-md-12 mb-3">
       <h3>Sections</h3>
+      {% if screenSections == [] %}
+      <p>Select the "Add a Section" button to begin documenting this screen's Sections and Elements.</p>
+      {% endif %}
     </div>
   </div>
   {% for i in screenSections %}
@@ -81,9 +84,6 @@
           <span style="float:right;text-align:right;padding:.2rem;font-size:.8rem;"><p class="card-text">{{i.section.description}} <a href="{{url_for('editSection', section_id=i.section_id)}}" style="color:#999;font-size:.75rem;">[edit]</a></p></span>
         </div>
         <div class="card-body">
-          <!--<h5 class="card-title">Special title treatment</h5>-->
-          <p class="card-text">Element Cards for the section will go here, including title, description, and remove button.
-          Will also have a "Ghost" card, to add new elements.</p>
 
           <div class="container">
             <div class="row">
@@ -131,6 +131,10 @@
 
   <p style="float:right;"><button type="button" class="btn btn-secondary btn-sm" data-toggle="modal" data-target="#add-section">Add a Section &raquo;</button></p>
 </div>
+
+<!-- Spacer to keep the "Add a Section" button above footer -->
+<p><br><br><br></p>
+
 <!-- END SECTIONS -->
 
 

@@ -18,7 +18,8 @@
         <button type="button" class="btn btn-md btn btn-outline-light" data-toggle="modal" data-target="#edit-org-details">Edit Details &raquo;</button>
       </div>
 
-<!-- Users Row -->
+      {% if projects != [] %}
+      <!-- Users Row -->
       <div class="container">
         <div class="row mb-4">
           <div class="col-md-3">
@@ -66,7 +67,8 @@
           </div>
         </div>
       </div>
-<!-- Users Row END -->
+      <!-- Users Row END -->
+      {% endif %}
 
 <!-- Projects Row -->
       <div class="container">
