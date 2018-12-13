@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+  {% include "header.html" %}
+
+
+  <body>
+    <title>Project-Map - Edit Element</title>
+
+    {% include "menu.html" %}
+
+  <body class="bg-light">
+
+    <div class="container">
+      <div class="py-5 text-center">
+        <h2>Editing Element: {{element.title}}</h2>
+      </div>
+
+
+      <div class="row">
+        <div class="col-md-2">
+        </div>
+
+        <!-- FORM -->
+        <div class="col-md-8">
+          <form class="needs-validation" action='{{url_for('editElement', element_id=element.id)}}' method='post' novalidate>
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <label for="title">Element title</label>
+                <input type="text" class="form-control" id="title" value="{{element.title}}" name="title" required>
+                <div class="invalid-feedback">
+                  Valid title is required.
+                </div>
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label for="description">Element Description <span class="test-muted">(Optional)</span></label>
+              <textarea class="form-control" id="description" rows="3" name="description">{{element.description}}</textarea>
+              <div class="invalid-feedback">
+                Please enter a valid description.
+              </div>
+            </div>
+
+            <hr class="mb-4">
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <button class="btn btn-primary btn-lg btn-block" type="Edit">Continue</button>
+              </div>
+          </form>
+              <div class="col-md-6 mb-3">
+                <form action="{{url_for('screenPage', project_id=element.project.id, screen_id=screen_id)}}">
+                  <button class="btn btn-secondary btn-lg btn-block" type="submit">Cancel</button>
+                </form>
+              </div>
+            </div>
+            <form action="{{url_for('delElement', element_id=element.id)}}">
+              <p><br><button style="float:right;" class="btn btn-danger btn-sm" type="submit">Delete Element</button></p>
+            </form>
+        </div>
+        <!-- END FORM -->
+
+        <div class="col-md-2">
+        </div>
+
+      </div>
+    </div>
+
+  {% include "footer.html" %}
+
+  </body>
+</html>

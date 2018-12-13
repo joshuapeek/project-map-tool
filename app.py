@@ -413,6 +413,29 @@ def editSection(section_id):
             ScreenSection=ss)
 
 
+# query specified element
+# serve edit element page for get, update db from form data for post
+@app.route('/elem?<int:element_id>&ed', methods=['GET', 'POST'])
+def editElement(element_id):
+    editElement = session.query(Element).filter_by(id=element_id).one()
+    se = session.query(SectionElement).filter_by(element_id=element_id).one()
+    ss=session.query(ScreenSection).filter_by(section_id=se.section_id).one()
+    screen_id=ss.screen_id
+    project_id=editElement.project.id
+    if request.method == 'POST':
+        if request.form['title']:
+            editElement.title = request.form['title']
+            editElement.description = request.form['description']
+        session.add(editElement)
+        session.commit()
+        flash("Element Edited!")
+        return redirect(url_for('screenPage', project_id=project_id,
+                                 screen_id=screen_id))
+    else:
+        return render_template('update/element.html', element=editElement,
+            screen_id=screen_id)
+
+
 # query specified role; find screens & sections from related project
 # serve edit role page for get, update db data for post
 @app.route('/rle?<int:role_id>&ed', methods=['GET', 'POST'])

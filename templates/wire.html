@@ -94,9 +94,12 @@
                 <div class="col-md-3" style="margin-bottom:2rem;">
                   <div class="card">
                     <div class="card-body" style="word-break:unset;">
-                      <h5 class="card-title" style="font-size:1rem">{{a.element.title}}</h5>
+                      <h5 class="card-title" style="font-size:1rem;color:#1eaeb4;">{{a.element.title}}</h5>
                       <p class="card-text" style="font-size:.8rem;">{{a.element.description}}</p>
-                      <span style="float:right;"><a href="{{url_for('delElement', element_id=a.id)}}" class="btn btn-sm btn-outline-danger">Delete</a></span>
+                      <span style="float:right;">
+                        <a href="{{url_for('editElement', element_id=a.id)}}" class="btn btn-sm btn-outline-secondary">Edit</a>&nbsp;
+                        <!--<a href="{{url_for('delElement', element_id=a.id)}}" class="btn btn-sm btn-outline-danger">Delete</a>-->
+                      </span>
                     </div>
                   </div>
                 </div>
