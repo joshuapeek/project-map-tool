@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+  {% include "header.html" %}
+
+
+  <body>
+    <title>Project-Map - Delete Element {{i.title}}</title>
+
+    {% include "menu.html" %}
+
+  <body class="bg-light">
+
+    <div class="container">
+      <div class="py-5 text-center">
+        <h2>Deleting element {{i.title}} from {{project.org.title}} - {{project.title}}</h2>
+        <p class="lead">Are you sure you'd like to delete function {{i.title}}?</p>
+      </div>
+
+      <div class="row">
+        <div class="col-md-12 order-md-1">
+          <form class="needs-validation" action='{{url_for('delElement', element_id=i.id)}}' method='post' novalidate>
+            <hr class="mb-4">
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <button class="btn btn-danger btn-lg btn-block" type="Edit">Continue</button>
+              </div>
+          </form>
+              <div class="col-md-6 mb-3">
+                <form action="{{url_for('screenPage', project_id=i.project.id, screen_id=screen_id)}}">
+                  <button class="btn btn-secondary btn-lg btn-block" type="submit">Cancel</button>
+                </form>
+              </div>
+            </div>
+        </div>
+      </div>
+    </div>
+
+  {% include "footer.html" %}
+
+  </body>
+</html>

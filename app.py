@@ -596,6 +596,28 @@ def delSection(section_id):
         return render_template('delete/section.html', i=delSection)
 
 
+# query specified section, observe org & project id's in role object
+# serve delete form for get; on post, delete function
+@app.route('/elem?<int:element_id>&d', methods=['GET', 'POST'])
+def delElement(element_id):
+    delElement = session.query(Element).filter_by(id=element_id).one()
+    se=session.query(SectionElement).filter_by(element_id=element_id).one()
+    ss=session.query(ScreenSection).filter_by(section_id=se.section_id).one()
+    project=session.query(Project).filter_by(id=delElement.project.id).one()
+    project_id=delElement.project.id
+    screen_id=ss.screen.id
+    if request.method == 'POST':
+        session.delete(delElement)
+        session.delete(se)
+        session.commit()
+        flash("Element Removed")
+        return redirect(url_for('screenPage', project_id=project_id,
+            screen_id=screen_id))
+    else:
+        return render_template('delete/element.html', i=delElement,
+            project=project, screen_id=ss.screen_id)
+
+
 # query specified function, observe org & project id's in role object
 # serve delete form for get; on post, delete function
 @app.route('/fnctn?<int:function_id>&d', methods=['GET', 'POST'])

@@ -96,7 +96,7 @@
                     <div class="card-body" style="word-break:unset;">
                       <h5 class="card-title" style="font-size:1rem">{{a.element.title}}</h5>
                       <p class="card-text" style="font-size:.8rem;">{{a.element.description}}</p>
-                      <span style="float:right;"><a href="#" class="btn btn-sm btn-outline-danger">Delete</a></span>
+                      <span style="float:right;"><a href="{{url_for('delElement', element_id=a.id)}}" class="btn btn-sm btn-outline-danger">Delete</a></span>
                     </div>
                   </div>
                 </div>
@@ -105,16 +105,15 @@
                 <!-- END Element Card -->
 
                 <!-- ADD Ghost-Box -->
-                <div class="col-md-3" style="margin-bottom:2rem;">
-                  <div class="card" style="background-clip: text;color: #999;border: 1px solid #C9C9C9;box-sizing:content-box;">
+                <div class="col-md-2" style="margin-bottom:2rem;">
+                  <div class="card" style="background-clip: text;color: #999;border: 0px solid #C9C9C9;box-sizing:content-box;">
                     <div class="card-body" style="word-break:unset;">
-                      <h5 class="card-title" style="font-size:1rem">Need More?</h5>
+                      <!--<h5 class="card-title" style="font-size:1rem">Need More</h5>-->
                       <!--<a href="#" class="btn btn-sm btn-secondary" style="float:right;">Click Here</a>-->
-
-                      <form action="{{url_for('newElement', section_id=i.id)}}">
-                        <center><button class="btn btn-secondary btn-sm" type="submit">Add an Element &raquo;</button></center>
-                      </form>
-
+                      <a href="{{url_for('newElement', section_id=i.id)}}">
+                        <img src="../../static/images/plus.png" width="70%">
+                      </a>
+                      <p style="color:#999;text-size:.75rem;">Add an Element</p>
                     </div>
                   </div>
                 </div>
