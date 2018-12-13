@@ -117,6 +117,7 @@ def screenPage(project_id, screen_id):
     screenSections = session.query(ScreenSection).\
         filter_by(screen_id=screen_id).all()
     roleScreen = session.query(RoleScreen).filter_by(screen_id=screen_id).all()
+    se=session.query(SectionElement).filter_by(project_id=project.id).all()
     # BROKEN
     # sectionElements=session.query(SectionElement).\
     #    filter(SectionElement.section_id.in_(screenSections[0])).all()
@@ -125,7 +126,7 @@ def screenPage(project_id, screen_id):
         roleScreen=roleScreen,
         allorgs=allorgs,
         allprojects=allprojects, roleaccess=roleaccess,
-        projects=projects, org=org, newroles=newroles)
+        projects=projects, org=org, newroles=newroles, sectionElements=se)
 
 
 # CREATE Pages-------------------------
@@ -276,6 +277,8 @@ def newSection(screen_id):
 def newElement(section_id):
     section = session.query(Section).filter_by(id=section_id).one()
     ss=session.query(ScreenSection).filter_by(section_id=section.id).one()
+    screen = session.query(Screen).filter_by(id=ss.screen.id).one()
+    project = session.query(Project).filter_by(id=section.project.id).one()
     if request.method == 'POST':
         newElement = Element(title=request.form['title'],
                      description=request.form['description'],
@@ -284,15 +287,16 @@ def newElement(section_id):
         session.commit()
         session.refresh(newElement)
         newSectionElement = SectionElement(section_id=section_id,
-            element_id=newElement.id)
-        session.add(new)
+            element_id=newElement.id, project_id=project.id)
+        session.add(newSectionElement)
         session.commit()
         flash("New Element created!")
-        return redirect(url_for('screenPage',project_id=section.project.id,
-                                 screen_id=ss.screen_id))
+        return redirect(url_for('screenPage',project_id=project.id,
+                                 screen_id=screen.id))
     else:
-        return redirect(url_for('screenPage',project_id=section.project.id,
-                                 screen_id=ss.screen_id))
+        return render_template('create/element.html',
+            section=section, screen=screen,
+            screensection=ss, project=project)
 
 
 # serves new function form for get, adds form data to db for post

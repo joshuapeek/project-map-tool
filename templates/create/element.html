@@ -18,8 +18,10 @@
 
       <!-- start body row -->
       <div class="row">
-        <div class="col-md-12 order-md-1">
-          <form class="needs-validation" action='{{url_for('newElement', section_id=i.id)}}' method='post' novalidate>
+        <div class="col-md-2 mb-3">
+        </div>
+        <div class="col-md-8">
+          <form class="needs-validation" action='{{url_for('newElement', section_id=section.id)}}' method='post' novalidate>
 
             <!-- start row -->
             <div class="row">
@@ -53,11 +55,13 @@
               </div>
           </form>
               <div class="col-md-6 mb-3">
-                <form action="{{url_for('screenPage', project_id=i.project.id, screen_id=screen.id)}}">
+                <form action="{{url_for('screenPage', project_id=project.id, screen_id=screen.id)}}">
                   <button class="btn btn-secondary btn-lg btn-block" type="submit">Cancel</button>
                 </form>
               </div>
             </div>
+        </div>
+        <div class="col-md-2 mb-3">
         </div>
       </div>
       <!-- end body row -->

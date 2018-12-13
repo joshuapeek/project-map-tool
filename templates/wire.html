@@ -85,40 +85,50 @@
           <p class="card-text">Element Cards for the section will go here, including title, description, and remove button.
           Will also have a "Ghost" card, to add new elements.</p>
 
-          <!-- Element Card -->
-            {% for a in sectionElements %}
-            {% if a.section_id == i.section_id %}
-            <div class="col-md-4" style="margin-bottom:2rem;">
-              <div class="card">
-                <div class="card-body">
-                  <h5 class="card-title">{{a.title}}</h5>
-                  <p class="card-text">{{a.description}}</p>
-                  <span style="float:right;"><a href="#" class="btn btn-sm btn-outline-danger">Delete</a></span>
+          <div class="container">
+            <div class="row">
+
+              <!-- Element Card -->
+                {% for a in sectionElements %}
+                {% if a.section_id == i.section_id %}
+                <div class="col-md-3" style="margin-bottom:2rem;">
+                  <div class="card">
+                    <div class="card-body" style="word-break:unset;">
+                      <h5 class="card-title" style="font-size:1rem">{{a.element.title}}</h5>
+                      <p class="card-text" style="font-size:.8rem;">{{a.element.description}}</p>
+                      <span style="float:right;"><a href="#" class="btn btn-sm btn-outline-danger">Delete</a></span>
+                    </div>
+                  </div>
                 </div>
-              </div>
-            </div>
-            {% endif %}
-            {% endfor %}
-            <!-- END Element Card -->
+                {% endif %}
+                {% endfor %}
+                <!-- END Element Card -->
 
+                <!-- ADD Ghost-Box -->
+                <div class="col-md-3" style="margin-bottom:2rem;">
+                  <div class="card" style="background-clip: text;color: #999;border: 1px solid #C9C9C9;box-sizing:content-box;">
+                    <div class="card-body" style="word-break:unset;">
+                      <h5 class="card-title" style="font-size:1rem">Need More?</h5>
+                      <!--<a href="#" class="btn btn-sm btn-secondary" style="float:right;">Click Here</a>-->
 
-          <!-- ADD Ghost-Box -->
-          <div class="col-md-3" style="margin-bottom:2rem;">
-            <div class="card" style="background-clip: text;color: #999;border: 1px solid #C9C9C9;">
-              <div class="card-body">
-                <h5 class="card-title">Need More?</h5>
-                <!--<a href="#" class="btn btn-sm btn-secondary" style="float:right;">Click Here</a>-->
-                <center><button type="button" class="btn btn-secondary btn-sm" href="{{url_for('newElement', section_id=i.id)}}">Add an Element &raquo;</button></center>
-              </div>
+                      <form action="{{url_for('newElement', section_id=i.id)}}">
+                        <center><button class="btn btn-secondary btn-sm" type="submit">Add an Element &raquo;</button></center>
+                      </form>
+
+                    </div>
+                  </div>
+                </div>
+                <!-- END Ghost-Box -->
+
             </div>
           </div>
-          <!-- END Ghost-Box -->
 
         </div>
       </div>
     </div>
   </div>
   {% endfor %}
+
   <p style="float:right;"><button type="button" class="btn btn-secondary btn-sm" data-toggle="modal" data-target="#add-section">Add a Section &raquo;</button></p>
 </div>
 <!-- END SECTIONS -->
