@@ -29,18 +29,6 @@ Base.metadata.bind = engine
 DBSession = sessionmaker(bind=engine)
 session = DBSession()
 
-# @app.route('_getscreen/<int:screen_id>')
-# def screen(screen_id):
-#     screen = session.query(Screen).filter_by(id=screen_id).one()
-#     try:
-#         lang = request.args.get('proglang')
-#         if str(lang).lower() == 'python':
-#             return jsonify(result='You are wise!')
-#         else:
-#             return jsonify(result='Try again')
-#     except Exception, e:
-#         return(str(e))
-
 
 @app.route('/')
 def mainPage():
@@ -127,6 +115,12 @@ def screenPage(project_id, screen_id):
         allorgs=allorgs,
         allprojects=allprojects, roleaccess=roleaccess,
         projects=projects, org=org, newroles=newroles, sectionElements=se)
+
+@app.route('/scrn?<int:screen_id>/story')
+def screenStory(screen_id):
+    # query all stories for this screen to variable 'stories'
+    # render template passing stories
+    return render_template('stories.html', stories=stories)
 
 
 # CREATE Pages-------------------------

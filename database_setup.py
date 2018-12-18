@@ -108,17 +108,26 @@ class Story(Base):
     __tablename__ = 'story'
     id = Column(Integer, primary_key=True)
     title = Column(String(250), nullable=False)
-    description = Column(String(500))
+    expectation = Column(String(500))
+    action = Column(String(50))
+    hook = Column(String(10), nullable=False)
+    hookID = Column(Integer)
     project_id = Column(Integer, ForeignKey('project.id'))
     project = relationship(Project)
+    screen_id = Column(Integer, ForeignKey('screen.id'))
+    screen = relationship(Screen)
 
     @property
     def serialize(self):
         return {
             'id': self.id,
             'title': self.title,
-            'description': self.description,
-            'project_id': self.project_id
+            'expectation': self.description,
+            'action': self.action,
+            'hook': self.hook,
+            'hookID': self.hookID,
+            'project_id': self.project_id,
+            'screen_id': self.screen_id
         }
 
 
@@ -206,7 +215,7 @@ class RoleSection(Base):
         }
 
 
-# MVP table 11
+# MVP table 11 - MIGHT NOT NEED THIS
 class StoryScreen(Base):
     __tablename__ = 'storyscreen'
     id = Column(Integer, primary_key=True)
