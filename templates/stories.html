@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en">
+  {% include "header.html" %}
+
+
+  <body>
+    <title>Project-Map - {{screen.title}}</title>
+
+    {% include "menu.html" %}
+    {% include "modals/createsection.html" %}
+    {% include "modals/editscreen.html" %}
+
+    <!-- Jumbotron -->
+    <main role="main" class="container">
+      <div class="jumbotron" style="padding:1rem 2rem;">
+        <h1>{{screen.title}} Screen</h1>
+        <!--<p class="lead">{{screen.description}}
+          {% if screen.description == "" %}<br>{% endif %}</p>
+        <button type="button" class="btn btn-sm btn btn-outline-light" data-toggle="modal" data-target="#edit-project-details">Edit Details &raquo;</button>-->
+      </div>
+      <!-- End Jumbotron -->
+
+<!-- Page User Stories -->
+<!-- End Page Stories -->
+
+<!-- Section & Element User Stories -->
+<!-- End Section & Element Stories -->
+
+    </main>
+
+  {% include "footer.html" %}
+
+  </body>
+</html>
