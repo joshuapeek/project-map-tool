@@ -116,6 +116,8 @@ class Story(Base):
     project = relationship(Project)
     screen_id = Column(Integer, ForeignKey('screen.id'))
     screen = relationship(Screen)
+    role_id = Column(Integer, ForeignKey('role.id'))
+    role = relationship(Role)
 
     @property
     def serialize(self):
@@ -127,7 +129,8 @@ class Story(Base):
             'hook': self.hook,
             'hookID': self.hookID,
             'project_id': self.project_id,
-            'screen_id': self.screen_id
+            'screen_id': self.screen_id,
+            'role_id': self.role_id
         }
 
 

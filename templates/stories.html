@@ -7,8 +7,6 @@
     <title>Project-Map - {{screen.title}}</title>
 
     {% include "menu.html" %}
-    {% include "modals/createsection.html" %}
-    {% include "modals/editscreen.html" %}
 
     <!-- Jumbotron -->
     <main role="main" class="container">
@@ -20,38 +18,49 @@
       </div>
       <!-- End Jumbotron -->
 
-<!-- Goal for the page:
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      Goal is to lay out stories for the page.<br>
+    </div>
+  </div>
+  <!-- end of row -->
 
-  As a <role.title>,
-  On the <screen.title> screen,
-  When I <story.action> the (<section.title> or <element.title>),
-  <story.expectation>.
+  <div class="row">
+    <div class="col-md-12">
+      <!-- Page User Stories -->
 
--->
+      Stories tied to the screen itself:<br>
+      <p>
+        {% for i in stories %}
+          {% if i.hook == "screen" %}
+            As a(n) {{i.role.title}}, when I {{i.action}} the {{i.screen.title}} screen, {{i.expectation}}.<br>
+          {% endif %}
+        {% endfor %}
+      </p>
+      <br>
+
+      <!-- End Page Stories -->
+
+    </div>
+  </div>
+  <!-- end of row -->
 
 
-<!-- Page User Stories -->
+  <div class="row">
+    <div class="col-md-12">
+      <!-- Section & Element User Stories -->
 
-  <!--
-  PSEUDO:
-  [if story.hook == screen] display [endif]
-  -->
+      Section & Element User Stories
 
-<!-- End Page Stories -->
+      <!-- End Section & Element Stories -->
+    </div>
+  </div>
+  <!-- end of row -->
 
-<!-- Section & Element User Stories -->
+</div>
+<!-- end of container -->
 
-  <!--
-  PSEUDO:
-  [for sections on screen]
-      [if story.hook == section AND story.hookID == section.id] display [endif]
-      [for elements in section]
-          [ if story.hook == element AND story.hookID == element.id] display [endif]
-      [endfor]
-  [endfor]
-  -->
-
-<!-- End Section & Element Stories -->
 
     </main>
 

@@ -116,11 +116,20 @@ def screenPage(project_id, screen_id):
         allprojects=allprojects, roleaccess=roleaccess,
         projects=projects, org=org, newroles=newroles, sectionElements=se)
 
-@app.route('/scrn?<int:screen_id>/story')
+
+# A page to lay out user stories for a given screen
+@app.route('/scrn<int:screen_id>/story')
 def screenStory(screen_id):
-    # query all stories for this screen to variable 'stories'
+    # query all stories, roles, screensections, elements
+    # for this screen to variable 'stories'
+    screen = session.query(Screen).filter_by(id=screen_id).one()
+    project = session.query(Project).filter_by(id=screen.project.id).one()
+    stories = session.query(Story).filter_by(screen_id=screen_id).all()
+    ss = session.query(ScreenSection).filter_by(screen_id=screen_id).all()
+    se = session.query(SectionElement).filter_by(project_id=project.id)
     # render template passing stories
-    return render_template('stories.html', stories=stories)
+    return render_template('stories.html', screen=screen, project=project,
+    stories=stories, ss=ss, se=se)
 
 
 # CREATE Pages-------------------------
