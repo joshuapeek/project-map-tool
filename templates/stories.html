@@ -11,56 +11,75 @@
     <!-- Jumbotron -->
     <main role="main" class="container">
       <div class="jumbotron" style="padding:1rem 2rem;">
-        <h1>{{screen.title}} Screen</h1>
+        <h1>{{screen.title}} Screen User Stories</h1>
         <!--<p class="lead">{{screen.description}}
           {% if screen.description == "" %}<br>{% endif %}</p>
         <button type="button" class="btn btn-sm btn btn-outline-light" data-toggle="modal" data-target="#edit-project-details">Edit Details &raquo;</button>-->
       </div>
       <!-- End Jumbotron -->
 
+<!-- body container -->
 <div class="container">
   <div class="row">
-    <div class="col-md-12">
-      Goal is to lay out stories for the page.<br>
+    <div class="col-md-12 mb-5">
+      <h3>Description</h3>
+      <p>The goal for this page is to lay out the related user stories,
+        grouped by where they apply on the page.</p>
     </div>
   </div>
   <!-- end of row -->
 
+  <!-- Page User Stories -->
   <div class="row">
-    <div class="col-md-12">
-      <!-- Page User Stories -->
-
-      Stories tied to the screen itself:<br>
-      <p>
+    <div class="col-md-12 mb-5">
+      <h3>Stories tied to the Screen itself</h3>
+      <ul>
         {% for i in stories %}
           {% if i.hook == "screen" %}
-            As a(n) {{i.role.title}}, when I {{i.action}} the {{i.screen.title}} screen, {{i.expectation}}.<br>
+            <li>As a(n) {{i.role.title}}, when I {{i.action}} the {{i.screen.title}} screen, {{i.expectation}}.</li>
           {% endif %}
         {% endfor %}
-      </p>
-      <br>
-
-      <!-- End Page Stories -->
-
+      </ul>
     </div>
   </div>
-  <!-- end of row -->
+  <!-- end of page stories row -->
 
 
+  <!-- Section & Element User Stories -->
   <div class="row">
-    <div class="col-md-12">
-      <!-- Section & Element User Stories -->
+    <div class="col-md-12 mb-5">
+      <h3>Stories tied to Screen Sections & Elements</h3>
+      <p>
+        {% for i in ss %}
+          <h5>Section: {{i.section.title}}</h5>
+          {% for a in stories %}
+            <ul>
+              {% if a.hook == "section" and a.hookID == i.id %}
+                <li>As a(n) {{a.role.title}}, when I {{a.action}} the
+                  {{i.section.title}} section, {{a.expectation}}.</li>
+              {% endif %}
+            </ul>
+          {% endfor %}
 
-      Section & Element User Stories
-
-      <!-- End Section & Element Stories -->
+          {% for b in se %}
+            <b>Element: {{b.element.title}}</b>
+            {% for c in stories %}
+              <ul>
+                {% if c.hook == "element" and c.hookID == b.id %}
+                  <li>As a(n) {{c.role.title}}, when I {{c.action}} the
+                    {{b.element.title}} section, {{c.expectation}}.</li>
+                {% endif %}
+              </ul>
+            {% endfor %}
+          {% endfor %}
+        {% endfor %}
+      </p>
     </div>
   </div>
-  <!-- end of row -->
+  <!-- end of section & element stories row -->
 
 </div>
-<!-- end of container -->
-
+<!-- end of body container -->
 
     </main>
 

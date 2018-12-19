@@ -21,14 +21,27 @@
       <!-- Org Link -->
       {% if org is defined %}
       <li class="nav-item">
-        <a class="nav-link" href="{{url_for('orgPage', org_id=org.id)}}">
-          {{org.title}} Main
-        </a>
+        <a class="nav-link" href="{{url_for('orgPage', org_id=org.id)}}">{{org.title}}</a>
       </li>
       {% endif %}
       <!-- END Org Link -->
 
+      {% if project is defined %}
+      <li class="nav-item">
+        <span class="nav-link">:</span>
+      </li>
+
+      <!-- Project Link -->
+      <li class="nav-item">
+        <a class="nav-link" href="{{url_for('projectPage', org_id=org.id,
+          project_id=project.id)}}">{{project.title}}
+        </a>
+      </li>
+      {% endif %}
+      <!-- END Project Link -->
+
       <!-- Project(s) Dropdown -->
+      <!-- Depreciating due to data overload
       {% if projects is defined %}
       <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -41,8 +54,41 @@
           {% endfor %}
         </div>
       </li>
-      {% endif %}
+      {% endif %}-->
       <!-- END Project(s) & Org Dropdown -->
+
+      <!-- Screen(s) Dropdown -->
+      {% if screens is defined %}
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Screens
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          {% for i in screens %}
+            <a class="dropdown-item" href="{{url_for('screenPage',
+              project_id=i.project.id, screen_id=i.id)}}">{{i.title}}</a>
+          {% endfor %}
+        </div>
+      </li>
+      {% endif %}
+      <!-- END Screens Dropdown -->
+
+      <!-- Stories(s) Dropdown -->
+      {% if screens is defined %}
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          User Stories
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          {% for i in screens %}
+            <a class="dropdown-item" href="{{url_for('screenStory',
+              screen_id=i.id)}}">{{i.title}} screen</a>
+          {% endfor %}
+        </div>
+      </li>
+      {% endif %}
+      <!-- END Stories Dropdown -->
+
 
     </ul>
 

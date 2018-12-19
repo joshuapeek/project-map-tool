@@ -86,6 +86,7 @@ def screenPage(project_id, screen_id):
     project = session.query(Project).filter_by(id=project_id).one()
     org = session.query(Org).filter_by(id=project.org.id).one()
     projects = session.query(Project).filter_by(org_id=org.id).all()
+    screens = session.query(Screen).filter_by(project_id=project.id).all()
     roleaccess = session.query(Role.id, Role.title, RoleScreen.access).\
         join(RoleScreen).\
         filter(Role.project_id==project_id).\
@@ -114,7 +115,8 @@ def screenPage(project_id, screen_id):
         roleScreen=roleScreen,
         allorgs=allorgs,
         allprojects=allprojects, roleaccess=roleaccess,
-        projects=projects, org=org, newroles=newroles, sectionElements=se)
+        projects=projects, org=org, newroles=newroles, sectionElements=se,
+        screens=screens, project=project)
 
 
 # A page to lay out user stories for a given screen
@@ -127,9 +129,15 @@ def screenStory(screen_id):
     stories = session.query(Story).filter_by(screen_id=screen_id).all()
     ss = session.query(ScreenSection).filter_by(screen_id=screen_id).all()
     se = session.query(SectionElement).filter_by(project_id=project.id)
+    allorgs = session.query(Org).all()
+    allprojects = session.query(Project).all()
+    org = session.query(Org).filter_by(id=project.org.id).one()
+    projects = session.query(Project).filter_by(org_id=org.id).all()
+    screens = session.query(Screen).filter_by(project_id=project.id).all()
     # render template passing stories
     return render_template('stories.html', screen=screen, project=project,
-    stories=stories, ss=ss, se=se)
+    stories=stories, ss=ss, se=se, allorgs=allorgs, allprojects=allprojects,
+    org=org, projects=projects, screens=screens)
 
 
 # CREATE Pages-------------------------
