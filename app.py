@@ -134,10 +134,11 @@ def screenStory(screen_id):
     org = session.query(Org).filter_by(id=project.org.id).one()
     projects = session.query(Project).filter_by(org_id=org.id).all()
     screens = session.query(Screen).filter_by(project_id=project.id).all()
+    roles = session.query(Role).filter_by(project_id=project.id).all()
     # render template passing stories
     return render_template('stories.html', screen=screen, project=project,
     stories=stories, ss=ss, se=se, allorgs=allorgs, allprojects=allprojects,
-    org=org, projects=projects, screens=screens)
+    org=org, projects=projects, screens=screens, roles=roles)
 
 
 # CREATE Pages-------------------------
@@ -308,6 +309,43 @@ def newElement(section_id):
         return render_template('create/element.html',
             section=section, screen=screen,
             screensection=ss, project=project)
+
+
+# serves screen page for get request, adds user story to db for post
+@app.route('/p?<int:project_id>&+story', methods=['GET', 'POST'])
+def newStory(project_id):
+    project = session.query(Project).filter_by(id=project_id).one()
+    screen_id = request.form['screen_id']
+    screen = session.query(Screen).filter_by(id=screen_id).one()
+    if request.method == 'POST':
+        rawhook = request.form['hook']
+        if rawhook.endswith('_s'):
+            sethookID = rawhook[:-2]
+            sethook = "section"
+        elif rawhook.endswith('_e'):
+            sethookID = rawhook[:-2]
+            sethook = "element"
+        elif rawhook.endswith('_scr'):
+            sethookID = rawhook[:-4]
+            sethook = "screen"
+        else:
+            sethook = "unkonwn"
+        newStory = Story(project_id=project.id,
+            screen_id=screen.id,
+            title=request.form['title'],
+            role_id=request.form['role_id'],
+            hook=sethook,
+            hookID=sethookID,
+            action=request.form['action'],
+            expectation=request.form['expectation'])
+        session.add(newStory)
+        session.commit()
+        session.refresh(newStory)
+        flash("New Story created!")
+        return redirect(url_for('screenStory', screen_id=screen.id))
+    else:
+        return redirect(url_for('projectPage',org_id=project.org.id,
+                                 project_id=project.id))
 
 
 # serves new function form for get, adds form data to db for post
@@ -611,7 +649,8 @@ def delSection(section_id):
     delSection = session.query(Section).filter_by(id=section_id).one()
     ss=session.query(ScreenSection).filter_by(section_id=section_id).one()
     try:
-        se = session.query(SectionElement).filter_by(section_id=section_id).all()
+        se = session.query(SectionElement).filter_by(
+            section_id=section_id).all()
     except:
         se = ""
     screen_id=ss.screen_id

@@ -107,11 +107,11 @@ class Action(Base):
 class Story(Base):
     __tablename__ = 'story'
     id = Column(Integer, primary_key=True)
-    title = Column(String(250), nullable=False)
-    expectation = Column(String(500))
-    action = Column(String(50))
+    title = Column(String(250))
+    expectation = Column(String(500), nullable=False)
+    action = Column(String(50), nullable=False)
     hook = Column(String(10), nullable=False)
-    hookID = Column(Integer)
+    hookID = Column(Integer, nullable=False)
     project_id = Column(Integer, ForeignKey('project.id'))
     project = relationship(Project)
     screen_id = Column(Integer, ForeignKey('screen.id'))
