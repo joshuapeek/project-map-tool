@@ -25,7 +25,7 @@
           <form class="needs-validation" action='{{url_for('editOrg', org_id=org.id)}}' method='post' novalidate>
             <div class="row">
               <div class="col-md-6 mb-3">
-                <label for="orgtitle">Org title</label>
+                <label for="orgtitle">Org Abbreviation</label>
                 <input type="text" class="form-control" id="orgtitle" value="{{org.title}}" name="orgtitle" required>
                 <div class="invalid-feedback">
                   Valid Org name is required.
@@ -34,7 +34,7 @@
             </div>
 
             <div class="mb-3">
-              <label for="orgdesc">Org Description <span class="test-muted">(Optional)</span></label>
+              <label for="orgdesc">Full Org Title</label>
               <textarea class="form-control" id="orgdesc" rows="3" name="orgdesc">{{org.description}}</textarea>
               <div class="invalid-feedback">
                 Please enter a valid org description.
