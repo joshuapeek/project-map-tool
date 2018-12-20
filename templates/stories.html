@@ -55,7 +55,7 @@
       <h3>Screen Sections & Elements</h3>
       <p>
         {% for i in ss %}
-          <h5>{{i.section.title}}</h5>
+          <!--<h5>{{i.section.title}}</h5>-->
           {% for a in stories %}
             <ul>
               {% if a.hook == "section" and a.hookID == i.section.id %}
@@ -67,7 +67,7 @@
 
           {% for b in se %}
             {% if b.section.id == i.section.id %}
-              <b>{{b.element.title}}</b>
+              <!--<b>{{b.element.title}}</b>-->
             {% endif %}
             {% for c in stories %}
               <ul>

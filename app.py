@@ -447,6 +447,7 @@ def editScreen(screen_id):
 def editSection(section_id):
     editSection=session.query(Section).filter_by(id=section_id).one()
     ss=session.query(ScreenSection).filter_by(section_id=section_id).one()
+    screen=session.query(Screen).filter_by(id=ss.screen.id).one()
     if request.method == 'POST':
         if request.form['title']:
             editSection.title = request.form['title']
@@ -458,7 +459,7 @@ def editSection(section_id):
                                  screen_id=ss.screen_id))
     else:
         return render_template('update/section.html', section=editSection,
-            ScreenSection=ss)
+            ScreenSection=ss, screen=screen)
 
 
 # query specified element
