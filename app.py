@@ -332,7 +332,6 @@ def newStory(project_id):
             sethook = "unkonwn"
         newStory = Story(project_id=project.id,
             screen_id=screen.id,
-            title=request.form['title'],
             role_id=request.form['role_id'],
             hook=sethook,
             hookID=sethookID,

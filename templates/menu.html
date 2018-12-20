@@ -33,29 +33,13 @@
 
       <!-- Project Link -->
       <li class="nav-item">
-        <a class="nav-link" href="{{url_for('projectPage', org_id=org.id,
+        <a class="nav-link" href="{{url_for('projectPage', org_id=project.org.id,
           project_id=project.id)}}">{{project.title}}
         </a>
       </li>
       {% endif %}
       <!-- END Project Link -->
 
-      <!-- Project(s) Dropdown -->
-      <!-- Depreciating due to data overload
-      {% if projects is defined %}
-      <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          Projects
-        </a>
-        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          {% for i in projects %}
-            <a class="dropdown-item" href="{{url_for('projectPage', org_id = org.id,
-                     project_id = i.id)}}">{{i.title}}</a>
-          {% endfor %}
-        </div>
-      </li>
-      {% endif %}-->
-      <!-- END Project(s) & Org Dropdown -->
 
       <!-- Screen(s) Dropdown -->
       {% if screens is defined %}

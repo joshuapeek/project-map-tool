@@ -17,75 +17,77 @@
           <div class="col-md-12">
             <form class="form-horizontal needs-validation" action='{{url_for('newStory', project_id=project.id)}}' method='post' novalidate>
               <fieldset>
+            <div class="row">
+              <!-- spacer -->
+              <div class="col-md-2">
+              </div>
 
-                <!-- Text input-->
-                <div class="form-group">
-                  <label class="col-md-4 control-label" for="title">Action</label>
-                  <div class="col-md-5">
-                  <input id="title" name="title" type="text" placeholder='Story Title' class="form-control input-md">
+              <!-- form -->
+              <div class="col-md-8">
+
+                <!-- Select Basic Role-->
+                <div class="form-group row">
+                  <label class="col-md-3 control-label" style="text-align:right;" for="role_id">As a(n):</label>
+                  <div class="col-md-9">
+                    <select id="role_id" name="role_id" class="form-control">
+                      {% for i in roles %}
+                        <option value="{{i.id}}">{{i.title}}</option>
+                      {% endfor %}
+                    </select>
                   </div>
                 </div>
 
-              <!-- Select Basic -->
-              <div class="form-group">
-                <label class="col-md-4 control-label" for="role_id">Role</label>
-                <div class="col-md-5">
-                  <select id="role_id" name="role_id" class="form-control">
-                    {% for i in roles %}
-                      <option value="{{i.id}}">{{i.title}}</option>
-                    {% endfor %}
-                  </select>
+                <!-- Text input Screen -->
+                <div class="form-group row">
+                  <label class="col-md-3 control-label" style="text-align:right;" for="screen_id">on the</label>
+                  <div class="col-md-9">
+                  <input id="screen_id" name="screen_id" type="hidden" class="form-control input-md" value="{{screen.id}}" required="">
+                  {{screen.title}} screen,
+
+                  </div>
                 </div>
-              </div>
 
-              <!-- Text input-->
-              <div class="form-group">
-                <label class="col-md-4 control-label" for="screen_id">Screen</label>
-                <div class="col-md-5">
-                <input id="screen_id" name="screen_id" type="text" placeholder="{{screen.title}}" class="form-control input-md" value="{{screen.id}}" required="" readonly>
+                <!-- Text input Action -->
+                <div class="form-group row">
+                  <label class="col-md-3 control-label" style="text-align:right;" for="action">when I __</label>
+                  <div class="col-md-9">
+                  <input id="action" name="action" type="text" placeholder=' "view", "select", etc.' class="form-control input-md" required="">
 
+                  </div>
                 </div>
-              </div>
 
-              <!-- Text input-->
-              <div class="form-group">
-                <label class="col-md-4 control-label" for="action">Action</label>
-                <div class="col-md-5">
-                <input id="action" name="action" type="text" placeholder=' "view", "select", etc.' class="form-control input-md" required="">
-
-                </div>
-              </div>
-
-              <!-- Select Basic -->
-              <div class="form-group">
-                <label class="col-md-4 control-label" for="hook">Screen/Section/Element</label>
-                <div class="col-md-5">
-                  <select id="hook" name="hook" class="form-control">
-                    <option value="{{screen.id}}_scr">Screen</option>
-                    {% for i in ss %}
-                      <option value="{{i.section.id}}_s">Section: {{i.section.title}}</option>
-                      {% for b in se %}
-                        {% if b.section.id == i.section.id %}
-                          <option value="{{b.element.id}}_e">Element: {{b.element.title}}</option>
-                        {% endif %}
+                <!-- Select Basic Hook -->
+                <div class="form-group row">
+                  <label class="col-md-3 control-label" style="text-align:right;" for="hook">the __,</label>
+                  <div class="col-md-9">
+                    <select id="hook" name="hook" class="form-control">
+                      <option value="{{screen.id}}_scr">Screen</option>
+                      {% for i in ss %}
+                        <option value="{{i.section.id}}_s">Section: {{i.section.title}}</option>
+                        {% for b in se %}
+                          {% if b.section.id == i.section.id %}
+                            <option value="{{b.element.id}}_e">Element: {{b.element.title}}</option>
+                          {% endif %}
+                        {% endfor %}
                       {% endfor %}
-                    {% endfor %}
-                  </select>
+                    </select>
+                  </div>
                 </div>
-              </div>
 
-              <!-- Textarea -->
-              <div class="form-group">
-                <label class="col-md-4 control-label" for="expectation">Expectation</label>
-                <div class="col-md-4">
-                  <textarea class="form-control" id="expectation" name="expectation">"I should..."</textarea>
+                <!-- Textarea Expectation-->
+                <div class="form-group row">
+                  <label class="col-md-3 control-label" style="text-align:right;" for="expectation">__.</label>
+                  <div class="col-md-9">
+                    <textarea class="form-control" id="expectation" name="expectation">"I should..."</textarea>
+                  </div>
                 </div>
-              </div>
+                <!-- end form -->
 
               </fieldset>
 
               <hr class="mb-4">
 
+              <!-- continue/cancel -->
               <div class="row">
                 <div class="col-md-6 mb-3">
                   <button class="btn btn-primary btn-lg btn-block" type="Create">Continue</button>
@@ -97,6 +99,13 @@
                   </form>
                 </div>
               </div>
+              <!-- end continue/cancel -->
+
+            </div>
+            <div class="col-md-2">
+            </div>
+
+
           </div>
         </div>
         <!-- end body row -->

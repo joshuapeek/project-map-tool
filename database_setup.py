@@ -107,7 +107,6 @@ class Action(Base):
 class Story(Base):
     __tablename__ = 'story'
     id = Column(Integer, primary_key=True)
-    title = Column(String(250))
     expectation = Column(String(500), nullable=False)
     action = Column(String(50), nullable=False)
     hook = Column(String(10), nullable=False)
@@ -123,7 +122,6 @@ class Story(Base):
     def serialize(self):
         return {
             'id': self.id,
-            'title': self.title,
             'expectation': self.description,
             'action': self.action,
             'hook': self.hook,
