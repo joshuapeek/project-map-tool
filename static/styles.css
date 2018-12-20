@@ -70,7 +70,8 @@ body {
   min-height: 75rem;
   padding-top: 4.5rem;
   background-image: url(images/wave.png);
-  background-repeat: round;
+  background-repeat: no-repeat;
+  background-position: bottom;
 }
 
 [tabindex="-1"]:focus {
