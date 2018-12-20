@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="en">
+  {% include "header.html" %}
+
+
+  <body>
+    <title>Project-Map - Edit Section</title>
+
+    {% include "menu.html" %}
+
+  <body class="bg-light">
+
+    <div class="container">
+      <div class="py-5 text-center">
+        <h2>Editing User Story for {{story.screen.title}} screen</h2>
+      </div>
+
+      <!-- body row -->
+      <div class="row">
+        <div class="col-md-12">
+          <form class="form-horizontal needs-validation" action='{{url_for('editStory', story_id=story.id)}}' method='post' novalidate>
+            <fieldset>
+
+
+          <div class="col-md-2">
+          </div>
+
+        <!-- form -->
+          <div class="col-md-8">
+
+            <!-- Select Basic Role-->
+            <div class="form-group row">
+              <label class="col-md-3 control-label" style="text-align:right;" for="role_id">As a(n):</label>
+              <div class="col-md-9">
+                <input id="role_id" name="role_id" type="hidden" class="form-control input-md" value="{{story.role.id}}" required="">
+                  {{story.role.title}}
+              </div>
+            </div>
+
+            <!-- Text input Screen -->
+            <div class="form-group row">
+              <label class="col-md-3 control-label" style="text-align:right;" for="screen_id">on the</label>
+              <div class="col-md-9">
+              <input id="screen_id" name="screen_id" type="hidden" class="form-control input-md" value="{{story.screen.id}}" required="">
+              {{story.screen.title}} screen,
+
+              </div>
+            </div>
+
+            <!-- Text input Action -->
+            <div class="form-group row">
+              <label class="col-md-3 control-label" style="text-align:right;" for="action">when I __</label>
+              <div class="col-md-9">
+              <input id="action" name="action" type="text" placeholder="{{story.action}}" class="form-control input-md" required="">
+
+              </div>
+            </div>
+
+            <!-- Select Basic Hook -->
+            <div class="form-group row">
+              <label class="col-md-3 control-label" style="text-align:right;" for="hook">the __,</label>
+              <div class="col-md-9">
+                {{target_title}} {{target_type}}
+              </div>
+            </div>
+
+            <!-- Textarea Expectation-->
+            <div class="form-group row">
+              <label class="col-md-3 control-label" style="text-align:right;" for="expectation">__.</label>
+              <div class="col-md-9">
+                <textarea class="form-control" id="expectation" name="expectation">{{story.expectation}}</textarea>
+              </div>
+            </div>
+            <!-- end form -->
+
+          </fieldset>
+
+          <hr class="mb-4">
+
+          <!-- continue/cancel -->
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <button class="btn btn-primary btn-lg btn-block" type="Create">Continue</button>
+            </div>
+        </form>
+            <div class="col-md-6 mb-3">
+              <form action="{{url_for('screenStory', screen_id=screen.id)}}">
+                <button class="btn btn-secondary btn-lg btn-block" type="submit">Cancel</button>
+              </form>
+            </div>
+          </div>
+          <!-- end continue/cancel -->
+
+          <div class="col-md-2">
+          </div>
+
+        </div>
+      </div>
+    </div>
+    <!-- end body row -->
+
+  </div>
+  <!-- end container -->
+
+  {% include "footer.html" %}
+
+  </body>
+</html>

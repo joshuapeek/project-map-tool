@@ -40,7 +40,8 @@
         {% for i in stories %}
           {% if i.hook == "screen" %}
             <li>As a(n) {{i.role.title}}, when I {{i.action}} the
-              {{i.screen.title}} screen, {{i.expectation}}.</li>
+              {{i.screen.title}} screen, {{i.expectation}}. -
+            <a href="{{url_for('editStory', story_id=i.id)}}">Edit</a></li>
           {% endif %}
         {% endfor %}
       </ul>

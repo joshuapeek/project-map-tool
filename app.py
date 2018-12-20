@@ -509,6 +509,40 @@ def editRole(role_id):
             section=sections, screens=screens)
 
 
+# query specified role; find screens & sections from related project
+# serve edit role page for get, update db data for post
+@app.route('/story?<int:story_id>&ed', methods=['GET', 'POST'])
+def editStory(story_id):
+    editStory=session.query(Story).filter_by(id=story_id).one()
+    project = session.query(Project).filter_by(id=editStory.project.id).one()
+    screen = session.query(Screen).filter_by(id=editStory.screen.id).one()
+    if editStory.hook == "screen":
+        target_type="screen"
+        target = session.query(Screen).filter_by(id=editStory.hookID).one()
+    elif editStory.hook == "section":
+        target_type="section"
+        target = session.query(Section).filter_by(id=editStory.hookID).one()
+    elif editStory.hook == "element":
+        target_type="element"
+        target = session.query(Element).filter_by(id=editStory.hookID).one()
+    else:
+        target_type = "unknown"
+        title = "unknown"
+    if request.method == 'POST':
+        if request.form['role_id']:
+            editStory.action = request.form['action']
+            editStory.expectation = request.form['expectation']
+        session.add(editStory)
+        session.commit()
+        session.refresh(editStory)
+        flash("Story edited!")
+        return redirect(url_for('screenStory', screen_id=screen.id))
+    else:
+        return render_template('update/story.html', story=editStory,
+        target_title=target.title, target_type=target_type, project=project,
+        screen=screen)
+
+
 @app.route('/_fliprolescreen/r?<int:role_id>/scrn?<int:screen_id>')
 def flipRoleScreen(role_id, screen_id):
     screen=session.query(Screen).filter_by(id=screen_id).one()
