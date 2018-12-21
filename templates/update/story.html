@@ -87,6 +87,9 @@
               <form action="{{url_for('screenStory', screen_id=screen.id)}}">
                 <button class="btn btn-secondary btn-lg btn-block" type="submit">Cancel</button>
               </form>
+              <form action="{{url_for('delStory', story_id=story.id)}}">
+                <p><br><button style="float:right;" class="btn btn-danger btn-sm" type="submit">Delete Story</button></p>
+              </form>
             </div>
           </div>
           <!-- end continue/cancel -->

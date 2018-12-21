@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+  {% include "header.html" %}
+
+
+  <body>
+    <title>Project-Map - Delete User Story</title>
+
+    <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+      <a class="navbar-brand" href="/">Project-Map</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarCollapse">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item active">
+          </li>
+        </ul>
+        <form class="form-inline mt-2 mt-md-0">
+        </form>
+      </div>
+    </nav>
+
+  <body class="bg-light">
+
+    <div class="container">
+      <div class="py-5 text-center">
+        <h2>Deleting User Story</h2>
+        <p class="lead">Are you sure you'd like to remove this User Story?</p>
+      </div>
+
+      <div class="row">
+        <div class="col-md-12 order-md-1">
+          <form class="needs-validation" action='{{url_for('delStory', story_id=i.id)}}' method='post' novalidate>
+            <hr class="mb-4">
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <button class="btn btn-danger btn-lg btn-block" type="Edit">Continue</button>
+              </div>
+          </form>
+              <div class="col-md-6 mb-3">
+                <form action="{{url_for('screenStory', screen_id=i.screen.id)}}">
+                  <button class="btn btn-secondary btn-lg btn-block" type="submit">Cancel</button>
+                </form>
+              </div>
+            </div>
+        </div>
+      </div>
+    </div>
+
+  {% include "footer.html" %}
+
+  </body>
+</html>

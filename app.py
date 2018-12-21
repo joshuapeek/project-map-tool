@@ -760,6 +760,22 @@ def delUser(user_id):
         return render_template('delete/user.html', i=delUser)
 
 
+# receive story_id, query Story matching id,
+# present confirmation, and when confirmed, delete User Story
+@app.route('/story?<int:story_id>&d', methods=['GET', 'POST'])
+def delStory(story_id):
+    delStory = session.query(Story).filter_by(id=story_id).one()
+    screen_id = delStory.screen.id
+    if request.method == 'POST':
+        session.delete(delStory)
+        session.commit()
+        flash("User Story Removed")
+        return redirect(url_for('screenStory', screen_id=screen_id))
+    else:
+        return render_template('delete/story.html', i=delStory,
+            screen_id=screen_id)
+
+
 # JSON Pages---------------------------
 
 # JSON Project page:

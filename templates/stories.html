@@ -61,7 +61,8 @@
             <ul>
               {% if a.hook == "section" and a.hookID == i.section.id %}
                 <li>As a(n) {{a.role.title}}, when I {{a.action}} the
-                  {{i.section.title}} section, {{a.expectation}}.</li>
+                  {{i.section.title}} section, {{a.expectation}}. -
+                <a href="{{url_for('editStory', story_id=a.id)}}">Edit</a></li>
               {% endif %}
             </ul>
           {% endfor %}
@@ -75,7 +76,8 @@
                 {% if c.hook == "element" %}
                   {% if c.hookID == b.element.id and b.section.id == i.section.id %}
                     <li>As a(n) {{c.role.title}}, when I {{c.action}} the
-                      {{b.element.title}} element, {{c.expectation}}.</li>
+                      {{b.element.title}} element, {{c.expectation}}. -
+                    <a href="{{url_for('editStory', story_id=c.id)}}">Edit</a></li>
                   {% endif %}
                 {% endif %}
               </ul>
