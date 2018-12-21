@@ -43,7 +43,7 @@
                   <tr>
                     <th scope="row">{{loop.index}}</th>
                     <td>{{i.title}}</td>
-                    <td></td>
+                    <td>{{i.description}}</td>
                     <td><a href='{{url_for('orgPage', org_id = i.id)}}'>View</a></td>
                     <td><a href='{{url_for('editOrg', org_id = i.id)}}'>Edit</a></td>
                     <td><a href='{{url_for('delOrg', org_id = i.id)}}'>Delete</a></td>
