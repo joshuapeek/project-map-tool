@@ -19,8 +19,8 @@
 
 <!-- Jumbotron -->
     <main role="main" class="container">
-      <div class="jumbotron" style="padding:1rem 2rem;">
-        <h1>{{org.title}} - {{project.title}}</h1>
+      <div class="jumbotron" style="padding:1rem 2rem;background-image:linear-gradient(to bottom right, #13cdf2, #47e5bc);">
+        <h2>{{org.title}} - {{project.title}}</h2>
         <p class="lead">{{project.description}}
           {% if project.description == "" %}<br>{% endif %}</p>
         <button type="button" class="btn btn-sm btn btn-outline-light" data-toggle="modal" data-target="#edit-project-details">Edit Details &raquo;</button>
@@ -32,8 +32,8 @@
             <div class="container">
               <!-- Header Row -->
               <div class="row">
-                <div class="col-md-12 mb-3">
-                  <h3>User Roles</h3>
+                <div class="col-md-12 mb-1">
+                  <h4>User Roles</h4>
                 </div>
               </div>
               <!-- END Header Row -->
@@ -68,7 +68,7 @@
                       <!--<h5 class="card-title">Need More?</h5>-->
                       <!--<a href="#" class="btn btn-sm btn-secondary" style="float:right;">Click Here</a>-->
                       <center>
-                        <a type="button" data-toggle="modal" data-target="#add-role">
+                        <a type="button" data-toggle="modal" data-target="#add-role" href="#add-role">
                           <img src="../../static/images/plus.png" width="70%">
                         </a>
                         <p style="color:#999;text-size:.75rem;">Add an Element</p>
@@ -90,8 +90,8 @@
 <!-- Screens IMAGE Row -->
       <div class="container">
         <div class="row">
-          <div class="col-md-12 mb-3">
-            <h3>Screens</h3>
+          <div class="col-md-12 mb-1">
+            <h4>Screens</h4>
           </div>
         </div>
 
@@ -118,7 +118,7 @@
             <div class="card" style="background-clip: text;color: #999;border: 0px solid #C9C9C9;">
               <div class="card-body">
                 <center>
-                  <a type="button" data-toggle="modal" data-target="#add-screen">
+                  <a type="button" data-toggle="modal" data-target="#add-screen" href="#add-screen">
                     <img src="../../static/images/plus.png" width="70%">
                   </a>
                   <p style="color:#999;text-size:.75rem;">Add a Screen</p>

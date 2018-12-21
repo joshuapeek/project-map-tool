@@ -12,8 +12,8 @@
 
 <!-- Jumbotron -->
     <main role="main" class="container">
-      <div class="jumbotron" style="padding:1rem 2rem;">
-        <h1>{{screen.title}} Screen</h1>
+      <div class="jumbotron" style="padding:1rem 2rem;background-color:#505cc9;background-image:none;">
+        <h2 style="font-family: 'Rock Salt', cursive;">{{screen.title}} Screen</h2>
         <!--<p class="lead">{{screen.description}}
           {% if screen.description == "" %}<br>{% endif %}</p>
         <button type="button" class="btn btn-sm btn btn-outline-light" data-toggle="modal" data-target="#edit-project-details">Edit Details &raquo;</button>-->
@@ -23,8 +23,8 @@
 <!-- ROLE ACCESS -->
 <div class="container">
   <div class="row">
-    <div class="col-md-6 mb-3">
-        <h3>Role Access</h3>
+    <div class="col-md-6 mb-1">
+        <h4>Role Access</h4>
         <table class="table table-responsive table-sm table-hover" width="100%">
           <thead class="thead-light">
             <tr>
@@ -56,7 +56,7 @@
       </div>
 
     <div class="col-md-6">
-      <h3>Description</h3>
+      <h4>Description</h4>
       <p>{{screen.description}}</p>
       <p>Will need to give some thought to allowing user to reorder the sections, as likely this will become a ux issue.<p>
       <button type="button" class="btn btn-sm btn btn-outline-secondary" data-toggle="modal" data-target="#edit-screen">Edit Details &raquo;</button>
@@ -68,8 +68,8 @@
 <!-- SECTIONS -->
 <div class="container">
   <div class="row">
-    <div class="col-md-12 mb-3">
-      <h3>Sections</h3>
+    <div class="col-md-12 mb-1">
+      <h4>Sections</h4>
       {% if screenSections == [] %}
       <p>Select the "Add a Section" button to begin documenting this screen's Sections and Elements.</p>
       {% endif %}
@@ -94,8 +94,8 @@
                 <div class="col-md-3" style="margin-bottom:2rem;">
                   <div class="card">
                     <div class="card-body" style="word-break:unset;">
-                      <h5 class="card-title" style="font-size:1rem;color:#1eaeb4;">{{a.element.title}}</h5>
-                      <p class="card-text" style="font-size:.8rem;">{{a.element.description}}</p>
+                      <h5 class="card-title" style="font-size:1.25rem;color:#1eaeb4;">{{a.element.title}}</h5>
+                      <p class="card-text" style="font-size:1rem;">{{a.element.description}}</p>
                       <span style="float:right;">
                         <a href="{{url_for('editElement', element_id=a.id)}}" class="btn btn-sm btn-outline-secondary">Edit</a>&nbsp;
                         <!--<a href="{{url_for('delElement', element_id=a.id)}}" class="btn btn-sm btn-outline-danger">Delete</a>-->

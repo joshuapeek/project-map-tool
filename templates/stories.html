@@ -4,15 +4,15 @@
 
 
   <body>
-    <title>{{project.org.title}}-{{project.title}}: {{screen.title}} Screen User Stories</title>
+    <title>{{screen.title}} Screen User Stories</title>
 
     {% include "menu.html" %}
     {% include "modals/storycomposer.html" %}
 
     <!-- Jumbotron -->
     <main role="main" class="container">
-      <div class="jumbotron" style="padding:1rem 2rem;">
-        <h1>{{screen.title}} Screen User Stories</h1>
+      <div class="jumbotron" style="padding:1rem 2rem;background-color:#13cdf2;background-image:none;">
+        <h2 style="font-family: 'Rock Salt', cursive;">{{screen.title}} Screen User Stories</h2>
         <!--<p class="lead">{{screen.description}}
           {% if screen.description == "" %}<br>{% endif %}</p>
         <button type="button" class="btn btn-sm btn btn-outline-light" data-toggle="modal" data-target="#edit-project-details">Edit Details &raquo;</button>-->
@@ -22,7 +22,7 @@
 <!-- body container -->
 <div class="container">
   <div class="row">
-    <div class="col-md-12 mb-5">
+    <div class="col-md-12 mb-4">
       <h3>Description</h3>
       <p>The goal for this page is to lay out the related user stories,
         grouped by where they apply on the page.</p>
@@ -34,7 +34,7 @@
 
   <!-- Page User Stories -->
   <div class="row">
-    <div class="col-md-12 mb-5">
+    <div class="col-md-12 mb-2">
       <h3>General Stories</h3>
       <ul>
         {% for i in stories %}
@@ -52,11 +52,9 @@
 
   <!-- Section & Element User Stories -->
   <div class="row">
-    <div class="col-md-12 mb-5">
+    <div class="col-md-12 mb-2">
       <h3>Screen Sections & Elements</h3>
-      <p>
-        {% for i in ss %}
-          <!--<h5>{{i.section.title}}</h5>-->
+        {% for i in ss %}<!--<h5>{{i.section.title}}</h5>-->
           {% for a in stories %}
             <ul>
               {% if a.hook == "section" and a.hookID == i.section.id %}
@@ -68,8 +66,7 @@
           {% endfor %}
 
           {% for b in se %}
-            {% if b.section.id == i.section.id %}
-              <!--<b>{{b.element.title}}</b>-->
+            {% if b.section.id == i.section.id %}<!--<b>{{b.element.title}}</b>-->
             {% endif %}
             {% for c in stories %}
               <ul>
@@ -84,7 +81,6 @@
             {% endfor %}
           {% endfor %}
         {% endfor %}
-      </p>
     </div>
   </div>
   <!-- end of section & element stories row -->
