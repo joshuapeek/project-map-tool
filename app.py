@@ -742,8 +742,8 @@ def delFunction(function_id):
         return render_template('delete/function.html', i=delFunction)
 
 
-# receive user_id, query userOrg (and in the future, userProject) rows matching,
-# delete userOrg rows, then user record
+# receive user_id, query userOrg (and in the future, userProject) rows
+# matching, delete userOrg rows, then user record
 # serve delete form for get; on post, delete user
 @app.route('/u?<int:user_id>&d', methods=['GET', 'POST'])
 def delUser(user_id):

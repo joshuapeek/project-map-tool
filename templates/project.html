@@ -47,11 +47,11 @@
                   <div class="card mx-auto">
                     <div class="card-body mx-auto" style="word-break:unset;">
                       <center><img src="../../../static/images/profile.png" width="30%"></center><br>
-                      <h5 class="card-title">{{i.title}}</h5>
-                      <p class="card-text">{{i.description}}
+                      <h5 class="card-title" style="color:#505cc9;">{{i.title}}</h5>
+                      <p class="card-text" style="font-size: .75rem;">{{i.description}}
                         {% if authRequired != "" %}<i style="font-size: .75rem;color: #bbb;">(Authenticated: {{i.authRequired}})</i>{% endif %}</p>
                       <!--<a href="#" class="btn btn-sm btn-secondary" style="float:right;">Click Here</a>-->
-                      <span style="float:right;"><a href="{{url_for('editRole', role_id = i.id)}}" class="btn btn-sm btn-primary">Edit</a>&nbsp;
+                      <span style="float:right;"><a href="{{url_for('editRole', role_id = i.id)}}" class="btn btn-sm btn-outline-secondary">Edit</a>&nbsp;
                       <a href="{{url_for('delRole', role_id = i.id)}}" class="btn btn-sm btn-outline-danger">Delete</a></span>
                     </div>
                   </div>
@@ -71,7 +71,7 @@
                         <a type="button" data-toggle="modal" data-target="#add-role" href="#add-role">
                           <img src="../../static/images/plus.png" width="70%">
                         </a>
-                        <p style="color:#999;text-size:.75rem;">Add an Element</p>
+                        <p style="color:#999;text-size:.75rem;">Add a Role</p>
                       </center>
                     </div>
                   </div>
@@ -100,12 +100,12 @@
 
         <!-- Screen Card -->
           {% for i in screens %}
-          <div class="col-md-4" style="margin-bottom:2rem;">
+          <div class="col-md-3" style="margin-bottom:2rem;">
             <div class="card">
               <div class="card-body">
-                <h5 class="card-title">{{i.title}}</h5>
-                <p class="card-text">{{i.description}}</p>
-                <span style="float:right;"><a href="{{url_for('screenPage', project_id = project.id, screen_id=i.id)}}" class="btn btn-sm btn-primary">View</a>&nbsp;
+                <h5 class="card-title" style="color:#505cc9;">{{i.title}}</h5>
+                <p class="card-text" style="font-size: .75rem;">{{i.description}}</p>
+                <span style="float:right;"><a href="{{url_for('screenPage', project_id = project.id, screen_id=i.id)}}" class="btn btn-sm btn-outline-secondary">View</a>&nbsp;
                 <a href="{{url_for('delScreen', screen_id = i.id)}}" class="btn btn-sm btn-outline-danger">Delete</a></span>
               </div>
             </div>
