@@ -58,7 +58,6 @@
     <div class="col-md-6">
       <h4>Description</h4>
       <p>{{screen.description}}</p>
-      <p>Will need to give some thought to allowing user to reorder the sections, as likely this will become a ux issue.<p>
       <button type="button" class="btn btn-sm btn btn-outline-secondary" data-toggle="modal" data-target="#edit-screen">Edit Details &raquo;</button>
     </div>
   </div>
@@ -116,10 +115,12 @@
                     <div class="card-body" style="word-break:unset;">
                       <!--<h5 class="card-title" style="font-size:1rem">Need More</h5>-->
                       <!--<a href="#" class="btn btn-sm btn-secondary" style="float:right;">Click Here</a>-->
-                      <a href="{{url_for('newElement', section_id=i.id)}}">
-                        <img src="../../static/images/plus.png" width="70%">
-                      </a>
-                      <p style="color:#999;text-size:.75rem;">Add an Element</p>
+                      <center>
+                        <a href="{{url_for('newElement', section_id=i.id)}}">
+                          <img class="ghost-add" src="../../static/images/plus.png">
+                        </a>
+                        <p style="color:#999;text-size:.75rem;">Add an Element</p>
+                      </center>
                     </div>
                   </div>
                 </div>
@@ -144,8 +145,6 @@
 
 
     </main>
-
-  {% include "footer.html" %}
 
   </body>
 </html>
